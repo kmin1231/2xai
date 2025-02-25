@@ -1,0 +1,34 @@
+# Node.js dependencies
+node_modules/
+
+# Environment files
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build directories
+dist/
+build/
+
+# Package manager lock files (unnecessary for development, can be re-generated)
+package-lock.json
+yarn.lock
+
+# Test coverage
+coverage/
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Debugging files
+*.swp

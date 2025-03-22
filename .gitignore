@@ -32,3 +32,6 @@ coverage/
 
 # Debugging files
 *.swp
+
+# data file
+/data/**

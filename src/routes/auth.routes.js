@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { login } = require('../controllers/auth.controller');
+const { login, logout } = require('../controllers/auth.controller');
 const { verifyToken } = require('../middleware/auth.middleware');
 
 /**
@@ -133,5 +133,29 @@ router.post('/login', login);
 router.get('/protected', verifyToken, (req, res) => {
     res.json({ message: 'This is a protected route', user: req.user });
 });
+
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout user
+ *     description: Log the user out by ending the session (clearing token in the client-side).
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       200:
+ *         description: User logged out successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Logged out successfully!"
+ */
+
+router.post('/logout', logout);
 
 module.exports = router;

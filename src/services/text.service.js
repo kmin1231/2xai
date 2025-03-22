@@ -9,6 +9,8 @@ const { parse } = require('xlsx');
 
 const Text = require('../models/text');
 const Record = require('../models/record');
+const Feedback = require('../models/feedback');
+const Highlight = require('../models/highlight');
 
 
 const loadBadKeywords = async () => {
@@ -71,9 +73,78 @@ const checkRecord = async (userId, textId) => {
 };
 
 
+const saveFeedback = async (userId, textId, feedback) => {
+  try {
+    const newFeedback = new Feedback({ userId, textId, feedback });
+    await newFeedback.save();
+  } catch (error) {
+    throw new Error('Failed to save feedback.');
+  }
+};
+
+
+const saveHighlight = async (userId, textId, start, end, highlightText) => {
+  try {
+    const newHighlight = new Highlight({
+      userId,
+      textId,
+      start,
+      end,
+      text: highlightText,
+    });
+    await newHighlight.save();
+  } catch (error) {
+    throw new Error('Failed to save highlight.');
+  }
+};
+
+
+const checkAnswer = async (userId, textId, answer) => {
+  try {
+    const text = await Text.findById(textId);
+    if (!text) {
+      throw new Error('Text not found.');
+    }
+
+    const isCorrect = text.answer === answer;
+
+    const newRecord = new Record({
+      userId,
+      textId,
+      isCorrect,
+    });
+
+    await newRecord.save();
+
+    return isCorrect;
+  } catch (error) {
+    throw new Error('Failed to check answer.');
+  }
+};
+
+
+const saveResult = async (userId, textId, isCorrect) => {
+  try {
+    const newRecord = new Record({
+      userId,
+      textId,
+      isCorrect,
+    });
+
+    await newRecord.save();
+  } catch (error) {
+    throw new Error('Failed to save learning result.');
+  }
+};
+
+
 module.exports = {
   generateText,
   filterText,
   checkRecord,
   loadBadKeywords,
+  saveFeedback,
+  saveHighlight,
+  checkAnswer,
+  saveResult,
 };

@@ -15,18 +15,14 @@ const login = async (req, res) => {
     return res.status(401).json({ message: result.message });
   }
 
-  if (result.role === 'student') {
-    console.log('Redirecting to /student');
-    return res.json({ message: 'Login successful', redirect: '/student' });
-  } else if (result.role === 'teacher') {
-    console.log('Redirecting to /teacher');
-    return res.json({ message: 'Login successful', redirect: '/teacher' });
-  } else if (result.role === 'admin') {
-    console.log('Redirecting to /admin');
-    return res.json({ message: 'Login successful', redirect: '/admin' });
-  } else {
-    return res.status(403).json({ message: 'Unauthorized role' });
-  }
+  console.log(`Redirecting to /${result.role}`);
+
+  return res.json({
+    message: 'Login successful',
+    redirect: `/${result.role}`,
+    token: result.token,  // return the token to the client
+  });
 };
+
 
 module.exports = { login };

@@ -6,35 +6,43 @@ const app = require('./app');
 const connectDB = require('./db/connect');
 const User = require('./models/user');
 const PORT = process.env.PORT || 5000;
+const SERVER_URL = process.env.SERVER_URL || "http://localhost";
 
 
 connectDB().then(() => {
-    createAdminUser();
+    createTestUsers();
     app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on ${SERVER_URL}:${PORT}`);
     });
   });
 
 
-const createAdminUser = async () => {
-    try {
-      const existingAdmin = await User.findOne({ username: 'admin' });
-  
-      if (!existingAdmin) {
-        const adminUser = new User({
-          username: 'admin',
-          password: 'admin',
-          name: 'Administrator',
-          class: 'N/A',
-          role: 'admin',
-        });
+const createUser = async (username, password, name, role) => {
+  try {
+    const existingUser = await User.findOne({ username });
 
-        await adminUser.save();
-        console.log('Admin user created');
-      } else {
-        console.log('Admin user already exists');
-      }
-    } catch (error) {
-      console.error('Error creating admin user:', error.message);
+    if (!existingUser) {
+      const user = new User({
+        username,
+        password,
+        name,
+        role,
+        class: 'N/A',
+      });
+
+      await user.save();
+      // console.log(`${role} user (${username}) created`);
+    } else {
+      // console.log(`${role} user (${username}) already exists`);
     }
+  } catch (error) {
+    console.error(`Error creating ${role} user:`, error.message);
+  }
+};
+  
+const createTestUsers = async () => {
+  await createUser('admin', 'admin', 'Administrator', 'admin');
+  await createUser('test-student', 'test-student', 'Test Student', 'student');
+  await createUser('test-teacher', 'test-teacher', 'Test Teacher', 'teacher');
+  console.log('Test accounts activated: admin, test-student, test-teacher');
 };

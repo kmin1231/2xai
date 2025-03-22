@@ -16,7 +16,7 @@ const loginUser = async (username, password) => {
       return { success: false, message: 'Invalid username or password' };
     }
 
-    console.log(`Login successful: ${username}, Role: ${user.role}`);
+    console.log(`Login Success: [${user.role}] ${username}`);
 
     return {
       success: true,

@@ -17,7 +17,7 @@ connectDB().then(() => {
   });
 
 
-const createUser = async (username, password, name, role, level = 'medium') => {
+const createUser = async (username, password, name, role, level = 'normal') => {
   try {
     const existingUser = await User.findOne({ username });
 

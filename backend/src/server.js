@@ -13,6 +13,7 @@ connectDB().then(() => {
     createTestUsers();
     app.listen(PORT, () => {
       console.log(`Server is running on ${SERVER_URL}:${PORT}`);
+      console.log(`Swagger UI is available on ${SERVER_URL}:${PORT}/api-docs`);
     });
   });
 

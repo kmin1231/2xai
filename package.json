@@ -1,0 +1,21 @@
+{
+  "name": "twoxai",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "front": "npm run dev --workspace=frontend",
+    "back": "npm run dev --workspace=backend",
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "build": "concurrently \"npm run build --workspace=frontend\" \"npm run build --workspace=backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -6,9 +6,9 @@ const textController = require('../controllers/text.controller');
 
 /**
  * @swagger
- * /api/text/create:
+ * /api/text/validate-keyword:
  *   post:
- *     summary: Create a new text based on the given keyword and level
+ *     summary: Validate if the given keyword is allowed and meets the required criteria
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -19,13 +19,66 @@ const textController = require('../controllers/text.controller');
  *             properties:
  *               keyword:
  *                 type: string
- *                 description: The keyword to generate the text
+ *                 description: The keyword to validate
+ *     responses:
+ *       200:
+ *         description: The keyword is valid and meets the criteria
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: '유효한 키워드입니다.'
+ *       400:
+ *         description: Invalid keyword or keyword length exceeded
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: '금지된 키워드입니다. 다시 입력해 주세요.'
+ *       500:
+ *         description: Failed to validate keyword
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: '키워드 검증 오류.'
+ *                 error:
+ *                   type: string
+ *                   example: 'Error message details'
+ */
+router.post('/validate-keyword', textController.validateKeyword);
+
+/**
+ * @swagger
+ * /api/text/request-generation:
+ *   post:
+ *     summary: Generate a single text set based on the provided keyword and level
+ *     tags: [Text]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 description: The keyword for generating text
  *               level:
  *                 type: string
- *                 description: The level of difficulty for the text
+ *                 description: The level of the generated content
  *     responses:
  *       201:
- *         description: Text created successfully
+ *         description: The text set has been successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -33,22 +86,120 @@ const textController = require('../controllers/text.controller');
  *               properties:
  *                 keyword:
  *                   type: string
+ *                   example: 'math'
  *                 level:
  *                   type: string
+ *                   example: 'easy'
  *                 passage:
  *                   type: string
+ *                   example: 'This is a sample passage.'
  *                 question:
  *                   type: string
+ *                   example: 'What is 2 + 2?'
  *                 answer:
  *                   type: string
+ *                   example: '4'
  *                 solution:
  *                   type: string
+ *                   example: 'The solution is simple addition.'
  *       400:
- *         description: Invalid keyword or keyword length exceeded
+ *         description: Failed to generate text due to invalid keyword or other errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: '텍스트 생성 실패'
  *       500:
- *         description: Failed to create text
+ *         description: Server error during text generation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Failed to generate text.'
+ *                 error:
+ *                   type: string
+ *                   example: 'Error message details'
  */
-router.post('/create', textController.createText);
+// router.post('/request-generation', textController.createText);
+
+/**
+ * @swagger
+ * /api/text/request-generation-3:
+ *   post:
+ *     summary: Generate three text sets based on the provided keyword and level
+ *     tags: [Text]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 description: The keyword for generating text
+ *               level:
+ *                 type: string
+ *                 description: The level of the generated content
+ *     responses:
+ *       201:
+ *         description: The text sets have been successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   keyword:
+ *                     type: string
+ *                     example: 'math'
+ *                   level:
+ *                     type: string
+ *                     example: 'easy'
+ *                   passage:
+ *                     type: string
+ *                     example: 'This is a sample passage.'
+ *                   question:
+ *                     type: string
+ *                     example: 'What is 2 + 2?'
+ *                   answer:
+ *                     type: string
+ *                     example: '4'
+ *                   solution:
+ *                     type: string
+ *                     example: 'The solution is simple addition.'
+ *       400:
+ *         description: Failed to generate text sets due to invalid keyword or other errors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: '텍스트 생성 실패'
+ *       500:
+ *         description: Server error during text generation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Failed to generate texts.'
+ *                 error:
+ *                   type: string
+ *                   example: 'Error message details'
+ */
+// router.post('/request-generation-3', textController.createText3);
 
 /**
  * @swagger

@@ -20,6 +20,7 @@ const textController = require('../controllers/text.controller');
  *               keyword:
  *                 type: string
  *                 description: The keyword to validate
+ *                 example: "Around the world in 80 days"
  *     responses:
  *       200:
  *         description: The keyword is valid and meets the criteria
@@ -59,9 +60,9 @@ router.post('/validate-keyword', textController.validateKeyword);
 
 /**
  * @swagger
- * /api/text/request-generation:
+ * /api/text/generate-text:
  *   post:
- *     summary: Generate a single text set based on the provided keyword and level
+ *     summary: Generate a single set of text content based on keyword and level
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -69,41 +70,61 @@ router.post('/validate-keyword', textController.validateKeyword);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - keyword
+ *               - level
  *             properties:
  *               keyword:
  *                 type: string
- *                 description: The keyword for generating text
+ *                 example: volcano
  *               level:
  *                 type: string
- *                 description: The level of the generated content
+ *                 enum: [high, normal, easy]
+ *                 example: normal
  *     responses:
  *       201:
- *         description: The text set has been successfully created
+ *         description: Successfully generated text content
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: 661690f2fabc1234567890ab
  *                 keyword:
  *                   type: string
- *                   example: 'math'
+ *                   example: volcano
  *                 level:
  *                   type: string
- *                   example: 'easy'
+ *                   enum: [high, normal, easy]
+ *                   example: normal
  *                 passage:
  *                   type: string
- *                   example: 'This is a sample passage.'
+ *                   example: A volcano is an opening in the Earth's crust...
  *                 question:
- *                   type: string
- *                   example: 'What is 2 + 2?'
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["What is a volcano?", "Where do they occur?", "How are they formed?", "What are the risks?", "Name an example."]
  *                 answer:
- *                   type: string
- *                   example: '4'
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["Opening in Earth's crust", "Near plate boundaries", "..."]
  *                 solution:
  *                   type: string
- *                   example: 'The solution is simple addition.'
+ *                   example: The answers are derived from the passage above.
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2025-04-10T14:48:00.000Z
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2025-04-10T14:48:00.000Z
  *       400:
- *         description: Failed to generate text due to invalid keyword or other errors
+ *         description: Invalid input or forbidden keyword
  *         content:
  *           application/json:
  *             schema:
@@ -111,9 +132,9 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: '텍스트 생성 실패'
+ *                   example: Keyword is forbidden or invalid.
  *       500:
- *         description: Server error during text generation
+ *         description: Internal server error during content generation
  *         content:
  *           application/json:
  *             schema:
@@ -121,18 +142,15 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'Failed to generate text.'
- *                 error:
- *                   type: string
- *                   example: 'Error message details'
+ *                   example: Failed to generate text contents.
  */
-// router.post('/request-generation', textController.createText);
+router.post('/generate-text', textController.createText); 
 
 /**
  * @swagger
- * /api/text/request-generation-3:
+ * /api/text/generate-text-3:
  *   post:
- *     summary: Generate three text sets based on the provided keyword and level
+ *     summary: Generate three sets of text content based on keyword and level
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -140,16 +158,20 @@ router.post('/validate-keyword', textController.validateKeyword);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - keyword
+ *               - level
  *             properties:
  *               keyword:
  *                 type: string
- *                 description: The keyword for generating text
+ *                 example: volcano
  *               level:
  *                 type: string
- *                 description: The level of the generated content
+ *                 enum: [high, normal, easy]
+ *                 example: normal
  *     responses:
  *       201:
- *         description: The text sets have been successfully created
+ *         description: Successfully generated three sets of text content
  *         content:
  *           application/json:
  *             schema:
@@ -157,26 +179,42 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               items:
  *                 type: object
  *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: 661690f2fabc1234567890ab
  *                   keyword:
  *                     type: string
- *                     example: 'math'
+ *                     example: volcano
  *                   level:
  *                     type: string
- *                     example: 'easy'
+ *                     enum: [high, normal, easy]
+ *                     example: normal
  *                   passage:
  *                     type: string
- *                     example: 'This is a sample passage.'
+ *                     example: A volcano is an opening in the Earth's crust...
  *                   question:
- *                     type: string
- *                     example: 'What is 2 + 2?'
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                     example: ["What is a volcano?", "Where do they occur?", "How are they formed?", "What are the risks?", "Name an example."]
  *                   answer:
- *                     type: string
- *                     example: '4'
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                     example: ["Opening in Earth's crust", "Near plate boundaries", "..."]
  *                   solution:
  *                     type: string
- *                     example: 'The solution is simple addition.'
+ *                     example: The answers are derived from the passage above.
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                     example: 2025-04-10T14:48:00.000Z
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
+ *                     example: 2025-04-10T14:48:00.000Z
  *       400:
- *         description: Failed to generate text sets due to invalid keyword or other errors
+ *         description: Invalid input or forbidden keyword
  *         content:
  *           application/json:
  *             schema:
@@ -184,9 +222,9 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: '텍스트 생성 실패'
+ *                   example: Keyword is forbidden or invalid.
  *       500:
- *         description: Server error during text generation
+ *         description: Internal server error during content generation
  *         content:
  *           application/json:
  *             schema:
@@ -194,12 +232,9 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'Failed to generate texts.'
- *                 error:
- *                   type: string
- *                   example: 'Error message details'
+ *                   example: Failed to generate text contents.
  */
-// router.post('/request-generation-3', textController.createText3);
+router.post('/generate-text-3', textController.createText3);
 
 /**
  * @swagger
@@ -407,6 +442,49 @@ router.post('/:id/answer', textController.checkAnswer);
  *         description: Failed to save learning result
  */
 router.post('/:id/result', textController.saveResult);
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Text:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: MongoDB document ID
+ *           example: 661690f2fabc1234567890ab
+ *         keyword:
+ *           type: string
+ *           example: volcano
+ *         level:
+ *           type: string
+ *           enum: [high, normal, easy]
+ *           example: normal
+ *         passage:
+ *           type: string
+ *           example: A volcano is an opening in the Earth's crust...
+ *         question:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["What is a volcano?", "Where do they occur?", "..."]
+ *         answer:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["An opening in the crust", "Near tectonic boundaries", "..."]
+ *         solution:
+ *           type: string
+ *           example: The answers are derived from the passage above.
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
 
 
 module.exports = router;

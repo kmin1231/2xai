@@ -8,7 +8,7 @@ const textController = require('../controllers/text.controller');
  * @swagger
  * /api/text/validate-keyword:
  *   post:
- *     summary: Validate if the given keyword is allowed and meets the required criteria
+ *     summary: Validate if the given keyword is allowed (must not include any forbidden terms)
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -19,11 +19,11 @@ const textController = require('../controllers/text.controller');
  *             properties:
  *               keyword:
  *                 type: string
- *                 description: The keyword to validate
+ *                 description: The keyword to validate. The keyword must not include any forbidden terms.
  *                 example: "Around the world in 80 days"
  *     responses:
  *       200:
- *         description: The keyword is valid and meets the criteria
+ *         description: The keyword is valid and does not include any forbidden words
  *         content:
  *           application/json:
  *             schema:
@@ -33,7 +33,7 @@ const textController = require('../controllers/text.controller');
  *                   type: string
  *                   example: '유효한 키워드입니다.'
  *       400:
- *         description: Invalid keyword or keyword length exceeded
+ *         description: The keyword includes a forbidden term or is otherwise invalid
  *         content:
  *           application/json:
  *             schema:
@@ -51,10 +51,7 @@ const textController = require('../controllers/text.controller');
  *               properties:
  *                 message:
  *                   type: string
- *                   example: '키워드 검증 오류.'
- *                 error:
- *                   type: string
- *                   example: 'Error message details'
+ *                   example: '키워드 검증 중 오류가 발생했습니다.'
  */
 router.post('/validate-keyword', textController.validateKeyword);
 

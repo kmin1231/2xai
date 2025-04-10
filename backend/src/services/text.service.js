@@ -26,6 +26,16 @@ const loadForbiddenKeywordsFromJson = () => {
 };
 
 
+const containsForbiddenKeyword = (text) => {
+  const forbiddenKeywords = loadForbiddenKeywordsFromJson();
+  
+  return forbiddenKeywords.some(keyword =>
+    text.toLowerCase().includes(keyword.toLowerCase())
+  );
+};
+
+
+
 const requestGeneration = async (keyword, level) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
@@ -200,6 +210,8 @@ const saveResult = async (userId, textId, isCorrect) => {
 module.exports = {
   // validateKeyword,
   loadForbiddenKeywordsFromJson,
+  containsForbiddenKeyword,
+
   requestGeneration,
   requestGeneration3,
 

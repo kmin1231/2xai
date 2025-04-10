@@ -11,9 +11,8 @@ exports.validateKeyword = (req, res) => {
   }
 
   try {
-    const forbiddenKeywords = textService.loadForbiddenKeywordsFromJson();
 
-    if (forbiddenKeywords.includes(keyword)) {
+    if (textService.containsForbiddenKeyword(keyword)) {
       return res.status(400).json({ message: '금지된 키워드입니다. 다시 입력해 주세요.' });
     }
 

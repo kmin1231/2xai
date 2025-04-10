@@ -12,6 +12,10 @@ const studentRoutes = require('./routes/student.routes');
 const { swaggerUi, swaggerSpec } = require('./swagger');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// CORS
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/text', textRoutes);

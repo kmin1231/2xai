@@ -5,6 +5,9 @@ require('dotenv').config();
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost';
+const PORT = process.env.PORT || 5000;
+
 const options = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -16,7 +19,8 @@ const options = {
     
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 5000}`,
+        url: `${SERVER_URL}:${PORT}`,
+        description: "GCP VM API server"
       },
     ],
   },

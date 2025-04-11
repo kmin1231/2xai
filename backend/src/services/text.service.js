@@ -57,6 +57,10 @@ const requestGeneration = async (keyword, level) => {
       throw new Error('FIVE answers are required.');
     }
 
+    if (!Array.isArray(solution) || solution.length !== 5) {
+      throw new Error('FIVE solutions are required.');
+    }
+
     const newText = new Text({
       keyword,
       level,

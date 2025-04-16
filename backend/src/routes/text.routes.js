@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const textController = require('../controllers/text.controller');
+const { verifyToken } = require('../middleware/auth.middleware');
 
 /**
  * @swagger
@@ -55,73 +56,62 @@ const textController = require('../controllers/text.controller');
  */
 router.post('/validate-keyword', textController.validateKeyword);
 
+
 /**
  * @swagger
  * /api/text/generate-text:
  *   post:
- *     summary: Generate a single set of text content based on keyword and level
+ *     summary: Generate text based on the provided keyword and user level (Authorization required)
  *     tags: [Text]
+ *     description: 로그인된 사용자가 제공한 keyword에 대해 텍스트 생성을 요청합니다. 유효한 토큰을 포함한 인증이 필요합니다.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - keyword
- *               - level
  *             properties:
  *               keyword:
  *                 type: string
- *                 example: volcano
- *               level:
- *                 type: string
- *                 enum: [high, normal, easy]
- *                 example: normal
+ *                 description: The keyword to generate text for.
+ *                 example: "Around the World in 80 Days"
  *     responses:
- *       201:
- *         description: Successfully generated text content
+ *       200:
+ *         description: Successfully generated text
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 _id:
- *                   type: string
- *                   example: 661690f2fabc1234567890ab
  *                 keyword:
  *                   type: string
- *                   example: volcano
+ *                   example: "Around the World in 80 Days"
  *                 level:
  *                   type: string
- *                   enum: [high, normal, easy]
- *                   example: normal
- *                 passage:
- *                   type: string
- *                   example: A volcano is an opening in the Earth's crust...
- *                 question:
- *                   type: array
- *                   items:
- *                     type: string
- *                   example: ["What is a volcano?", "Where do they occur?", "How are they formed?", "What are the risks?", "Name an example."]
- *                 answer:
- *                   type: array
- *                   items:
- *                     type: string
- *                   example: ["Opening in Earth's crust", "Near plate boundaries", "..."]
- *                 solution:
- *                   type: string
- *                   example: The answers are derived from the passage above.
- *                 createdAt:
- *                   type: string
- *                   format: date-time
- *                   example: 2025-04-10T14:48:00.000Z
- *                 updatedAt:
- *                   type: string
- *                   format: date-time
- *                   example: 2025-04-10T14:48:00.000Z
+ *                   example: "low"
+ *                 generation1:
+ *                   type: object
+ *                   properties:
+ *                     passage:
+ *                       type: string
+ *                       example: "..."
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: ["Question 1", "Question 2"]
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: ["Answer 1", "Answer 2"]
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: ["Solution 1", "Solution 2"]
  *       400:
- *         description: Invalid input or forbidden keyword
+ *         description: Invalid level or request data
  *         content:
  *           application/json:
  *             schema:
@@ -129,9 +119,19 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Keyword is forbidden or invalid.
+ *                   example: "ERROR: invalid level"
+ *       401:
+ *         description: Unauthorized (Invalid or missing token)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Authentication required. Please provide a valid token."
  *       500:
- *         description: Internal server error during content generation
+ *         description: Failed to generate text
  *         content:
  *           application/json:
  *             schema:
@@ -139,15 +139,16 @@ router.post('/validate-keyword', textController.validateKeyword);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Failed to generate text contents.
+ *                   example: "텍스트 생성 중 오류가 발생했습니다."
  */
-router.post('/generate-text', textController.createText); 
+router.post('/generate-text', verifyToken, textController.generateText);
+
 
 /**
  * @swagger
- * /api/text/generate-text-3:
+ * /api/text/generate-text-low:
  *   post:
- *     summary: Generate three sets of text content based on keyword and level
+ *     summary: Generate text at a low level using the provided keyword
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -155,63 +156,78 @@ router.post('/generate-text', textController.createText);
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - keyword
- *               - level
  *             properties:
  *               keyword:
  *                 type: string
- *                 example: volcano
- *               level:
- *                 type: string
- *                 enum: [high, normal, easy]
- *                 example: normal
+ *                 description: The keyword to generate content for.
+ *                 example: "Around the world in 80 days"
  *     responses:
- *       201:
- *         description: Successfully generated three sets of text content
+ *       200:
+ *         description: Successfully generated text at a low level
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                     example: 661690f2fabc1234567890ab
- *                   keyword:
- *                     type: string
- *                     example: volcano
- *                   level:
- *                     type: string
- *                     enum: [high, normal, easy]
- *                     example: normal
- *                   passage:
- *                     type: string
- *                     example: A volcano is an opening in the Earth's crust...
- *                   question:
- *                     type: array
- *                     items:
+ *               type: object
+ *               properties:
+ *                 keyword:
+ *                   type: string
+ *                   example: "Around the world in 80 days"
+ *                 level:
+ *                   type: string
+ *                   example: "low"
+ *                 generation1:
+ *                   type: object
+ *                   properties:
+ *                     passage:
  *                       type: string
- *                     example: ["What is a volcano?", "Where do they occur?", "How are they formed?", "What are the risks?", "Name an example."]
- *                   answer:
- *                     type: array
- *                     items:
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                 generation2:
+ *                   type: object
+ *                   properties:
+ *                     passage:
  *                       type: string
- *                     example: ["Opening in Earth's crust", "Near plate boundaries", "..."]
- *                   solution:
- *                     type: string
- *                     example: The answers are derived from the passage above.
- *                   createdAt:
- *                     type: string
- *                     format: date-time
- *                     example: 2025-04-10T14:48:00.000Z
- *                   updatedAt:
- *                     type: string
- *                     format: date-time
- *                     example: 2025-04-10T14:48:00.000Z
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                 generation3:
+ *                   type: object
+ *                   properties:
+ *                     passage:
+ *                       type: string
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
  *       400:
- *         description: Invalid input or forbidden keyword
+ *         description: Invalid keyword provided
  *         content:
  *           application/json:
  *             schema:
@@ -219,9 +235,9 @@ router.post('/generate-text', textController.createText);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Keyword is forbidden or invalid.
+ *                   example: 'Invalid keyword.'
  *       500:
- *         description: Internal server error during content generation
+ *         description: Failed to generate content
  *         content:
  *           application/json:
  *             schema:
@@ -229,9 +245,10 @@ router.post('/generate-text', textController.createText);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Failed to generate text contents.
+ *                   example: '텍스트 생성 중 오류가 발생했습니다.'
  */
-router.post('/generate-text-3', textController.createText3);
+router.post('/generate-text-low', textController.generateTextLow);
+
 
 /**
  * @swagger

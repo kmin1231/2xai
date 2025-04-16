@@ -23,11 +23,11 @@ const { verifyToken } = require('../middleware/auth.middleware');
  *             properties:
  *               username:
  *                 type: string
- *                 example: "johndoe"
+ *                 example: "admin"
  *                 description: The username of the user attempting to log in.
  *               password:
  *                 type: string
- *                 example: "password123"
+ *                 example: "admin"
  *                 description: The password of the user attempting to log in.
  *     responses:
  *       200:

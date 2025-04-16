@@ -23,40 +23,53 @@ exports.validateKeyword = (req, res) => {
 };
 
 
-// POST api/text/generate-text
-exports.createText = async (req, res) => {
-  const { keyword, level } = req.body;
-  
-  if (!keyword || !level) {
-    return res.status(400).json({ message: 'keyword and level are required fields.' });
-  }
-
+// POST /api/text/generate-text
+exports.generateText = async (req, res) => {
   try {
-    const newText = await textService.requestGeneration(keyword, level);
-    console.log('Contents generated successfully\n', newText);
-    return res.status(201).json(newText);
+    const { keyword } = req.body;
+    const level = req.user?.level;
+
+    if (!level || !['low', 'middle', 'high'].includes(level)) {
+      return res.status(400).json({ message: 'ERROR: invalid level' });
+    }
+
+    const result = await textService.requestGeneration(keyword, level);
+    res.status(200).json(result);
+
   } catch (error) {
-    console.error('Error generating contents:', error.message);
-    return res.status(400).json({ message: error.message || 'Failed to generate contents' });
+    console.error('Error generating text:', error.message);
+
+    const status = error.status || 500;
+    const message =
+      error.message === '금지어가 포함되어 있습니다.'
+        ? '입력한 키워드에 금지어가 포함되어 있습니다.'
+        : '텍스트 생성 중 오류가 발생했습니다.';
+
+    res.status(status).json({ message });
   }
 };
 
 
-// POST api/text/generate-text-3
-exports.createText3 = async (req, res) => {
-  const { keyword, level } = req.body;
-
-  if (!keyword || !level) {
-    return res.status(400).json({ message: 'Both keyword and level are required.' });
-  }
-
+// POST /api/text/generate-text-low
+exports.generateTextLow = async (req, res) => {
   try {
-    const generatedTexts = await textService.requestGeneration3(keyword, level);
-    console.log('THREE sets of content generated successfully:\n', generatedTexts);
-    return res.status(201).json(generatedTexts);
+    const { keyword } = req.body;
+    
+    const level = 'low';  // fixed level
+
+    const result = await textService.requestGeneration(keyword, level);
+
+    res.status(200).json(result);
   } catch (error) {
-    console.error('Error generating THREE content sets:', error.message, error.stack);
-    return res.status(400).json({ message: error.message || 'Failed to generate text contents.' });
+    console.error('Error generating low-level text:', error.message);
+
+    const status = error.status || 500;
+    const message =
+      error.message === '금지어가 포함되어 있습니다.'
+        ? '입력한 키워드에 금지어가 포함되어 있습니다.'
+        : '텍스트 생성 중 오류가 발생했습니다.';
+
+    res.status(status).json({ message });
   }
 };
 

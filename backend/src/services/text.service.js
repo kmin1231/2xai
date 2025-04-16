@@ -35,91 +35,52 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-
 const requestGeneration = async (keyword, level) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
-  if (forbiddenKeywords.includes(keyword)) {
-    throw new Error('금지된 키워드입니다. 다시 입력해 주세요.');
-  }
-
-  try {
-    const response = await axios.post(process.env.CONTENTS_API, { keyword, level });
-    const newContents = response.data;
-
-    const { passage, question, answer, solution } = newContents;
-
-    if (!Array.isArray(question) || question.length !== 5) {
-      throw new Error('FIVE questions are required.');
-    }
-
-    if (!Array.isArray(answer) || answer.length !== 5) {
-      throw new Error('FIVE answers are required.');
-    }
-
-    const newText = new Text({
-      keyword,
-      level,
-
-      passage,
-      question,
-      answer,
-      solution,
-    });
-
-    await newText.save();
-    return newText;
-  } catch (error) {
-    console.error('Failed to call CONTENTS_API or, save text:', error.message);
-    throw new Error('Failed to generate text from external API.');
-  }
-};
-
-
-const requestGeneration3 = async (keyword, level) => {
-  const forbiddenKeywords = loadForbiddenKeywordsFromJson();
-
-  if (forbiddenKeywords.includes(keyword)) {
-    throw new Error('금지된 키워드입니다. 다시 입력해 주세요.');
+  if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
+    const error = new Error('금지어가 포함되어 있습니다.');
+    error.status = 400;
+    throw error;
   }
 
   try {
     const requests = Array.from({ length: 3 }, () =>
-      axios.post(process.env.CONTENTS_API, { keyword, level })
+      axios.post(`${process.env.CONTENTS_API}/generate/${level}`, { keyword })
     );
 
     const responses = await Promise.all(requests);
 
-    const savedTexts = [];
-
-    for (const response of responses) {
+    const generations = responses.map((response, index) => {
       const { passage, question, answer, solution } = response.data;
 
-      if (!Array.isArray(question) || question.length !== 5) {
-        throw new Error('FIVE questions are required.');
+      if (
+        typeof passage !== 'string' ||
+        !Array.isArray(question) || question.length !== 5 ||
+        !Array.isArray(answer) || answer.length !== 5 ||
+        !Array.isArray(solution) || solution.length !== 5
+      ) {
+        throw new Error(`Generation ${index + 1} format is invalid.`);
       }
 
-      if (!Array.isArray(answer) || answer.length !== 5) {
-        throw new Error('FIVE answers are required.');
-      }
-
-      const newText = new Text({
-        keyword,
-        level,
+      return {
         passage,
         question,
         answer,
-        solution,
-      });
+        solution
+      };
+    });
 
-      await newText.save();
-      savedTexts.push(newText);
-    }
-
-    return savedTexts;
+    return {
+      keyword,
+      level,
+      generation1: generations[0],
+      generation2: generations[1],
+      generation3: generations[2]
+    };
   } catch (error) {
-    console.error('Failed to generate THREE text sets:', error.message);
-    throw new Error('Failed to generate THREE text sets.');
+    console.error('Error generating content:', error.message);
+    throw new Error('Failed to generate content.');
   }
 };
 
@@ -208,12 +169,9 @@ const saveResult = async (userId, textId, isCorrect) => {
 
 
 module.exports = {
-  // validateKeyword,
   loadForbiddenKeywordsFromJson,
   containsForbiddenKeyword,
-
   requestGeneration,
-  requestGeneration3,
 
   filterText,
   checkRecord,

@@ -1,0 +1,10 @@
+/* src/layouts/MainLayout.css */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}

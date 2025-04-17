@@ -255,6 +255,41 @@ router.post('/generate-text-low', textController.generateTextLow);
 
 /**
  * @swagger
+ * /api/text/test:
+ *   get:
+ *     summary: Test connection to FastAPI server
+ *     tags: [Text]
+ *     responses:
+ *       200:
+ *         description: Successfully connected to FastAPI server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: FastAPI server is reachable.
+ *                 data:
+ *                   type: object
+ *       500:
+ *         description: Failed to connect to FastAPI server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Failed to reach FastAPI server.
+ *                 error:
+ *                   type: string
+ */
+router.get('/test', textController.testTextConnection);
+
+
+/**
+ * @swagger
  * /api/text/filter:
  *   get:
  *     summary: Filter text based on the given keyword, level, and user ID

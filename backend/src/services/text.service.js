@@ -82,6 +82,35 @@ const requestGeneration = async (keyword, level) => {
 };
 
 
+const testConnection = async () => {
+  try {
+    const response = await axios.get(`${process.env.CONTENTS_API}/`);
+    
+    if (response.status === 200) {
+      console.log('Request sent successfully to FastAPI server.');
+      return {
+        success: true,
+        message: 'FastAPI server is reachable.',
+        data: response.data
+      };
+    } else {
+      console.error('FastAPI server responded with non-200 status:', response.status);
+      return {
+        success: false,
+        message: `Unexpected status code from FastAPI server: ${response.status}`
+      };
+    }
+  } catch (error) {
+    console.error('Failed to connect to FastAPI server:', error.message);
+    return {
+      success: false,
+      message: 'Failed to reach FastAPI server.',
+      error: error.message
+    };
+  }
+};
+
+
 const filterText = async (keyword, level) => {
   try {
     return await Text.findOne({ keyword, level });
@@ -169,6 +198,7 @@ module.exports = {
   loadForbiddenKeywordsFromJson,
   containsForbiddenKeyword,
   requestGeneration,
+  testConnection,
 
   filterText,
   checkRecord,

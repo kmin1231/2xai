@@ -74,6 +74,24 @@ exports.generateTextLow = async (req, res) => {
 };
 
 
+// GET /api/text/test
+exports.testTextConnection = async (req, res) => {
+  const result = await textService.testConnection();
+
+  if (result.success) {
+    return res.status(200).json({
+      message: result.message,
+      data: result.data
+    });
+  } else {
+    return res.status(500).json({
+      message: result.message,
+      error: result.error
+    });
+  }
+};
+
+
 // GET /api/text/filter 
 exports.filterText = async (req, res) => {
   const { keyword, level, userId } = req.query;

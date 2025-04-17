@@ -45,13 +45,10 @@ const requestGeneration = async (keyword, level) => {
   }
 
   try {
-    const requests = Array.from({ length: 3 }, () =>
-      axios.post(`${process.env.CONTENTS_API}/generate/${level}`, { keyword })
-    );
+    const generations = [];
 
-    const responses = await Promise.all(requests);
-
-    const generations = responses.map((response, index) => {
+    for (let i = 0; i < 3; i++) {
+      const response = await axios.post(`${process.env.CONTENTS_API}/generate/${level}`, { keyword });
       const { passage, question, answer, solution } = response.data;
 
       if (
@@ -60,23 +57,23 @@ const requestGeneration = async (keyword, level) => {
         !Array.isArray(answer) || answer.length !== 5 ||
         !Array.isArray(solution) || solution.length !== 5
       ) {
-        throw new Error(`Generation ${index + 1} format is invalid.`);
+        throw new Error(`Generation ${i + 1} format is invalid.`);
       }
 
-      return {
+      generations.push({
         passage,
         question,
         answer,
         solution
-      };
-    });
+      });
+    }
 
     return {
       keyword,
       level,
-      generation1: generations[0],
-      generation2: generations[1],
-      generation3: generations[2]
+      generation0: generations[0],
+      generation1: generations[1],
+      generation2: generations[2]
     };
   } catch (error) {
     console.error('Error generating content:', error.message);

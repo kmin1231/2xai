@@ -149,6 +149,9 @@ router.post('/generate-text', verifyToken, textController.generateText);
  * /api/text/generate-text-low:
  *   post:
  *     summary: Generate text at a low level using the provided keyword
+ *     description: |
+ *       Generates 3 sets of text content (passage, questions, answers, solutions) at a low difficulty level.
+ *       Each content generation request is now handled **sequentially**, not concurrently, to improve stability and reduce load on the content API.
  *     tags: [Text]
  *     requestBody:
  *       required: true
@@ -175,6 +178,23 @@ router.post('/generate-text', verifyToken, textController.generateText);
  *                 level:
  *                   type: string
  *                   example: "low"
+ *                 generation0:
+ *                   type: object
+ *                   properties:
+ *                     passage:
+ *                       type: string
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
  *                 generation1:
  *                   type: object
  *                   properties:
@@ -193,23 +213,6 @@ router.post('/generate-text', verifyToken, textController.generateText);
  *                       items:
  *                         type: string
  *                 generation2:
- *                   type: object
- *                   properties:
- *                     passage:
- *                       type: string
- *                     question:
- *                       type: array
- *                       items:
- *                         type: string
- *                     answer:
- *                       type: array
- *                       items:
- *                         type: string
- *                     solution:
- *                       type: array
- *                       items:
- *                         type: string
- *                 generation3:
  *                   type: object
  *                   properties:
  *                     passage:
@@ -248,6 +251,41 @@ router.post('/generate-text', verifyToken, textController.generateText);
  *                   example: '텍스트 생성 중 오류가 발생했습니다.'
  */
 router.post('/generate-text-low', textController.generateTextLow);
+
+
+/**
+ * @swagger
+ * /api/text/test:
+ *   get:
+ *     summary: Test connection to FastAPI server
+ *     tags: [Text]
+ *     responses:
+ *       200:
+ *         description: Successfully connected to FastAPI server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: FastAPI server is reachable.
+ *                 data:
+ *                   type: object
+ *       500:
+ *         description: Failed to connect to FastAPI server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Failed to reach FastAPI server.
+ *                 error:
+ *                   type: string
+ */
+router.get('/test', textController.testTextConnection);
 
 
 /**

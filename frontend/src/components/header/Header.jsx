@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="headerInfo">
+      <div className="header-info">
 
     {/* depends on login status */}
       {isLoggedIn ? (

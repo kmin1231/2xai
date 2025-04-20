@@ -3,6 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import CONFIG from '@/config';
 
+// login
 export const login = createAsyncThunk(
   'auth/login',
 
@@ -16,19 +17,40 @@ export const login = createAsyncThunk(
       },
     );
 
-    return await res.json();
+    const data = await res.json();
+    return data;
   },
 );
 
+
+// logout
+export const logoutAsync = createAsyncThunk('auth/logout', async () => {
+  const res = await fetch(
+    `${CONFIG.AUTH.BASE_URL}${CONFIG.AUTH.ENDPOINTS.LOGOUT}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }
+  );
+
+  const data = await res.json();
+  return data;
+});
+
+
+// initialState
 const initialState = {
   username: '',
   password: '',
   isLoggedIn: false,
   token: null,
+  userInfo: null,
   redirect: null,
   status: 'idle',
 };
 
+
+// slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -52,13 +74,22 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.redirect = action.payload.redirect;
         state.isLoggedIn = true;
+        state.userInfo = {
+          school: action.payload.school,
+          name: action.payload.name
+        };
         state.status = 'succeeded';
       })
       .addCase(login.rejected, (state) => {
         state.status = 'failed';
+      })
+      .addCase(logoutAsync.fulfilled, (state) => {
+        return initialState;  // initialize every state
       });
   },
 });
 
+
+// export
 export const { setUsername, setPassword, logout } = authSlice.actions;
 export default authSlice.reducer;

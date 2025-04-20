@@ -1,0 +1,17 @@
+/* src/styles/theme.css */
+
+:root {
+  --primary-color: #1c3454;
+  --blue-color-1: #295c8b;
+  --blue-color-2: #709cbd;
+  --blue-color-3: #b4cce3;
+  --blue-color-4: #e5f2fb;
+  --khu-color: #8c201e;
+  --border-color: #dbdbdb;
+  --placeholder-color: #7a7777;
+  --primary-font: 'IBM Plex Sans KR', sans-serif;
+}
+
+body {
+  font-family: var(--primary-font);
+}

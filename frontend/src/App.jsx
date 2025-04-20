@@ -7,6 +7,7 @@ import '@fontsource/ibm-plex-sans-kr/700.css';
 
 import SplashPage from './pages/splash/Splash';
 import Login from './pages/login/Login';
+import StudentMain from './pages/student/main/StudentMain';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/student" element={<StudentMain />} />
       </Routes>
     </Router>
   );

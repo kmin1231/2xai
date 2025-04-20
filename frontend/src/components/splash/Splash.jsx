@@ -54,7 +54,7 @@ const Splash = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: '10vh',
+        textAlign: 'center',
       }}
     >
       {/* animiation #1: 2xAI Research Lab */}
@@ -68,8 +68,9 @@ const Splash = () => {
             variants={letterVariant}
             style={{
               display: 'inline-block',
-              marginRight: '4px',
               fontSize: '4.5rem',
+              marginLeft: '3px',
+              marginRight: '3px',
               fontWeight: '700',
               fontFamily: `'charm', sans-serif`,
               background: `linear-gradient(135deg, #0f1d35, #3e7ca6, #8aaec5)`,
@@ -90,7 +91,8 @@ const Splash = () => {
             variants={letterVariant}
             style={{
               display: 'inline-block',
-              marginRight: '4px',
+              marginLeft: '2px',
+              marginRight: '2px',
               fontSize: '2.2rem',
               fontWeight: '400',
               fontFamily: `'charm', sans-serif`,

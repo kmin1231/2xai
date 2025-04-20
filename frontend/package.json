@@ -11,7 +11,14 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@fontsource/charm": "^5.2.5",
+    "@fontsource/dm-serif-text": "^5.2.5",
+    "@fontsource/faculty-glyphic": "^5.2.5",
+    "@fontsource/itim": "^5.2.5",
+    "@fontsource/merriweather": "^5.2.6",
+    "@fontsource/tinos": "^5.2.5",
     "@reduxjs/toolkit": "^2.7.0",
+    "framer-motion": "^12.7.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^9.2.0",

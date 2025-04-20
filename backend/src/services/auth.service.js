@@ -32,6 +32,8 @@ const loginUser = async (username, password) => {
     return {
       success: true,
       role: user.role,
+      school: user.school,
+      name: user.name,
       message: 'Login successful',
       token,  // token to be delivered to the client
     };

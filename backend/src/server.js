@@ -18,7 +18,7 @@ connectDB().then(() => {
   });
 
 
-const createUser = async (username, password, name, role, level = 'normal') => {
+const createUser = async (username, password, name, role, level = 'low') => {
   try {
     const existingUser = await User.findOne({ username });
 
@@ -28,7 +28,8 @@ const createUser = async (username, password, name, role, level = 'normal') => {
         password,
         name,
         role,
-        class: 'N/A',
+        school: '경희중학교',
+        class: '3반',
         level,
       });
 
@@ -44,7 +45,7 @@ const createUser = async (username, password, name, role, level = 'normal') => {
   
 const createTestUsers = async () => {
   await createUser('admin', 'admin', 'Administrator', 'admin');
-  await createUser('test-student', 'test-student', 'Test Student', 'student');
-  await createUser('test-teacher', 'test-teacher', 'Test Teacher', 'teacher');
-  console.log('Test accounts activated: admin, test-student, test-teacher');
+  await createUser('student', 'student', '김경희', 'student');
+  await createUser('teacher', 'teacher', '이경희', 'teacher');
+  console.log('Test accounts activated: admin, student, teacher');
 };

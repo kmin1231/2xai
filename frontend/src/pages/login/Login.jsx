@@ -43,7 +43,8 @@ const Login = () => {
 
     <div className="login-container">
 
-<Header />
+      <Header />
+      
       {step === 1 ? (
         <InputField
           label="아이디를 입력해 주세요."

@@ -3,18 +3,30 @@
 import React from 'react';
 import './InputField.css';
 
-const InputField = ({ placeholder }) => {
+const InputField = ({
+  label,
+  placeholder,
+  onChange,
+  value,
+  type = 'text',
+  onButtonClick,
+}) => {
   return (
     <div className="input-container">
-      <div className="static-text">아이디를 입력해 주세요.</div>
+      <div className="input-static-text">
+        {label || '아이디를 입력해 주세요.'}
+      </div>
       <div className="input-box">
         <input
           className="input-field"
-          type="text"
-          placeholder={"2xAIID123"}
-          // placeholder={placeholder || "2xAIID123"}
+          type={type}
+          placeholder={placeholder || '2xAIID123'}
+          value={value}
+          onChange={onChange}
         />
-        <button className="next-button">다음</button>
+        <button className="next-button" onClick={onButtonClick}>
+          다음
+        </button>
       </div>
     </div>
   );

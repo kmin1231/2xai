@@ -24,7 +24,10 @@ const loginUser = async (username, password) => {
 
     // issue the token from the server
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { userId: user._id,
+        role: user.role,
+        level: user.level,
+      },
       SECRET_KEY,
       { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
     );
@@ -34,6 +37,7 @@ const loginUser = async (username, password) => {
       role: user.role,
       school: user.school,
       name: user.name,
+      level: user.level,
       message: 'Login successful',
       token,  // token to be delivered to the client
     };

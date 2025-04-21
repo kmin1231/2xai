@@ -1,124 +1,79 @@
 {
-    "keyword": "The Great Wall",
-    "level": "high",
-    "generation0": {
-      "title": "A Wall Through Time",
-      "passage": "The Great Wall of China is one of the most famous landmarks in the world.\nIt stretches over 13,000 miles and winds through mountains, deserts, and grasslands.\nBut why was it built?\nThe Great Wall was mainly built to protect China from invaders, especially from the north.\nLong ago, different Chinese dynasties added to the wall over hundreds of years.\nThe most well-known part was built during the Ming Dynasty, about 600 years ago.\nIt was made using bricks and stones, and it was strong enough to last for centuries.\nThousands of workers helped build the wall.\nSome were soldiers, while others were farmers forced to work.\nIt was hard, dangerous labor.\nMany people died while building it.\nThat’s why the wall is sometimes called \"the world’s longest cemetery.\"\nThe wall also helped with communication.\nWatchtowers were placed along the wall.\nIf enemies were seen, soldiers used smoke during the day or fire at night to send warnings.\nToday, the Great Wall is a symbol of China’s strength and history.\nMillions of people visit it each year.\nWhile some parts are broken or worn down, other sections have been repaired for tourists.\nThe Great Wall is not just a wall—it’s a piece of history that tells the story of a powerful civilization and the people who built it.",
-      "question": [
-        "What is the Great Wall?",
-        "Where is the Great Wall located?",
-        "Who built the Great Wall?",
-        "When was the Great Wall built?",
-        "Why was the Great Wall built?"
-      ],
-      "answer": [
-        "A massive wall",
-        "China",
-        "The first emperor of the Qin Dynasty",
-        "Over 2,000 years ago",
-        "To protect from invasions"
-      ],
-      "solution": [
-        "The Great Wall is a long, ancient structure.",
-        "Located in northern China.",
-        "It was constructed to defend against invaders.",
-        "Built in the 7th century BC.",
-        "The Great Wall has historical and cultural significance."
-      ]
-    },
+  "keyword": "Harry Potter",
+  "level": "low",
+  "generation0": {
+    "title": "Who is Harry Potter?",
+    "passage": "Harry Potter is a young wizard who discovers he has magical powers on his 11th birthday.\nHe attends Hogwarts School of Witchcraft and Wizardry and becomes famous for surviving an attack by the dark wizard Voldemort when he was a baby.\nHarry makes close friends like Ron Weasley and Hermione Granger, and together they face many magical adventures.\nThe story follows Harry as he grows up, learns magic, and fights against evil.",
+    "question": [
+      "What is Harry Potter?\nA normal boy\nA doctor\nA wizard\nA vampire\nA detective",
+      "Where does Harry go to learn magic?\nDurmstrang\nBeauxbatons\nHogwarts\nIlvermorny\nUagadou",
+      "Who is Harry's best friend?\nDraco Malfoy\nNeville Longbottom\nRon Weasley\nDudley Dursley\nCedric Diggory",
+      "Who is the main villain in the series?\nSnape\nDumbledore\nHagrid\nVoldemort\nSirius Black",
+      "What is Harry famous for?\nBeing a Quidditch player\nBeing rich\nDefeating dragons\nSurviving Voldemort's curse\nOwning a magical pet"
+    ],
+    "answer": [
+      "c",
+      "c",
+      "c",
+      "d",
+      "d"
+    ],
+    "solution": [
+      "Harry is a wizard, not a normal boy or vampire.",
+      "Harry studies magic at Hogwarts.",
+      "Ron Weasley is Harry’s closest friend.",
+      "Voldemort is the main villain throughout the series.",
+      "He is known for surviving Voldemort's curse as a baby."
+    ]
+  },
   "generation1": {
-        "title": "How Was the Great Wall Built?",
-        "passage": "Have you ever heard of the Great Wall of China?\nIt’s a huge wall that goes across parts of northern China.\nThe wall is over 13,000 miles long and is one of the world’s biggest man-made structures.\nThe Great Wall was built to keep enemies out and to protect the Chinese people.\nOver many years, different rulers added to the wall.\nThe most famous parts were built during the Ming Dynasty.\nBack then, they used strong bricks and stones to make sure it would last a long time.\nBuilding the wall was very hard work.\nMany people had to work in dangerous places like high mountains and hot deserts.\nSome workers were soldiers, but many were regular people who were forced to help.\nBesides protection, the wall was also used to send messages.\nThere were tall towers along the wall where soldiers could watch for danger.\nIf they saw enemies, they lit fires or sent smoke signals to warn others quickly.\nToday, the Great Wall is a popular place for tourists.\nSome parts are broken, but others have been fixed so people can visit.\nIt’s more than just a wall—it’s a story of history, hard work, and the people of China.",
-        "questions": [
-          {
-            "question": "How long is the Great Wall of China?",
-            "options": [
-              "5,000 miles",
-              "8,000 miles",
-              "10,000 miles",
-              "13,000 miles",
-              "15,000 miles"
-            ]
-          },
-          {
-            "question": "Why was the Great Wall originally built?",
-            "options": [
-              "To transport goods",
-              "To protect the Chinese people",
-              "As a tourist attraction",
-              "To divide regions",
-              "To mark the emperor's territory"
-            ]
-          },
-          {
-            "question": "Which dynasty built the most famous parts of the wall?",
-            "options": [
-              "Qin Dynasty",
-              "Tang Dynasty",
-              "Ming Dynasty",
-              "Han Dynasty",
-              "Song Dynasty"
-            ]
-          },
-          {
-            "question": "How did soldiers use the wall to communicate danger?",
-            "options": [
-              "Used pigeons",
-              "Lit fires or sent smoke signals",
-              "Used drums",
-              "Sent runners",
-              "Blew horns"
-            ]
-          },
-          {
-            "question": "Who helped build the Great Wall?",
-            "options": [
-              "Only engineers",
-              "Only prisoners",
-              "Only farmers",
-              "Soldiers and forced laborers",
-              "Only government workers"
-            ]
-          }
-        ],
-        "answers": [
-          "d",
-          "b",
-          "c",
-          "b",
-          "d"
-        ],
-        "solutions": [
-          "The passage clearly states the wall is over 13,000 miles long.",
-          "It was built to keep enemies out and protect people, not for transport or tourism.",
-          "The Ming Dynasty built the most famous sections with strong bricks and stones.",
-          "The wall had towers for watching enemies and sending smoke signals or lighting fires.",
-          "Both soldiers and regular people (forced laborers) were involved in building the wall."
-        ]
-    },
-    "generation2": {
-      "title": "The Great Wall Today",
-      "passage": "The Great Wall of China is a long wall that was built a very long time ago.\nIt was made to protect the people of China from enemy attacks.\nIt goes across mountains, rivers, and deserts for thousands of miles.\nThe wall is so long that it can even be seen from space!\nIt was built by hand using stones, bricks, and even dirt in some places.\nThe hardest part of building the wall was how dangerous it was.\nMany people had to carry heavy materials up steep hills.\nLong ago, there were soldiers who stood on the wall to watch for danger.\nThey used fire and smoke to send messages if they saw enemies coming.\nThat way, people far away could get ready to protect themselves.\nToday, the Great Wall is not used for defense anymore.\nInstead, people from all over the world go to see it and take pictures.\nIt is one of the most famous places in China.\nThe Great Wall is not just big—it is also a symbol of China’s long and powerful history.\nIt shows how much effort people can give when they work together.",
-      "question": [
-        "What dynasties contributed to the Great Wall?",
-        "Was the Great Wall continuously constructed?",
-        "Did the Great Wall have a military purpose?",
-        "Were there any major battles near the Great Wall?",
-        "How does the Great Wall impact Chinese culture?"
-      ],
-      "answer": [
-        "Qin, Han, Ming",
-        "Yes, over several centuries",
-        "Yes, military defense",
-        "Yes, especially during invasions",
-        "Symbol of strength and resilience"
-      ],
-      "solution": [
-        "The wall was expanded by multiple dynasties.",
-        "Work continued during various Chinese dynasties.",
-        "Its primary function was to deter invasions.",
-        "Battles near the Wall marked significant conflicts.",
-        "The Wall remains a key part of Chinese heritage."
-      ]
-    }
+    "title": "Life at Hogwarts",
+    "passage": "At Hogwarts, students are sorted into four houses: Gryffindor, Hufflepuff, Ravenclaw, and Slytherin.\nHarry is sorted into Gryffindor, where he meets many of his friends.\nStudents attend classes like Potions, Defense Against the Dark Arts, and Transfiguration.\nThey learn spells, fly on broomsticks, and take magical exams.\nHogwarts is also full of secrets, including moving staircases and hidden rooms.",
+    "question": [
+      "How many houses are at Hogwarts?\nTwo\nThree\nFour\nFive\nSix",
+      "Which house is Harry sorted into?\nSlytherin\nRavenclaw\nHufflepuff\nGryffindor\nDurmstrang",
+      "What class teaches students to defend themselves?\nHerbology\nCharms\nDefense Against the Dark Arts\nDivination\nAstronomy",
+      "What do students use to fly?\nWands\nCapes\nShoes\nBroomsticks\nSpells",
+      "What is special about the Hogwarts staircases?\nThey're made of gold\nThey move\nThey're invisible\nThey talk\nThey're flat"
+    ],
+    "answer": [
+      "c",
+      "d",
+      "c",
+      "d",
+      "b"
+    ],
+    "solution": [
+      "There are four houses at Hogwarts.",
+      "Harry belongs to Gryffindor.",
+      "Defense Against the Dark Arts is the correct class.",
+      "Wizards fly using broomsticks.",
+      "The staircases at Hogwarts move on their own."
+    ]
+  },
+  "generation2": {
+    "title": "Harry's Magical World",
+    "passage": "Harry’s world includes many magical creatures like house-elves, hippogriffs, and goblins.\nHe also plays Quidditch, a popular sport on flying broomsticks.\nHarry uses a wand to cast spells and carries an invisibility cloak that once belonged to his father.\nThe wizarding world also includes magical objects like the Marauder’s Map and the Mirror of Erised.\nThroughout the series, Harry learns about bravery, friendship, and sacrifice.",
+    "question": [
+      "What sport does Harry play?\nFootball\nBasketball\nQuidditch\nTennis\nWizard Chess",
+      "What does Harry use to turn invisible?\nA magic ring\nA broomstick\nA potion\nAn invisibility cloak\nA mirror",
+      "What magical map shows people’s locations?\nMap of Hogwarts\nMarauder’s Map\nWizard’s Compass\nElder Scroll\nDark Detector",
+      "What magical creature does Harry befriend?\nUnicorn\nDragon\nHippogriff\nBasilisk\nThestral",
+      "What lesson does Harry often learn?\nMath\nCooking\nSacrifice\nEngineering\nSwimming"
+    ],
+    "answer": [
+      "c",
+      "d",
+      "b",
+      "c",
+      "c"
+    ],
+    "solution": [
+      "Harry plays the sport called Quidditch.",
+      "He uses an invisibility cloak to hide.",
+      "The Marauder’s Map shows everyone’s location in Hogwarts.",
+      "Harry befriends a hippogriff named Buckbeak.",
+      "Harry learns important lessons about sacrifice and courage."
+    ]
   }
+}

@@ -20,6 +20,7 @@ function App() {
         <Route path="/student" element={<StudentMain />} />
         <Route path="/student/mode/custom" element={<CustomLevelKeyword />} />
         <Route path="/student/mode/custom/result" element={<CustomLevelResult />} />
+
       </Routes>
     </Router>
   );

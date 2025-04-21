@@ -35,7 +35,7 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-const requestGeneration = async (keyword, level) => {
+const requestGeneration = async (keyword, level, token) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
@@ -45,22 +45,46 @@ const requestGeneration = async (keyword, level) => {
   }
 
   try {
+    console.log('Requesting generation for keyword:', keyword);
+    console.log('Requesting generation for level:', level);
+
     const generations = [];
 
     for (let i = 0; i < 3; i++) {
-      const response = await axios.post(`${process.env.CONTENTS_API}/generate/${level}`, { keyword });
-      const { passage, question, answer, solution } = response.data;
+      const response = await axios.post(
+        `${process.env.CONTENTS_API}/generate/${level}`,
+        { keyword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const generationData = response.data[`generation${i}`];
+
+            if (!generationData) {
+              throw new Error(`Generation ${i} data is missing.`);
+            }
+      
+            const { title, passage, question, answer, solution } = generationData;
+
+      // console.log(`=== Generation ${i} Response ===`);
+      console.log('=== Generation', i, 'parsed ===', { title, passage, question, answer, solution });
+      // console.log(JSON.stringify(response.data, null, 2));
 
       if (
-        typeof passage !== 'string' ||
-        !Array.isArray(question) || question.length !== 5 ||
-        !Array.isArray(answer) || answer.length !== 5 ||
-        !Array.isArray(solution) || solution.length !== 5
+        typeof title !== 'string' || !title.trim() ||
+        typeof passage !== 'string' || !passage.trim() ||
+        !Array.isArray(question) || question.some(q => typeof q !== 'string' || !q.trim()) ||
+        !Array.isArray(answer) || answer.some(a => typeof a !== 'string' || !a.trim()) ||
+        !Array.isArray(solution) || solution.some(s => typeof s !== 'string' || !s.trim())
       ) {
-        throw new Error(`Generation ${i + 1} format is invalid.`);
+        throw new Error(`Generation ${i} format is invalid.`);
       }
 
       generations.push({
+        title,
         passage,
         question,
         answer,

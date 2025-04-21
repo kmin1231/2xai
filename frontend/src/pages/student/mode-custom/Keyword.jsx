@@ -40,6 +40,9 @@ const CustomLevelKeyword = () => {
       return;
     }
 
+    console.log('Sending request to API with token:', token);
+    console.log('Sending request with keyword:', keyword);
+
     try {
       const response = await axios.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT}`,

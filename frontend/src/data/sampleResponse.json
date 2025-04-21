@@ -1,0 +1,76 @@
+{
+    "keyword": "The Great Wall",
+    "level": "high",
+    "generation0": { 
+      "passage": "The Great Wall of China is one of the most famous landmarks in the world.\nIt stretches over 13,000 miles and winds through mountains, deserts, and grasslands.\nBut why was it built?\nThe Great Wall was mainly built to protect China from invaders, especially from the north.\nLong ago, different Chinese dynasties added to the wall over hundreds of years.\nThe most well-known part was built during the Ming Dynasty, about 600 years ago.\nIt was made using bricks and stones, and it was strong enough to last for centuries.\nThousands of workers helped build the wall.\nSome were soldiers, while others were farmers forced to work.\nIt was hard, dangerous labor.\nMany people died while building it.\nThat’s why the wall is sometimes called \"the world’s longest cemetery.\"\nThe wall also helped with communication.\nWatchtowers were placed along the wall.\nIf enemies were seen, soldiers used smoke during the day or fire at night to send warnings.\nToday, the Great Wall is a symbol of China’s strength and history.\nMillions of people visit it each year.\nWhile some parts are broken or worn down, other sections have been repaired for tourists.\nThe Great Wall is not just a wall—it’s a piece of history that tells the story of a powerful civilization and the people who built it.",
+      "question": [
+        "What is the Great Wall?",
+        "Where is the Great Wall located?",
+        "Who built the Great Wall?",
+        "When was the Great Wall built?",
+        "Why was the Great Wall built?"
+      ],
+      "answer": [
+        "A massive wall",
+        "China",
+        "The first emperor of the Qin Dynasty",
+        "Over 2,000 years ago",
+        "To protect from invasions"
+      ],
+      "solution": [
+        "The Great Wall is a long, ancient structure.",
+        "Located in northern China.",
+        "It was constructed to defend against invaders.",
+        "Built in the 7th century BC.",
+        "The Great Wall has historical and cultural significance."
+      ]
+    },
+    "generation1": { 
+      "passage": "Have you ever heard of the Great Wall of China?\nIt’s a huge wall that goes across parts of northern China.\nThe wall is over 13,000 miles long and is one of the world’s biggest man-made structures.\nThe Great Wall was built to keep enemies out and to protect the Chinese people.\nOver many years, different rulers added to the wall.\nThe most famous parts were built during the Ming Dynasty.\nBack then, they used strong bricks and stones to make sure it would last a long time.\nBuilding the wall was very hard work.\nMany people had to work in dangerous places like high mountains and hot deserts.\nSome workers were soldiers, but many were regular people who were forced to help.\nBesides protection, the wall was also used to send messages.\nThere were tall towers along the wall where soldiers could watch for danger.\nIf they saw enemies, they lit fires or sent smoke signals to warn others quickly.\nToday, the Great Wall is a popular place for tourists.\nSome parts are broken, but others have been fixed so people can visit.\nIt’s more than just a wall—it’s a story of history, hard work, and the people of China.",
+      "question": [
+        "How long is the Great Wall?",
+        "What is the significance of the Great Wall?",
+        "Is the Great Wall visible from space?",
+        "What materials were used in the Great Wall?",
+        "Who were the workers building the wall?"
+      ],
+      "answer": [
+        "13,000 miles",
+        "Defensive structure",
+        "Yes",
+        "Stone, brick, and earth",
+        "Soldiers and forced laborers"
+      ],
+      "solution": [
+        "It is the longest wall in the world.",
+        "Used to guard against military threats.",
+        "Myth says it's visible, but that's untrue.",
+        "Materials were selected based on local availability.",
+        "Many workers were conscripted from different classes."
+      ]
+    },
+    "generation2": { 
+      "passage": "The Great Wall of China is a long wall that was built a very long time ago.\nIt was made to protect the people of China from enemy attacks.\nIt goes across mountains, rivers, and deserts for thousands of miles.\nThe wall is so long that it can even be seen from space!\nIt was built by hand using stones, bricks, and even dirt in some places.\nThe hardest part of building the wall was how dangerous it was.\nMany people had to carry heavy materials up steep hills.\nLong ago, there were soldiers who stood on the wall to watch for danger.\nThey used fire and smoke to send messages if they saw enemies coming.\nThat way, people far away could get ready to protect themselves.\nToday, the Great Wall is not used for defense anymore.\nInstead, people from all over the world go to see it and take pictures.\nIt is one of the most famous places in China.\nThe Great Wall is not just big—it is also a symbol of China’s long and powerful history.\nIt shows how much effort people can give when they work together.",
+      "question": [
+        "What dynasties contributed to the Great Wall?",
+        "Was the Great Wall continuously constructed?",
+        "Did the Great Wall have a military purpose?",
+        "Were there any major battles near the Great Wall?",
+        "How does the Great Wall impact Chinese culture?"
+      ],
+      "answer": [
+        "Qin, Han, Ming",
+        "Yes, over several centuries",
+        "Yes, military defense",
+        "Yes, especially during invasions",
+        "Symbol of strength and resilience"
+      ],
+      "solution": [
+        "The wall was expanded by multiple dynasties.",
+        "Work continued during various Chinese dynasties.",
+        "Its primary function was to deter invasions.",
+        "Battles near the Wall marked significant conflicts.",
+        "The Wall remains a key part of Chinese heritage."
+      ]
+    }
+  }

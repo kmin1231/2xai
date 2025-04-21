@@ -1,0 +1,78 @@
+/* src/pages/student/mode-custom/result.css */
+
+body {
+  overflow: hidden;
+}
+
+.result-container {
+  display: flex;
+  height: 80vh;
+  gap: 2rem;
+  padding: 2rem;
+  margin-top: 18vh;
+  margin-bottom: 5vh;
+  font-size: 2rem;
+}
+
+.result-container h2 {
+  font-size: 25px;
+  text-align: center;
+}
+.result-container p {
+  font-size: 18px;
+  text-align: justify;
+}
+
+.result-left,
+.result-right {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid #ddd;
+  overflow-y: auto;
+  transition: box-shadow 0.3s ease;
+}
+
+.result-left {
+  flex: 3;
+  max-height: 60vw;
+  margin-right: 1rem;
+  padding-right: 2rem;
+}
+
+.result-right {
+  flex: 2;
+}
+
+.result-left h2,
+.result-right h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.result-right ul {
+  padding-left: 0.4rem;
+  font-size: 18px;
+  text-align: justify;
+  list-style-type: none;
+  margin-bottom: 1rem;
+}
+
+.question-submit-wrapper {
+  text-align: right;
+}
+
+.question-submit-btn {
+  width: 10vw;
+  height: 7vh;
+  font-size: 22px;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: 15px;
+  background-color: var(--border-color);
+  padding: 0px;
+}
+
+.question-submit-btn:hover {
+  background-color: var(--blue-color-4);
+}

@@ -41,6 +41,10 @@ const FeedbackModal = ({
     setFinalChoiceIndex(index);
   };
 
+  const handleConfirmSelection = (selectedGeneration) => {
+    onConfirmSelection(selectedGeneration);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -108,7 +112,7 @@ const FeedbackModal = ({
             <button
               className="confirm-btn"
               disabled={finalChoiceIndex === null}
-              onClick={() => onConfirmSelection(generations[finalChoiceIndex])}
+              onClick={() => handleConfirmSelection(generations[finalChoiceIndex])}
             >
               문제 풀기
             </button>

@@ -1,0 +1,152 @@
+/* src/pages/student/feedback/feedback-modal.css */
+
+@import '@/styles/theme.css';
+
+.feedback-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  width: 90vw;
+  max-width: 80vw;
+  height: 90vh;
+  background: #fff;
+  border: none;
+
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-radius: 15px;
+  overflow-y: auto;
+  margin: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--gray-button-hover-color);
+  z-index: 999;
+  border: none;
+}
+
+.modal-content {
+  display: flex;
+  flex-grow: 1;
+  max-height: 70vh;
+}
+
+.modal-left {
+  flex: 3;
+  padding-right: 2rem;
+  border-right: 1px solid #ddd;
+}
+
+.modal-left h3 {
+  font-size: 22px;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.modal-left p {
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 3rem;
+  text-align: justify;
+  font-size: 18px;
+}
+
+.modal-right {
+  flex: 2;
+  padding-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.modal-right h4 {
+  font-size: 22px;
+  text-align: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4vh;
+}
+.feedback-btn {
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  width: 22vw;
+}
+
+.feedback-btn:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.final-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px, 20px;
+  border-radius: 8px;
+  width: 55vw;
+}
+
+.final-option p {
+  max-width: 40vw;
+}
+
+.final-select-button {
+  margin-left: 3vw;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.final-select-button:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.feedback-btn.selected {
+  background-color: #dff0d8;
+}
+
+.final-option.selected {
+  background-color: #f0f8ff;
+  border: 2px solid #007bff;
+}
+
+.modal-final {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-final h3 {
+  font-size: 22px;
+  margin-top: 5vh;
+  margin-bottom: 3vh;
+}
+
+.final-selection-list {
+  margin-top: 0px;
+}
+
+.confirm-btn {
+  margin-top: 0px;
+  width: 15vw;
+}

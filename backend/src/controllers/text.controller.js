@@ -26,6 +26,8 @@ exports.validateKeyword = (req, res) => {
 // POST /api/text/generate-text
 exports.generateText = async (req, res) => {
   try {
+
+    console.log('req.user:', req.user);
     const { keyword } = req.body;
     const level = req.user?.level;
 

@@ -17,7 +17,7 @@ body {
 
 .input-static-text {
   font-family: 'IBM Plex Sans KR', sans-serif;
-  font-size: 50px;
+  font-size: 2.2rem;
   font-weight: bold;
   text-align: center;
   height: 100px;
@@ -34,7 +34,7 @@ body {
   border-radius: 50px;
   height: 110px;
   width: 100%;
-  max-width: 600px;
+  max-width: 50vw;
   padding: 0 20px;
   margin-top: 20px;
 }
@@ -42,10 +42,10 @@ body {
 .input-field {
   flex: 1;
   font-family: 'IBM Plex Sans KR', sans-serif;
-  font-size: 40px;
+  font-size: 2rem;
   border: none;
   outline: none;
-  height: 95%;
+  height: 5vh;
   padding-left: 10px;
   border-radius: 20px;
 }

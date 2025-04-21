@@ -10,6 +10,7 @@ const InputField = ({
   value,
   type = 'text',
   onButtonClick,
+  buttonText = '다음',
 }) => {
 
   const handleKeyDown = (e) => {
@@ -33,7 +34,7 @@ const InputField = ({
           onKeyDown={handleKeyDown}
         />
         <button className="next-button" onClick={onButtonClick}>
-          다음
+          {buttonText}
         </button>
       </div>
     </div>

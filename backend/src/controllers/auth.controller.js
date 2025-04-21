@@ -22,7 +22,8 @@ const login = async (req, res) => {
     redirect: `/${result.role}`,
     token: result.token,  // return the token to the client
     school: result.school,
-    name: result.name
+    name: result.name,
+    level: result.level,
   });
 };
 

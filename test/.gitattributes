@@ -1,0 +1,2 @@
+# exclude 'data' folder from GitHub Linguist language statistics
+**/data/* linguist-vendored

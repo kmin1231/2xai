@@ -1,0 +1,79 @@
+{
+    "keyword": "baseball",
+    "level": "high",
+    "generation0": {
+      "title": "Advanced Baseball Rules",
+      "passage": "Baseball has many complex rules that govern the game. A key rule is the strike zone, which is the area over home plate between the batter's knees and the midpoint of their torso. A pitcher aims to throw the ball within this zone to get a strike. Additionally, there are rules regarding balks (illegal pitching movements), tag-ups (when a runner must return to their base before advancing), and interference (when a player illegally disrupts another player's play). These rules add strategic depth to the game.",
+      "question": [
+        "What is the strike zone in baseball?\nThe area above the batter's head\nThe area over home plate between the batter's knees and torso\nThe area near the pitcher's mound\nThe area in the outfield\nThe area where a home run ball lands",
+        "What happens if a pitcher commits a balk?\nThe batter gets a free strike\nThe runner is allowed to advance one base\nThe pitcher is replaced\nThe batter is automatically out\nThe game ends",
+        "What is a tag-up in baseball?\nWhen a runner is allowed to run after hitting the ball\nWhen a runner must return to their base before advancing on a caught fly ball\nWhen a batter gets hit by the pitch\nWhen a pitcher strikes out the batter\nWhen a catcher tags the batter",
+        "What does interference mean in baseball?\nWhen a player makes an illegal play that disrupts another player's actions\nWhen a batter hits the ball in a dangerous area\nWhen the pitcher hits the batter with the ball\nWhen a coach makes an illegal substitution\nNone of the above",
+        "What happens if a batter receives four balls?\nThey are allowed to swing freely\nThey are automatically out\nThey are awarded a walk and can advance to first base\nThe pitcher must throw another pitch\nThe game ends"
+      ],
+      "answer": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "c"
+      ],
+      "solution": [
+        "The strike zone is the area over home plate between the batter's knees and torso.",
+        "If a pitcher commits a balk, the runner is allowed to advance one base.",
+        "A tag-up occurs when a runner must return to their base before advancing on a caught fly ball.",
+        "Interference occurs when a player makes an illegal play that disrupts another player's actions.",
+        "If a batter receives four balls, they are awarded a walk and can advance to first base."
+      ]
+    },
+    "generation1": {
+      "title": "Advanced Baseball Strategies",
+      "passage": "In advanced baseball, teams often use strategies to outsmart their opponents. For example, a defensive shift is when a team arranges its fielders in non-traditional positions based on a batter's hitting tendencies. Managers also use pitch counts to determine when to replace a pitcher, considering factors like fatigue and the number of pitches thrown. Another strategy is the hit-and-run play, where the batter swings as the runner steals a base. These strategies add layers of complexity to the game.",
+      "question": [
+        "What is a defensive shift?\nWhen a team changes the pitcher's stance\nWhen a team arranges its fielders in non-traditional positions based on a batter's hitting tendencies\nWhen a batter moves to a new position\nWhen a pitcher changes their pitching style\nNone of the above",
+        "What is the purpose of pitch counts?\nTo determine how long a pitcher has been playing\nTo monitor a batter's performance\nTo decide when to replace a pitcher based on fatigue and pitches thrown\nTo track the number of batters faced\nTo measure the strength of the pitcher",
+        "What is the hit-and-run play?\nWhen the batter tries to hit a home run\nWhen the batter swings as the runner steals a base\nWhen the batter hits a pitch that is difficult to catch\nWhen the batter gets on base by walking\nWhen the batter intentionally hits a weak ground ball",
+        "What is the benefit of using a defensive shift?\nTo make the game more exciting\nTo increase the chance of getting a hit\nTo increase the chance of getting a double play\nTo prevent the batter from getting a hit by positioning fielders in expected locations\nNone of the above",
+        "How does a pitcher use pitch selection to their advantage?\nBy throwing the same pitch over and over again\nBy guessing what pitch the batter will expect\nBy choosing pitches that will surprise the batter\nBy following a specific pattern of pitches\nNone of the above"
+      ],
+      "answer": [
+        "b",
+        "c",
+        "b",
+        "d",
+        "c"
+      ],
+      "solution": [
+        "A defensive shift is when a team arranges its fielders in non-traditional positions based on a batter's hitting tendencies.",
+        "Pitch counts are used to determine when to replace a pitcher based on fatigue and pitches thrown.",
+        "A hit-and-run play is when the batter swings as the runner steals a base.",
+        "The benefit of using a defensive shift is to prevent the batter from getting a hit by positioning fielders in expected locations.",
+        "A pitcher can use pitch selection to their advantage by choosing pitches that will surprise the batter."
+      ]
+    },
+    "generation2": {
+      "title": "The History and Evolution of Baseball",
+      "passage": "Baseball originated in the United States in the 19th century, evolving from older bat-and-ball games. It became formalized with the creation of the first professional league, the National Association of Base Ball Players, in 1871. The game continued to grow in popularity, leading to the formation of Major League Baseball (MLB) in 1903. The sport has undergone many changes, such as the introduction of night games, the expansion of teams, and the breaking of racial barriers with players like Jackie Robinson. Today, baseball is played worldwide.",
+      "question": [
+        "When did the first professional baseball league, the National Association of Base Ball Players, begin?\n1865\n1871\n1882\n1903\n1920",
+        "Who is considered the first player to break the racial barrier in Major League Baseball?\nHank Aaron\nBabe Ruth\nJackie Robinson\nSatchel Paige\nWillie Mays",
+        "What major change occurred in baseball during the 1930s?\nThe introduction of night games\nThe creation of the designated hitter rule\nThe invention of the baseball bat\nThe formation of MLB\nNone of the above",
+        "What was the significance of the formation of Major League Baseball in 1903?\nIt marked the start of organized baseball in the U.S.\nIt made the game more popular in Europe\nIt created the first World Series\nIt introduced the designated hitter rule\nNone of the above",
+        "Which player is known for hitting the most home runs in MLB history?\nBabe Ruth\nBarry Bonds\nHank Aaron\nMark McGwire\nKen Griffey Jr."
+      ],
+      "answer": [
+        "b",
+        "c",
+        "a",
+        "a",
+        "b"
+      ],
+      "solution": [
+        "The first professional baseball league, the National Association of Base Ball Players, began in 1871.",
+        "Jackie Robinson is considered the first player to break the racial barrier in Major League Baseball.",
+        "The introduction of night games occurred in baseball during the 1930s.",
+        "The formation of Major League Baseball in 1903 marked the start of organized baseball in the U.S.",
+        "Barry Bonds is known for hitting the most home runs in MLB history."
+      ]
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "keyword": "baseball",
+    "level": "middle",
+    "generation0": {
+      "title": "Introduction to Baseball",
+      "passage": "Baseball is a sport played between two teams of nine players each. The objective of the game is to score runs by hitting the ball and running to a series of four bases arranged in a diamond shape. The game is played in innings, with each team having a turn to bat and a turn to field. The team with the most runs at the end of the game wins.",
+      "question": [
+        "How many players are on a baseball team?\n9\n10\n11\n8\n7",
+        "What is the objective of baseball?\nTo hit the ball out of the park\nTo score the most runs\nTo throw the ball to the batter\nTo catch the most balls\nTo avoid strikes",
+        "What shape are the bases in baseball?\nCircle\nRectangle\nTriangle\nSquare\nDiamond",
+        "What is the role of the pitcher?\nTo hit the ball\nTo catch the ball\nTo throw the ball to the batter\nTo run the bases\nTo bat",
+        "How many innings are typically played in a baseball game?\n7\n9\n8\n10\n6"
+      ],
+      "answer": [
+        "a",
+        "b",
+        "e",
+        "c",
+        "b"
+      ],
+      "solution": [
+        "A baseball team has 9 players.",
+        "The objective of baseball is to score the most runs.",
+        "The bases are arranged in the shape of a diamond.",
+        "The pitcher throws the ball to the batter.",
+        "A baseball game typically consists of 9 innings."
+      ]
+    },
+    "generation1": {
+      "title": "Baseball Positions",
+      "passage": "In baseball, players are assigned specific positions on the field. The pitcher stands on the pitcher's mound and throws the ball to the batter. The catcher stands behind the batter to catch any balls that are missed. Other positions include first baseman, second baseman, shortstop, third baseman, and the outfield positions: left field, center field, and right field.",
+      "question": [
+        "Who throws the ball to the batter?\nFirst baseman\nCatcher\nPitcher\nShortstop\nOutfielder",
+        "What position is behind the batter?\nPitcher\nFirst baseman\nCatcher\nSecond baseman\nShortstop",
+        "What position does the shortstop play?\nOutfield\nInfield\nCatcher\nPitcher\nFirst baseman",
+        "Where does the first baseman stand?\nNext to the catcher\nIn the outfield\nIn the infield\nNear third base\nNear second base",
+        "What is the role of the outfielders?\nTo catch flies\nTo bat\nTo pitch\nTo catch ground balls\nTo stand still"
+      ],
+      "answer": [
+        "c",
+        "c",
+        "b",
+        "c",
+        "a"
+      ],
+      "solution": [
+        "The pitcher throws the ball to the batter.",
+        "The catcher stands behind the batter.",
+        "The shortstop plays in the infield.",
+        "The first baseman stands in the infield near first base.",
+        "The outfielders catch fly balls hit into the outfield."
+      ]
+    },
+    "generation2": {
+      "title": "Baseball Strategy",
+      "passage": "Baseball is a sport that involves strategy both at the plate and in the field. Teams often use specific batting orders and pitching rotations to maximize their chances of winning. When on defense, teams work together to prevent the opposing team from scoring, using strategies like shifting fielders or calling for a double play.",
+      "question": [
+        "What is a double play?\nWhen two players are out in one play\nWhen a team scores two runs\nWhen a pitcher throws two pitches\nWhen a batter hits two home runs\nWhen a game goes into extra innings",
+        "Why do teams use specific batting orders?\nTo confuse the opposing team\nTo ensure the best players bat first\nTo maximize the chance of getting a hit\nTo make the game more exciting\nTo entertain the crowd",
+        "What is a common defensive strategy?\nShifting the outfield\nCalling for a double play\nBatting in a certain order\nChanging pitchers every inning\nSwinging at every pitch",
+        "What does the pitcher do when the batter is likely to bunt?\nThrows a curveball\nThrows a fastball\nThrows a changeup\nThrows high\nThrows low",
+        "What is the primary goal when playing defense?\nTo score the most runs\nTo stop the other team from scoring\nTo hit the ball\nTo pitch the ball perfectly\nTo confuse the batter"
+      ],
+      "answer": [
+        "a",
+        "c",
+        "b",
+        "d",
+        "b"
+      ],
+      "solution": [
+        "A double play is when two players are out in one play.",
+        "Teams use specific batting orders to maximize the chances of getting a hit.",
+        "A common defensive strategy is calling for a double play.",
+        "When a batter is likely to bunt, the pitcher often throws low.",
+        "The primary goal when playing defense is to stop the other team from scoring."
+      ]
+    }
+}

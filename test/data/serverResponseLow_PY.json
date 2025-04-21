@@ -1,0 +1,79 @@
+{
+    "keyword": "pyramid",
+    "level": "low",
+    "generation0": {
+      "title": "What is a Pyramid?",
+      "passage": "A pyramid is a large structure with a square or triangular base and sloping sides that meet at a point at the top. The ancient Egyptians are famous for building pyramids, especially the Great Pyramid of Giza. Pyramids were used as tombs for pharaohs and important people. The pyramid shape is very strong and can last for thousands of years.",
+      "question": [
+        "What shape is the base of a pyramid?\nSquare\nTriangle\nCircle\nRectangle\nOval",
+        "What was the purpose of the pyramids in ancient Egypt?\nTo store food\nTo house animals\nTo be tombs for pharaohs\nTo build houses\nTo provide shade",
+        "Who built the famous pyramids in Egypt?\nRomans\nGreeks\nEgyptians\nChinese\nMayans",
+        "What is special about the pyramid shape?\nIt can be easily destroyed\nIt has sloping sides that make it strong\nIt is made of wood\nIt is round\nIt is very small",
+        "Where is the Great Pyramid located?\nMexico\nChina\nGreece\nEgypt\nIndia"
+      ],
+      "answer": [
+        "a",
+        "c",
+        "c",
+        "b",
+        "d"
+      ],
+      "solution": [
+        "The base of a pyramid is usually square.",
+        "Pyramids were used as tombs for pharaohs in ancient Egypt.",
+        "The famous pyramids in Egypt were built by the Egyptians.",
+        "The pyramid shape is strong because of its sloping sides.",
+        "The Great Pyramid is located in Egypt."
+      ]
+    },
+    "generation1": {
+      "title": "The Great Pyramids of Giza",
+      "passage": "The Great Pyramid of Giza is one of the Seven Wonders of the Ancient World. It was built around 4,500 years ago during the reign of Pharaoh Khufu. The pyramid was originally covered in shiny limestone, but most of the outer casing has been removed over time. The pyramid is still a mystery in many ways, as we do not know exactly how the ancient Egyptians built it, but it remains an incredible achievement.",
+      "question": [
+        "Who was the pharaoh that ordered the construction of the Great Pyramid?\nPharaoh Akhenaten\nPharaoh Tutankhamun\nPharaoh Ramses\nPharaoh Khufu\nPharaoh Cleopatra",
+        "What was the Great Pyramid originally covered with?\nGold\nWood\nShiny limestone\nMarble\nBrick",
+        "How old is the Great Pyramid of Giza?\nAbout 1,000 years\nAbout 2,000 years\nAbout 4,500 years\nAbout 10,000 years\nAbout 100 years",
+        "What is the Great Pyramid known for?\nBeing the tallest building in the world\nBeing a tomb for a king\nBeing a house for soldiers\nBeing a temple\nBeing a lighthouse",
+        "Why is the construction of the Great Pyramid still a mystery?\nBecause it was built in modern times\nBecause we don't know exactly how it was built\nBecause it was destroyed\nBecause no one was allowed to enter\nBecause the pharaoh did not want it known"
+      ],
+      "answer": [
+        "d",
+        "c",
+        "c",
+        "b",
+        "b"
+      ],
+      "solution": [
+        "Pharaoh Khufu ordered the construction of the Great Pyramid.",
+        "The Great Pyramid was originally covered with shiny limestone.",
+        "The Great Pyramid of Giza is about 4,500 years old.",
+        "The Great Pyramid is known for being a tomb for a king, Pharaoh Khufu.",
+        "The construction of the Great Pyramid is still a mystery because we don't know exactly how it was built."
+      ]
+    },
+    "generation2": {
+      "title": "Other Famous Pyramids",
+      "passage": "While the pyramids of Egypt are the most famous, there are other pyramids around the world. In Mexico, the Mayans built large pyramids like the Pyramid of Kukulkan at Chichen Itza. The ancient Egyptians were not the only ones who used pyramids for important structures. Pyramids are also found in other parts of the world, such as Central America, China, and Sudan.",
+      "question": [
+        "Where is the Pyramid of Kukulkan located?\nEgypt\nChina\nMexico\nIndia\nSudan",
+        "Who built the Pyramid of Kukulkan?\nThe Greeks\nThe Egyptians\nThe Romans\nThe Mayans\nThe Aztecs",
+        "Which civilization built the most famous pyramids in Egypt?\nThe Romans\nThe Egyptians\nThe Mayans\nThe Greeks\nThe Chinese",
+        "Are there pyramids outside of Egypt?\nYes\nNo\nOnly in Asia\nOnly in Europe\nOnly in America",
+        "What is the Pyramid of Kukulkan famous for?\nBeing the oldest pyramid\nBeing a tomb for a pharaoh\nBeing used for religious ceremonies\nBeing the largest pyramid\nBeing the smallest pyramid"
+      ],
+      "answer": [
+        "c",
+        "d",
+        "b",
+        "a",
+        "c"
+      ],
+      "solution": [
+        "The Pyramid of Kukulkan is located in Mexico.",
+        "The Pyramid of Kukulkan was built by the Mayans.",
+        "The Egyptians built the most famous pyramids in Egypt.",
+        "Yes, there are pyramids outside of Egypt, in places like Mexico and Sudan.",
+        "The Pyramid of Kukulkan is famous for being used for religious ceremonies."
+      ]
+    }
+}

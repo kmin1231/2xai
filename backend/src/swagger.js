@@ -23,6 +23,23 @@ const options = {
         description: "GCP VM API server"
       },
     ],
+
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
+          description: "Bearer token authorization"
+        }
+      }
+    },
+
+    security: [
+      {
+        BearerAuth: []
+      }
+    ]
   },
   apis: ["./src/routes/**/*.js"],
 };

@@ -19,6 +19,9 @@ const verifyToken = (req, res, next) => {
     // if the token is VALID, it assigns the decoded payload (user information inside the token) to the 'req.user' object
     req.user = decoded;
 
+    // save token
+    req.token = token;
+
     // calls 'next()' function to pass control to the NEXT middleware (or, route handler in the chain)
     next();
   } catch (error) {

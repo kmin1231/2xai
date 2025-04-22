@@ -28,7 +28,7 @@ const Header = () => {
       {isLoggedIn ? (
           `${userInfo.school || "학교명"} | ${userInfo.name || "이름"}`
         ) : (
-          "프로그램명"
+          "2xAI"
         )}
 
       </div>

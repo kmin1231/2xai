@@ -18,7 +18,7 @@ connectDB().then(() => {
   });
 
 
-const createUser = async (username, password, name, role, level = 'low') => {
+const createUser = async (username, password, name, role, level) => {
   try {
     const existingUser = await User.findOne({ username });
 
@@ -37,6 +37,8 @@ const createUser = async (username, password, name, role, level = 'low') => {
       // console.log(`${role} user (${username}) created`);
     } else {
       // console.log(`${role} user (${username}) already exists`);
+      existingUser.level = level;
+      await existingUser.save();
     }
   } catch (error) {
     console.error(`Error creating ${role} user:`, error.message);
@@ -44,8 +46,10 @@ const createUser = async (username, password, name, role, level = 'low') => {
 };
   
 const createTestUsers = async () => {
-  await createUser('admin', 'admin', 'Administrator', 'admin');
-  await createUser('student', 'student', '김경희', 'student');
-  await createUser('teacher', 'teacher', '이경희', 'teacher');
+  await createUser('admin', 'admin', '관리자', 'admin', 'low');
+  await createUser('low', 'low', '김low', 'student', 'low');
+  await createUser('middle', 'middle', '김middle', 'student', 'middle');
+  await createUser('high', 'high', '김high', 'student', 'high');
+  await createUser('teacher', 'teacher', '이경희', 'teacher','low');
   console.log('Test accounts activated: admin, student, teacher');
 };

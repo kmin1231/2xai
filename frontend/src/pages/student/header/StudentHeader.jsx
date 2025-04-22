@@ -29,7 +29,7 @@ const StudentHeader = () => {
       <div className="student-header-info">
         {isLoggedIn
           ? `${userInfo.school || '학교명'} | ${userInfo.name || '이름'}`
-          : '프로그램명'}
+          : '2xAI'}
       </div>
 
       <div className="student-header-buttons">

@@ -1,2 +1,5 @@
 *.jsx linguist-language=JavaScript
 *.tsx linguist-language=TypeScript
+
+*.css linguist-vendored
+*.html linguist-vendored

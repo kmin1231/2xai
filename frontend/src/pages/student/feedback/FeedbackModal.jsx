@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+
 import { api } from '@/config';
 import CONFIG from '@/config';
 
@@ -33,17 +34,20 @@ const FeedbackModal = ({
 
   const handleFeedback = (choice) => {
     const updated = [...feedbacks];
+
     updated[currentPage] = {
       feedback: choice,
       title: currentGeneration?.title,
       passage: currentGeneration?.passage,
     };
+
     setFeedbacks(updated);
   };
 
   const handleFinalSelect = (index) => {
     setFinalChoiceIndex(index);
   };
+
 
   const ConfirmSelection = async () => {
     console.log(generations);
@@ -68,7 +72,6 @@ const FeedbackModal = ({
     }
   };
 
-
   return (
     <Modal
       isOpen={isOpen}
@@ -84,6 +87,7 @@ const FeedbackModal = ({
               <h3>
                 [Passage #{currentPage + 1}] {currentGeneration?.title}
               </h3>
+
               <p>
                 {currentGeneration?.passage.split('\n').map((line, index) => (
                   <React.Fragment key={index}>
@@ -97,6 +101,7 @@ const FeedbackModal = ({
             <div className="modal-right">
               <h4>읽기 자료가 마음에 드나요?</h4>
               <button
+
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}
                 onClick={() => handleFeedback('good')}
               >

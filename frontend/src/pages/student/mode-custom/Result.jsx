@@ -8,6 +8,7 @@ import StudentHeader from '../header/StudentHeader';
 import './result.css';
 
 const CustomLevelResult = () => {
+
   const location = useLocation();
   const apiResponseData = location.state?.data;
 
@@ -28,6 +29,7 @@ const CustomLevelResult = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [userAnswers, setUserAnswers] = useState({});
+
 
   const handleConfirmSelection = (selectedGeneration) => {
     console.log('selected generation index:', selectedGeneration);
@@ -65,6 +67,7 @@ const CustomLevelResult = () => {
         generations={generations} // actual data (API response)
         keyword={keyword}
         level={level}
+
       />
       {selectedGeneration && (
         <div className="result-container">
@@ -82,6 +85,7 @@ const CustomLevelResult = () => {
           </div>
           <div className="result-right">
             <h3>Questions</h3>
+
             {selectedGeneration.question.map((q, index) => {
               const questionParts = q.split('\n');
               const questionText = questionParts[0];

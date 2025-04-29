@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { api } from '@/config';
@@ -13,7 +14,6 @@ import KeywordButtons from '../keywords/KeywordButtons';
 import CONFIG from '@/config';
 
 const CustomLevelKeyword = () => {
-
   const [keyword, setKeyword] = useState('');
   const navigate = useNavigate();
 
@@ -44,6 +44,7 @@ const CustomLevelKeyword = () => {
       alert('키워드를 입력해주세요!');
       return;
     }
+
 
     const level = userInfo?.inferredLevel || 'low';
 

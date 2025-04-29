@@ -72,7 +72,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(bearer_sch
             "inferred_level": inferred_level,
             "assigned_level": assigned_level
         }
-    
+
     except jwt.ExpiredSignatureError:
         logger.error("Token has expired.")
         raise HTTPException(status_code=401, detail="Token expired")
@@ -81,6 +81,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(bearer_sch
         raise HTTPException(status_code=401, detail="Invalid token")
     except Exception as e:
         logger.error(f"Token validation failed: {str(e)}")
+
         raise HTTPException(status_code=403, detail=f"Token validation failed: {str(e)}")
 
 
@@ -181,6 +182,7 @@ async def get_swagger():
 @app.post("/generate/low", response_model=SampleResponse)
 async def generate_low(request: RequestModel, user_info: dict = Depends(verify_token)):
     user_level = user_info.get("inferred_level")
+
     if user_level != "low":
         raise HTTPException(status_code=403, detail="User does not have access to 'low' level")
 
@@ -223,6 +225,7 @@ async def generate_low(request: RequestModel, user_info: dict = Depends(verify_t
 @app.post("/generate/middle", response_model=SampleResponse)
 async def generate_middle(request: RequestModel, user_info: dict = Depends(verify_token)):
     user_level = user_info.get("inferred_level")
+
     if user_level != "middle":
         raise HTTPException(status_code=403, detail="User does not have access to 'middle' level")
 
@@ -262,6 +265,7 @@ async def generate_middle(request: RequestModel, user_info: dict = Depends(verif
 @app.post("/generate/high", response_model=SampleResponse)
 async def generate_high(request: RequestModel, user_info: dict = Depends(verify_token)):
     user_level = user_info.get("inferred_level")
+
     if user_level != "high":
         raise HTTPException(status_code=403, detail="User does not have access to 'high' level")
 

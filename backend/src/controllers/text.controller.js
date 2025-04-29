@@ -122,26 +122,24 @@ exports.filterText = async (req, res) => {
 };
 
 
-// POST /api/text/:id/feedback
-exports.saveFeedback = async (req, res) => {
-  const { id } = req.params;  // textId
-  const { userId, feedback } = req.body;
-
+// POST /api/text/feedback
+exports.saveFeedbackController = async (req, res) => {
   try {
-    if (!['easy', 'hard', 'boring'].includes(feedback)) {
-      return res.status(400).json({ message: 'Invalid feedback value.' });
-    }
 
-    const newFeedback = new Feedback({
-      userId,
-      textId: id,
-      feedback,
-    });
+    const { userId } = req.user;
+    const { keyword, level, feedbacks } = req.body;
 
-    await newFeedback.save();
-    return res.status(201).json({ message: 'Feedback saved successfully.' });
+    // generate feedback data
+    const feedbackData = textService.generateFeedbackData(keyword, level, feedbacks);
+
+    feedbackData.userId = userId;
+
+    const result = await textService.saveFeedback(feedbackData);
+
+    res.status(200).json({ message: 'Feedback saved successfully!', data: result });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to save feedback.', error });
+    console.error('Error in saving feedback:', error.message);
+    res.status(500).json({ message: 'Failed to save feedback', error: error.message });
   }
 };
 

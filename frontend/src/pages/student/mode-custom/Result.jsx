@@ -113,22 +113,37 @@ const CustomLevelResult = () => {
   
     return elements;
   };
-  
 
-  const handleSubmitAnswers = async () => {
+  const submitAnswers = async () => {
+
+    const selectedGeneration = generations[finalChoiceIndex];
+
+    const answers = selectedGeneration.question.map((_, index) => userAnswers[index]);
+
+    console.log("selected generation: ", selectedGeneration);
+    console.log("user answers: ", answers)
+    // onConfirmSelection(selectedGeneration);
+
+
     try {
-      const payload = {
-        answers: Object.values(userAnswers),
-        questionIds: selectedGeneration.questions.map((q, i) => i),
-      };
-      const response = await axios.post('/api/text/answers', payload);
-      console.log('정답 제출 성공:', response.data);
-      alert('제출 완료!');
+      const response = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CHECK_ANSWER}`, {
+          keyword,
+          level,
+          title: selectedGeneration.title,
+          passage: selectedGeneration.passage,
+          question: selectedGeneration.question,
+          answer: selectedGeneration.answer,
+          solution: selectedGeneration.solution,
+          userAnswer: answers,
+        }
+      );
+      console.log('Requested successfully:', response.data);
     } catch (error) {
-      console.error('정답 제출 오류:', error);
-      alert('제출 실패');
+      console.error('Error checking answers:', error);
     }
   };
+  
 
   return (
     <div>
@@ -206,7 +221,7 @@ const CustomLevelResult = () => {
             <div className="question-submit-wrapper">
               <button
                 className="question-submit-btn"
-                onClick={handleSubmitAnswers}
+                onClick={submitAnswers}
               >
                 답안 제출
               </button>

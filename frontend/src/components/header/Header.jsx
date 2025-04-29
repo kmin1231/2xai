@@ -7,18 +7,9 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
-  const [userInfo, setUserInfo] = useState({
-    school: 'ㅇㅇ중학교',
-    name: 'ㅇㅇㅇ 학생',
-  });
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  // should be implemented to display user information
-  const displayUserInfo = (school, name) => {
-    setUserInfo({ school, name });
-    console.log(userInfo);
-  };
+  const userInfo = useSelector((state) => state.auth.userInfo);
 
   return (
     <header className="header">

@@ -75,9 +75,9 @@ const authSlice = createSlice({
         state.redirect = action.payload.redirect;
         state.isLoggedIn = true;
         state.userInfo = {
-          school: action.payload.school,
-          name: action.payload.name,
-          level: action.payload.level || 'low',
+          school: action.payload.classInfo?.schoolName || '',
+          name: action.payload.name || '',
+          level: action.payload.studentLevels?.assignedLevel || 'low',
         };
         state.status = 'succeeded';
 

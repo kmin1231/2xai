@@ -21,6 +21,10 @@ const login = async (req, res) => {
     message: 'Login successful',
     redirect: `/${result.role}`,
     token: result.token,  // return the token to the client
+    role: result.role,
+    name: result.name,
+    classInfo: result.classInfo,
+    studentLevels: result.studentLevels,  // only for student
   });
 };
 

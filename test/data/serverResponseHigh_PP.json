@@ -1,0 +1,79 @@
+{
+    "keyword": "Pride and Prejudice",
+    "level": "high",
+    "generation0": {
+      "title": "The Story of Elizabeth Bennet",
+      "passage": "Pride and Prejudice is a classic novel by Jane Austen that tells the story of Elizabeth Bennet, one of five daughters in a respectable family. Elizabeth, known for her wit and intelligence, faces the challenge of marriage, which was the most important aspect of social life during that time. The novel explores themes of social class, marriage, and individual agency, focusing on Elizabeth's evolving relationship with the proud Mr. Darcy.",
+      "question": [
+        "Who is the protagonist of Pride and Prejudice?\nMr. Darcy\nElizabeth Bennet\nJane Bennet\nLydia Bennet\nCharlotte Lucas",
+        "Which theme is most prominent in the novel?\nMarriage\nWar\nScience\nAdventure\nFriendship",
+        "Who is Elizabeth Bennet's love interest?\nMr. Bingley\nMr. Collins\nMr. Darcy\nMr. Wickham\nSir William Lucas",
+        "What is Mr. Darcy's initial attitude towards Elizabeth?\nHe admires her\nHe dislikes her\nHe ignores her\nHe is afraid of her\nHe loves her instantly",
+        "What is the significance of the novel's title?\nIt refers to Elizabeth's pride\nIt refers to Mr. Darcy's prejudice\nIt refers to both Elizabeth's pride and Mr. Darcy's prejudice\nIt refers to the social pressures of marriage\nIt refers to the character of Mr. Wickham"
+      ],
+      "answer": [
+        "b",
+        "a",
+        "c",
+        "b",
+        "c"
+      ],
+      "solution": [
+        "Elizabeth Bennet is the main character of the story.",
+        "Marriage and social class are central themes in the novel.",
+        "Elizabeth’s love interest is Mr. Darcy.",
+        "Mr. Darcy initially finds Elizabeth beneath him but later falls in love.",
+        "The title reflects both Elizabeth’s pride and Mr. Darcy’s prejudice."
+      ]
+    },
+    "generation1": {
+      "title": "The Importance of Social Class",
+      "passage": "In Pride and Prejudice, social class plays a significant role in determining the characters' choices and actions. Elizabeth's family is of modest means, and they often face prejudice from wealthier families, particularly Mr. Darcy's. The novel critiques the rigid class structures of the time, highlighting the contrast between characters like Elizabeth, who values personal integrity over wealth, and others who prioritize social standing.",
+      "question": [
+        "Why is social class important in Pride and Prejudice?\nIt determines wealth\nIt affects marriage prospects\nIt decides who can work\nIt influences friendship choices\nIt dictates travel destinations",
+        "Which character defies social expectations by marrying for love?\nMrs. Bennet\nCharlotte Lucas\nLydia Bennet\nElizabeth Bennet\nLady Catherine",
+        "What does Mr. Darcy initially believe about Elizabeth's family?\nThey are wealthy\nThey are socially inferior\nThey are very charming\nThey are noble\nThey are not worth his attention",
+        "What does Elizabeth think about Mr. Darcy at first?\nShe admires him\nShe dislikes him\nShe finds him charming\nShe is indifferent\nShe falls in love with him instantly",
+        "How does Elizabeth's perception of Mr. Darcy change?\nShe hates him more\nShe falls in love with him\nShe becomes indifferent\nShe decides to marry him out of duty\nShe is confused by him"
+      ],
+      "answer": [
+        "b",
+        "d",
+        "b",
+        "b",
+        "b"
+      ],
+      "solution": [
+        "Social class affects marriage prospects in the novel.",
+        "Elizabeth Bennet defies social expectations by marrying for love.",
+        "Mr. Darcy believes Elizabeth’s family is socially inferior at first.",
+        "At first, Elizabeth dislikes Mr. Darcy due to his arrogance.",
+        "Elizabeth eventually falls in love with Mr. Darcy after understanding his true character."
+      ]
+    },
+    "generation2": {
+      "title": "The Conclusion of Pride and Prejudice",
+      "passage": "By the end of the novel, Elizabeth Bennet and Mr. Darcy's relationship evolves significantly. Mr. Darcy proves his love for Elizabeth through actions, including helping her family during a crisis. Elizabeth, in turn, realizes that her own prejudices about Mr. Darcy were wrong. The story concludes with their marriage, representing the triumph of personal growth over societal expectations.",
+      "question": [
+        "What is Mr. Darcy's gesture to prove his love?\nHe writes a letter\nHe buys Elizabeth a gift\nHe helps her family\nHe proposes again\nHe insults her family",
+        "Why does Elizabeth change her mind about Mr. Darcy?\nShe realizes he is rich\nShe realizes he is kind and sincere\nShe finds him attractive\nShe is pressured by society\nShe feels sorry for him",
+        "What is the final outcome for Elizabeth and Mr. Darcy?\nThey remain enemies\nThey become friends\nThey marry\nThey both move away\nThey die tragically",
+        "What lesson does Elizabeth learn?\nTo marry for money\nTo trust her first impressions\nTo follow societal rules\nTo understand others before forming judgments\nTo avoid marriage at all costs",
+        "What is the significance of the novel's ending?\nIt shows that wealth is the most important thing\nIt shows the victory of love over prejudice\nIt shows that marriage is unnecessary\nIt shows that status is everything\nIt shows the importance of family"
+      ],
+      "answer": [
+        "c",
+        "b",
+        "c",
+        "d",
+        "b"
+      ],
+      "solution": [
+        "Mr. Darcy proves his love by helping Elizabeth's family.",
+        "Elizabeth changes her mind about Mr. Darcy when she sees his true character.",
+        "Elizabeth and Mr. Darcy marry at the end of the novel.",
+        "Elizabeth learns to understand people before judging them.",
+        "The ending of the novel demonstrates that love can overcome prejudice."
+      ]
+    }
+}

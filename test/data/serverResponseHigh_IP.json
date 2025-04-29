@@ -1,0 +1,79 @@
+{
+    "keyword": "intellectual property",
+    "level": "high",
+    "generation0": {
+      "title": "What is Intellectual Property?",
+      "passage": "Intellectual property (IP) refers to creations of the mind such as inventions, literary works, and designs. IP is protected by law through patents, copyrights, trademarks, and trade secrets. These protections allow creators to control the use of their creations and prevent others from using them without permission. Intellectual property is important in fostering innovation and creativity in various industries.",
+      "question": [
+        "What does intellectual property protect?\nInventions\nIdeas\nCreations of the mind\nAll of the above\nNone of the above",
+        "What is a patent?\nA right to use a brand name\nA protection for an invention\nA right to use a logo\nA protection for artistic works\nNone of the above",
+        "Which of the following is a type of intellectual property?\nTrademark\nPatent\nCopyright\nAll of the above\nNone of the above",
+        "Why is intellectual property important?\nIt encourages creativity\nIt protects creators\nIt fosters innovation\nAll of the above\nNone of the above",
+        "What is a trademark?\nA protection for a brand name\nA protection for an invention\nA protection for a song\nNone of the above"
+      ],
+      "answer": [
+        "d",
+        "b",
+        "d",
+        "d",
+        "a"
+      ],
+      "solution": [
+        "Intellectual property protects inventions, ideas, and creations of the mind.",
+        "A patent protects an invention.",
+        "Trademark, patent, and copyright are types of intellectual property.",
+        "Intellectual property encourages creativity, protects creators, and fosters innovation.",
+        "A trademark protects a brand name."
+      ]
+    },
+    "generation1": {
+      "title": "Types of Intellectual Property",
+      "passage": "There are several types of intellectual property, including patents, copyrights, trademarks, and trade secrets. Patents protect inventions and innovations, while copyrights protect literary and artistic works. Trademarks are used to protect brand names, logos, and symbols, and trade secrets protect confidential business information. Each type of IP offers legal protection to prevent others from using or copying the creation without permission.",
+      "question": [
+        "What does a copyright protect?\nBrand names\nInventions\nLiterary and artistic works\nTrade secrets\nNone of the above",
+        "What is the purpose of a trademark?\nTo protect inventions\nTo protect literary works\nTo protect brand names\nTo protect trade secrets\nNone of the above",
+        "Which of the following protects a business's confidential information?\nPatent\nTrademark\nCopyright\nTrade secret\nNone of the above",
+        "What type of IP protects new inventions?\nCopyright\nTrademark\nPatent\nTrade secret\nNone of the above",
+        "Which IP protection is used for creative works like books and music?\nPatent\nTrademark\nCopyright\nTrade secret\nNone of the above"
+      ],
+      "answer": [
+        "c",
+        "c",
+        "d",
+        "c",
+        "c"
+      ],
+      "solution": [
+        "A copyright protects literary and artistic works.",
+        "A trademark protects brand names and logos.",
+        "A trade secret protects confidential business information.",
+        "A patent protects new inventions.",
+        "A copyright protects creative works like books and music."
+      ]
+    },
+    "generation2": {
+      "title": "The Importance of Intellectual Property in Business",
+      "passage": "Intellectual property is crucial in business because it allows companies to protect their ideas and innovations. IP helps businesses maintain a competitive edge by preventing others from copying their products or services. It also encourages investment in new ideas, as companies know their innovations will be protected. Many companies rely on intellectual property for their profitability and growth, especially in technology and entertainment industries.",
+      "question": [
+        "Why is intellectual property important in business?\nIt helps businesses protect their ideas\nIt encourages innovation\nIt creates competitive advantages\nAll of the above\nNone of the above",
+        "How does IP help businesses maintain a competitive edge?\nBy preventing others from copying their products\nBy allowing free use of their creations\nBy reducing costs\nNone of the above",
+        "In which industries is intellectual property especially important?\nTechnology and entertainment\nConstruction and agriculture\nRetail and manufacturing\nAll industries\nNone of the above",
+        "What role does intellectual property play in encouraging investment?\nIt provides legal protection for investments\nIt discourages innovation\nIt creates higher risks for investors\nNone of the above",
+        "What is the main reason businesses value intellectual property?\nTo protect their products\nTo increase profits\nTo enhance creativity\nAll of the above\nNone of the above"
+      ],
+      "answer": [
+        "d",
+        "a",
+        "a",
+        "a",
+        "d"
+      ],
+      "solution": [
+        "Intellectual property is important because it protects ideas, encourages innovation, and creates competitive advantages.",
+        "IP helps businesses maintain a competitive edge by preventing others from copying their products.",
+        "Intellectual property is especially important in technology and entertainment industries.",
+        "Intellectual property encourages investment by providing legal protection.",
+        "Businesses value intellectual property to protect their products, increase profits, and enhance creativity."
+      ]
+    }
+}

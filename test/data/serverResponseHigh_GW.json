@@ -1,0 +1,79 @@
+{
+    "keyword": "global warming",
+    "level": "high",
+    "generation0": {
+      "title": "What is Global Warming?",
+      "passage": "Global warming refers to the long-term rise in Earth's average surface temperature due to human activities, mainly the burning of fossil fuels like coal, oil, and natural gas. This process releases greenhouse gases such as carbon dioxide (CO2) into the atmosphere, trapping heat and causing the planet to warm. As a result, ice caps melt, sea levels rise, and extreme weather events become more frequent.",
+      "question": [
+        "What causes global warming?\nNatural disasters\nGreenhouse gases\nEarth's orbit\nVolcanic eruptions\nNone of the above",
+        "What is the main greenhouse gas responsible for global warming?\nMethane\nOzone\nCarbon dioxide\nNitrous oxide\nWater vapor",
+        "What happens as a result of global warming?\nIce caps melt\nSea levels rise\nMore extreme weather\nAll of the above\nNone of the above",
+        "What human activity contributes to global warming?\nBurning of fossil fuels\nRecycling\nPlanting trees\nConserving water\nNone of the above",
+        "What is the greenhouse effect?\nA natural process that warms the Earth\nA cooling process\nThe effect of solar radiation\nThe creation of clouds\nNone of the above"
+      ],
+      "answer": [
+        "b",
+        "c",
+        "d",
+        "a",
+        "a"
+      ],
+      "solution": [
+        "Greenhouse gases, such as carbon dioxide, cause global warming.",
+        "Carbon dioxide is the main greenhouse gas responsible for global warming.",
+        "Global warming causes ice caps to melt, sea levels to rise, and more extreme weather.",
+        "The burning of fossil fuels contributes to global warming.",
+        "The greenhouse effect is a natural process that warms the Earth."
+      ]
+    },
+    "generation1": {
+      "title": "Effects of Global Warming",
+      "passage": "Global warming has a wide range of harmful effects on the environment. Melting ice caps and glaciers contribute to rising sea levels, threatening coastal communities. Extreme weather events such as hurricanes, floods, and droughts are becoming more common. The rising temperatures also affect ecosystems, with many plants and animals struggling to adapt to the changes. Additionally, global warming leads to the loss of biodiversity as species are unable to survive in altered climates.",
+      "question": [
+        "What is one effect of global warming?\nRising sea levels\nBetter weather\nMore rain\nNone of the above\nMore biodiversity",
+        "What natural event becomes more frequent due to global warming?\nHurricanes\nVolcanic eruptions\nEarthquakes\nTsunamis\nTornadoes",
+        "Which ecosystem is most threatened by global warming?\nRainforests\nOceans\nDeserts\nForests\nNone of the above",
+        "How do animals respond to climate change?\nAdapt to the environment\nMove to a new area\nDie off\nAll of the above\nNone of the above",
+        "What happens when ice caps melt?\nSea levels rise\nMore freshwater becomes available\nOcean temperatures drop\nNone of the above"
+      ],
+      "answer": [
+        "a",
+        "a",
+        "b",
+        "d",
+        "a"
+      ],
+      "solution": [
+        "Rising sea levels are one effect of global warming.",
+        "Hurricanes are becoming more frequent due to global warming.",
+        "Oceans are among the ecosystems most threatened by global warming.",
+        "Animals may adapt, move to new areas, or die off due to climate change.",
+        "When ice caps melt, sea levels rise."
+      ]
+    },
+    "generation2": {
+      "title": "Fighting Global Warming",
+      "passage": "Efforts to combat global warming include reducing greenhouse gas emissions, transitioning to renewable energy sources like wind and solar power, and promoting energy efficiency. Governments, businesses, and individuals can all play a role in these efforts. Many countries have committed to international agreements like the Paris Agreement to limit global warming. Reforestation, reducing waste, and using public transport instead of cars are also important actions that can help fight climate change.",
+      "question": [
+        "What is one way to reduce global warming?\nUse renewable energy\nBurn more coal\nCut down forests\nIncrease waste\nNone of the above",
+        "What is the Paris Agreement?\nAn international agreement to limit global warming\nA plan to increase emissions\nA law to protect endangered species\nA trade agreement\nNone of the above",
+        "What type of energy is considered renewable?\nCoal\nNatural gas\nWind\nOil\nNone of the above",
+        "How can individuals help fight global warming?\nBy planting trees\nBy using public transportation\nBy conserving energy\nAll of the above\nNone of the above",
+        "Which of the following can help reduce greenhouse gas emissions?\nRecycling\nDriving cars more\nUsing fossil fuels\nCutting down forests\nNone of the above"
+      ],
+      "answer": [
+        "a",
+        "a",
+        "c",
+        "d",
+        "a"
+      ],
+      "solution": [
+        "Using renewable energy sources helps reduce global warming.",
+        "The Paris Agreement is an international agreement to limit global warming.",
+        "Wind energy is considered renewable.",
+        "Individuals can help fight global warming by planting trees, using public transportation, and conserving energy.",
+        "Recycling helps reduce greenhouse gas emissions."
+      ]
+    }
+}

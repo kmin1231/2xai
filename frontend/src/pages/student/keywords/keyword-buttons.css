@@ -1,0 +1,47 @@
+/* src/pages/student/keywords/keyword-button.css */
+
+@import '@/styles/theme.css';
+
+body {
+  overflow-y: auto; /* keyboard */
+}
+
+.keyword-container {
+  margin-top: 8vh;
+}
+
+.keyword-buttons {
+  margin-top: 5vh;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 70vw;
+}
+
+.keyword-button-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--main-gray-color);
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.keyword-button {
+  font-size: 1.4rem;
+  color: black;
+  border-radius: 20px;
+  max-width: 50vw;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+
+  border: none;
+}
+
+.keyword-button:hover {
+  background-color: var(--keyword-button-hover-color);
+}

@@ -1,0 +1,79 @@
+{
+    "keyword": "Premier League",
+    "level": "middle",
+    "generation0": {
+      "title": "What is the Premier League?",
+      "passage": "The Premier League is the top football (soccer) league in England. It consists of 20 teams that compete against each other every season. The league was founded in 1992, and since then, it has become one of the most watched football leagues in the world. Teams like Manchester United, Liverpool, Arsenal, and Chelsea are famous for their success in the Premier League.",
+      "question": [
+        "How many teams play in the Premier League?\n10\n15\n20\n25\n30",
+        "Which country is the Premier League played in?\nFrance\nGermany\nEngland\nSpain\nItaly",
+        "When was the Premier League founded?\n1982\n1992\n2000\n2010\n2015",
+        "Which team is famous for its 'Red Devils' nickname?\nLiverpool\nChelsea\nManchester United\nArsenal\nTottenham Hotspur",
+        "What sport is played in the Premier League?\nBasketball\nCricket\nFootball\nTennis\nRugby"
+      ],
+      "answer": [
+        "c",
+        "c",
+        "b",
+        "c",
+        "c"
+      ],
+      "solution": [
+        "There are 20 teams in the Premier League.",
+        "The Premier League is based in England.",
+        "The Premier League was founded in 1992.",
+        "Manchester United is known as the 'Red Devils'.",
+        "Football (soccer) is played in the Premier League."
+      ]
+    },
+    "generation1": {
+      "title": "Famous Premier League Teams",
+      "passage": "Some of the most famous Premier League teams include Manchester United, Liverpool, Chelsea, and Arsenal. Manchester United has won the most Premier League titles. Liverpool is known for its passionate fans and success in European competitions. Chelsea has been a strong team in the 21st century, and Arsenal is famous for going unbeaten during the 2003-2004 season.",
+      "question": [
+        "Which team has won the most Premier League titles?\nLiverpool\nManchester United\nArsenal\nChelsea\nManchester City",
+        "Which team is known for passionate fans?\nChelsea\nManchester United\nLiverpool\nArsenal\nTottenham Hotspur",
+        "Which team went unbeaten in the 2003-2004 season?\nChelsea\nArsenal\nLiverpool\nTottenham Hotspur\nManchester City",
+        "Which team has a blue kit?\nLiverpool\nArsenal\nChelsea\nManchester United\nTottenham Hotspur",
+        "Which team is known as the 'Gunners'?\nManchester United\nArsenal\nChelsea\nLiverpool\nTottenham Hotspur"
+      ],
+      "answer": [
+        "b",
+        "c",
+        "b",
+        "c",
+        "b"
+      ],
+      "solution": [
+        "Manchester United has won the most Premier League titles.",
+        "Liverpool is known for its passionate fans.",
+        "Arsenal went unbeaten in the 2003-2004 season.",
+        "Chelsea plays in a blue kit.",
+        "Arsenal is known as the 'Gunners'."
+      ]
+    },
+    "generation2": {
+      "title": "The Premier League's Global Impact",
+      "passage": "The Premier League is watched by millions of fans all over the world. Its global popularity has helped English football grow and attract players from all over the globe. Big names like Cristiano Ronaldo, Mohamed Salah, and Kevin De Bruyne have played in the Premier League, making it a global spectacle. The league also has a major impact on England's economy due to TV rights and sponsorships.",
+      "question": [
+        "How many people watch the Premier League around the world?\nMillions\nThousands\nHundreds\nBillions\nTens of thousands",
+        "Who is known for playing in the Premier League?\nCristiano Ronaldo\nLionel Messi\nNeymar\nKylian Mbappé\nZlatan Ibrahimović",
+        "What is the Premier League's impact on England?\nTourism\nTelevision Rights\nSponsorship\nAll of the above\nNone of the above",
+        "Which player is famous for playing for Liverpool?\nCristiano Ronaldo\nMohamed Salah\nKevin De Bruyne\nHarry Kane\nSergio Agüero",
+        "Which country does the Premier League belong to?\nGermany\nEngland\nSpain\nItaly\nFrance"
+      ],
+      "answer": [
+        "a",
+        "a",
+        "d",
+        "b",
+        "b"
+      ],
+      "solution": [
+        "Millions of people around the world watch the Premier League.",
+        "Cristiano Ronaldo is known for playing in the Premier League.",
+        "The Premier League has a major impact on England through tourism, television rights, and sponsorship.",
+        "Mohamed Salah is famous for playing for Liverpool.",
+        "The Premier League belongs to England."
+      ]
+    }
+}

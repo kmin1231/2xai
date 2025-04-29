@@ -1,0 +1,7 @@
+# requirements.txt
+
+fastapi==0.115.12
+uvicorn[standard]==0.34.0
+pydantic==1.10.19
+PyJWT==2.4.0
+python-dotenv==0.21.0

@@ -1,0 +1,21 @@
+/* src/styles/theme.css */
+
+:root {
+  --primary-color: #1c3454;
+  --blue-color-1: #245786;
+  --blue-color-2: #588bb2;
+  --blue-color-3: #b4cce3;
+  --blue-color-4: #e5f2fb;
+  --main-gray-color: #454444;
+  --keyword-button-hover-color: #e7edf0;
+  --khu-color: #8c201e;
+  --gray-button-color: #8d9196;
+  --gray-button-hover-color: #abb5be;
+  --border-color: #dbdbdb;
+  --placeholder-color: #7a7777;
+  --primary-font: 'IBM Plex Sans KR', sans-serif;
+}
+
+body {
+  font-family: var(--primary-font);
+}

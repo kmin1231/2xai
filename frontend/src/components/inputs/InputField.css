@@ -1,8 +1,23 @@
 /* src/components/inputs/InputField.css */
 
-.static-text {
-  font-family: 'Nanum Gothic', sans-serif;
-  font-size: 50px;
+body {
+  overflow-y: auto; /* keyboard */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: -15vh;
+}
+
+.input-static-text {
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 2.2rem;
   font-weight: bold;
   text-align: center;
   height: 100px;
@@ -19,18 +34,18 @@
   border-radius: 50px;
   height: 110px;
   width: 100%;
-  max-width: 600px;
+  max-width: 50vw;
   padding: 0 20px;
   margin-top: 20px;
 }
 
 .input-field {
   flex: 1;
-  font-family: 'Nanum Gothic', sans-serif;
-  font-size: 40px;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 2rem;
   border: none;
   outline: none;
-  height: 95%;
+  height: 5vh;
   padding-left: 10px;
   border-radius: 20px;
 }
@@ -38,7 +53,7 @@
 .next-button {
   background-color: black;
   color: white;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'IBM Plex Sans KR', sans-serif;
   font-size: 25px;
   font-weight: bold;
   border: none;
@@ -53,15 +68,5 @@
 }
 
 .next-button:hover {
-  background-color: #444;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: calc(100vh - 100px);
-  text-align: center;
+  background-color: rgb(69, 68, 71);
 }

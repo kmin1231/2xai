@@ -26,6 +26,6 @@ const textSchema = new mongoose.Schema({
   versionKey: false,
 });
 
-const Text = mongoose.model('Text', textSchema);
+const Text = mongoose.model('Text', textSchema, "texts");
 
 module.exports = Text;

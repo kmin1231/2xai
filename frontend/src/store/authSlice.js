@@ -77,7 +77,8 @@ const authSlice = createSlice({
         state.userInfo = {
           school: action.payload.classInfo?.schoolName || '',
           name: action.payload.name || '',
-          level: action.payload.studentLevels?.assignedLevel || 'low',
+          inferredLevel: action.payload.studentLevels?.inferredLevel || 'low',
+          assignedLevel: action.payload.studentLevels?.assignedLevel || 'low',
         };
         state.status = 'succeeded';
 

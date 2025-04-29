@@ -29,15 +29,15 @@ exports.generateText = async (req, res) => {
 
     console.log('req.user:', req.user);
     const { keyword } = req.body;
-    const level = req.user?.level;
+    const inferredLevel = req.user?.inferredLevel;
 
-    if (!level || !['low', 'middle', 'high'].includes(level)) {
-      console.error('Invalid level:', level);
+    if (!inferredLevel || !['low', 'middle', 'high'].includes(inferredLevel)) {
+      console.error('Invalid inferred level:', inferredLevel);
       return res.status(400).json({ message: 'ERROR: invalid level' });
     }
 
     const token = req.headers.authorization?.split(' ')[1];  // extract token
-    const result = await textService.requestGeneration(keyword, level, token);  // token
+    const result = await textService.requestGeneration(keyword, inferredLevel, token);  // token
     res.status(200).json(result);
 
   } catch (error) {

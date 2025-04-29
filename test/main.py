@@ -12,7 +12,7 @@ import logging
 import re
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("myapp")
+logger = logging.getLogger("FASTAPI")
 
 app = FastAPI()
 
@@ -55,7 +55,24 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(bearer_sch
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         logger.info(f"Token payload: {payload}")
-        return payload
+
+        user_id = payload.get("userId")
+        role = payload.get("role")
+        inferred_level = payload.get("inferredLevel")
+        assigned_level = payload.get("assignedLevel")
+        
+        logger.info(f"User ID: {user_id}, Role: {role}, Inferred Level: {inferred_level}, Assigned Level: {assigned_level}")
+        
+        if role != 'student':
+            raise HTTPException(status_code=403, detail="Access forbidden: You don't have permission to access this resource.")
+
+        return {
+            "user_id": user_id,
+            "role": role,
+            "inferred_level": inferred_level,
+            "assigned_level": assigned_level
+        }
+    
     except jwt.ExpiredSignatureError:
         logger.error("Token has expired.")
         raise HTTPException(status_code=401, detail="Token expired")
@@ -63,6 +80,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(bearer_sch
         logger.error("Invalid token.")
         raise HTTPException(status_code=401, detail="Invalid token")
     except Exception as e:
+        logger.error(f"Token validation failed: {str(e)}")
         raise HTTPException(status_code=403, detail=f"Token validation failed: {str(e)}")
 
 
@@ -162,7 +180,7 @@ async def get_swagger():
 
 @app.post("/generate/low", response_model=SampleResponse)
 async def generate_low(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("level")
+    user_level = user_info.get("inferred_level")
     if user_level != "low":
         raise HTTPException(status_code=403, detail="User does not have access to 'low' level")
 
@@ -204,7 +222,7 @@ async def generate_low(request: RequestModel, user_info: dict = Depends(verify_t
 
 @app.post("/generate/middle", response_model=SampleResponse)
 async def generate_middle(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("level")
+    user_level = user_info.get("inferred_level")
     if user_level != "middle":
         raise HTTPException(status_code=403, detail="User does not have access to 'middle' level")
 
@@ -243,7 +261,7 @@ async def generate_middle(request: RequestModel, user_info: dict = Depends(verif
 
 @app.post("/generate/high", response_model=SampleResponse)
 async def generate_high(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("level")
+    user_level = user_info.get("inferred_level")
     if user_level != "high":
         raise HTTPException(status_code=403, detail="User does not have access to 'high' level")
 

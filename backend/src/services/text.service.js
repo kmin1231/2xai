@@ -6,6 +6,7 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
+const User = require('../models/user');
 const Text = require('../models/text');
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
@@ -171,76 +172,53 @@ const saveHighlight = async (highlightData) => {
 };
 
 
-const filterText = async (keyword, level) => {
-  try {
-    return await Text.findOne({ keyword, level });
-  } catch (error) {
-    throw new Error('Failed to filter text by keyword and level.');
+const updateLevel = async (userId, score) => {
+  const user = await User.findById(userId);
+  if (!user) throw new Error('User not found');
+
+  const currentLevel = user.student_info?.inferred_level || 'low';
+
+  let newLevel = currentLevel;
+
+  const correctCount = score;
+
+  // update 'inferred_level' based on performance 
+  if (!user.student_info || !user.student_info.inferred_level) {
+    if (correctCount === 5) newLevel = 'high';
+    else if (correctCount >= 2) newLevel = 'middle';
+    else newLevel = 'low';
+  } else if (currentLevel === 'high') {
+    newLevel = correctCount >= 3 ? 'high' : 'middle';
+  } else if (currentLevel === 'middle') {
+    if (correctCount === 5) newLevel = 'high';
+    else if (correctCount <= 1) newLevel = 'low';
+    else newLevel = 'middle';
+  } else if (currentLevel === 'low') {
+    newLevel = correctCount >= 4 ? 'middle' : 'low';
   }
+
+  // update user info
+  if (newLevel !== currentLevel) {
+    user.student_info.inferred_level = newLevel;
+    await user.save();
+  }
+
+  return newLevel;
 };
 
 
-const checkRecord = async (userId, textId) => {
-  try {
-    return await Record.findOne({ userId, textId });
-  } catch (error) {
-    throw new Error('Failed to check user record.');
-  }
-};
+const checkAnswer = (userAnswers, correctAnswers) => {
 
-
-// const saveHighlight = async (userId, textId, start, end, highlightText) => {
-//   try {
-//     const newHighlight = new Highlight({
-//       userId,
-//       textId,
-//       start,
-//       end,
-//       text: highlightText,
-//     });
-//     await newHighlight.save();
-//   } catch (error) {
-//     throw new Error('Failed to save highlight.');
-//   }
-// };
-
-
-const checkAnswer = async (userId, textId, answer) => {
-  try {
-    const text = await Text.findById(textId);
-    if (!text) {
-      throw new Error('Text not found.');
-    }
-
-    const isCorrect = text.answer === answer;
-
-    const newRecord = new Record({
-      userId,
-      textId,
-      isCorrect,
-    });
-
-    await newRecord.save();
-
-    return isCorrect;
-  } catch (error) {
-    throw new Error('Failed to check answer.');
-  }
-};
-
-
-const saveResult = async (userId, textId, isCorrect) => {
-  try {
-    const newRecord = new Record({
-      userId,
-      textId,
-      isCorrect,
-    });
-
-    await newRecord.save();
-  } catch (error) {
-    throw new Error('Failed to save learning result.');
-  }
+  // boolean array
+  return userAnswers.map((answer, index) => {
+    
+    // map to 'a', 'b', 'c', 'd', 'e'
+    const options = ['a', 'b', 'c', 'd', 'e'];
+    const selectedOption = options[answer];
+    
+    // correct (true) vs. incorrect (false)
+    return correctAnswers[index] === selectedOption;
+  });
 };
 
 
@@ -252,9 +230,8 @@ module.exports = {
   saveFeedback,
   generateFeedbackData,
   saveHighlight,
-
-  filterText,
-  checkRecord,
+  updateLevel,
   checkAnswer,
-  saveResult,
+
+  // filterText,
 };

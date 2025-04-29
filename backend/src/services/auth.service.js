@@ -5,10 +5,14 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.JWT_SECRET;
 
 const User = require('../models/user');
+const Class = require('../models/class');
 
 const loginUser = async (username, password) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username })
+      .populate('class_id');
+
+    // console.log('User class_id:', user.class_id);
 
     if (!user) {
       console.log('Login failed: User not found');
@@ -22,12 +26,22 @@ const loginUser = async (username, password) => {
     
     console.log(`Login Success: [${user.role}] ${username}`);
 
+    // information to be included in the token
+    let payload = {
+      userId: user._id,
+      role: user.role,
+      classId: user.class_id?._id || null,
+    };
+
+    // add additional information based on user role (User.role = student)
+    if (user.role === 'student') {
+      payload.inferredLevel = user.student_info.inferred_level;
+      payload.assignedLevel = user.student_info.assigned_level;
+    }
+
     // issue the token from the server
     const token = jwt.sign(
-      { userId: user._id,
-        role: user.role,
-        level: user.level,
-      },
+      payload,
       SECRET_KEY,
       { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
     );
@@ -35,9 +49,15 @@ const loginUser = async (username, password) => {
     return {
       success: true,
       role: user.role,
-      school: user.school,
       name: user.name,
-      level: user.level,
+      classInfo: user.class_id ? {
+        className: user.class_id.class_name,
+        schoolName: user.class_id.school_name,
+      } : null,
+      studentLevels: user.role === 'student' ? {
+        inferredLevel: user.student_info?.inferred_level || 'low',
+        assignedLevel: user.student_info?.assigned_level || 'low',
+      } : null,
       message: 'Login successful',
       token,  // token to be delivered to the client
     };

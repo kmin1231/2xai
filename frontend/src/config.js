@@ -48,6 +48,7 @@ const CONFIG = {
       GENERATE_TEXT: '/generate-text',
       GENERATE_TEXT_LOW: '/generate-text-low',
       SAVE_FEEDBACK: '/feedback',
+      SAVE_HIGHLIGHT: '/highlight',
     },
   },
 };

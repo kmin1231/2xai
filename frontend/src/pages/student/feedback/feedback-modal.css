@@ -151,4 +151,9 @@
 .confirm-btn {
   margin-top: 0px;
   width: 15vw;
+  border: none;
+}
+
+.confirm-btn:hover {
+  background-color: var(--keyword-button-hover-color);
 }

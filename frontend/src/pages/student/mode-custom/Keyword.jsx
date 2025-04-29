@@ -2,7 +2,10 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { api } from '@/config';
 
 import StudentHeader from '../header/StudentHeader';
 import InputField from '@/components/inputs/InputField';
@@ -24,8 +27,10 @@ const CustomLevelKeyword = () => {
   ];
 
   const handleKeywordClick = (selectedKeyword) => {
-    setKeyword(selectedKeyword); // selected keyword into InputField
+    setKeyword(selectedKeyword);  // selected keyword into InputField
   };
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   const handleCustomLevel = async () => {
     const token = localStorage.getItem('token');
@@ -40,16 +45,19 @@ const CustomLevelKeyword = () => {
       return;
     }
 
+
+    const level = userInfo?.inferredLevel || 'low';
+
     console.log('Sending request to API with token:', token);
     console.log('Sending request with keyword:', keyword);
+    console.log('Inferred level based on performance:', level);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT}`,
         { keyword },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         },

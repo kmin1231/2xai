@@ -18,6 +18,7 @@ body {
   font-size: 25px;
   text-align: center;
 }
+
 .result-container p {
   font-size: 18px;
   text-align: justify;
@@ -48,6 +49,15 @@ body {
 .result-right h2 {
   margin: 0;
   font-size: 25px;
+}
+
+.result-right h3 {
+  font-size: 24px;
+  margin-top: 0px;
+}
+
+.question-text p {
+  font-size: 18px;
 }
 
 .result-right ul {

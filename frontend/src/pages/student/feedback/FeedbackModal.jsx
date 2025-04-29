@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
+import { api } from '@/config';
+import CONFIG from '@/config';
+
 import './feedback-modal.css';
-import sampleData from '@/data/sampleResponse.json';
+// import sampleData from '@/data/sampleResponse.json';
 
 Modal.setAppElement('#root');
 
@@ -18,12 +21,10 @@ const FeedbackModal = ({
   finalChoiceIndex,
   setFinalChoiceIndex,
   onConfirmSelection,
+  generations,
+  keyword={keyword},
+  level={level},
 }) => {
-  const generations = [
-    sampleData.generation0,
-    sampleData.generation1,
-    sampleData.generation2,
-  ];
   const totalPages = generations.length + 1;
 
   const currentGeneration =
@@ -33,7 +34,13 @@ const FeedbackModal = ({
 
   const handleFeedback = (choice) => {
     const updated = [...feedbacks];
-    updated[currentPage] = { choice };
+
+    updated[currentPage] = {
+      feedback: choice,
+      title: currentGeneration?.title,
+      passage: currentGeneration?.passage,
+    };
+
     setFeedbacks(updated);
   };
 
@@ -41,8 +48,28 @@ const FeedbackModal = ({
     setFinalChoiceIndex(index);
   };
 
-  const handleConfirmSelection = (selectedGeneration) => {
+
+  const ConfirmSelection = async () => {
+    console.log(generations);
+
+    const selectedGeneration = generations[finalChoiceIndex];
     onConfirmSelection(selectedGeneration);
+
+    console.log('selected generation index:', finalChoiceIndex);
+    console.log('selected generation:', selectedGeneration);
+
+    try {
+      const response = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_FEEDBACK}`, {
+          keyword,
+          level,
+          feedbacks,
+       }
+      );
+      console.log('Feedback saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving feedback:', error);
+    }
   };
 
   return (
@@ -57,7 +84,10 @@ const FeedbackModal = ({
         {currentPage < 3 ? (
           <>
             <div className="modal-left">
-              <h3>지문 #{currentPage + 1}</h3>
+              <h3>
+                [Passage #{currentPage + 1}] {currentGeneration?.title}
+              </h3>
+
               <p>
                 {currentGeneration?.passage.split('\n').map((line, index) => (
                   <React.Fragment key={index}>
@@ -70,6 +100,13 @@ const FeedbackModal = ({
 
             <div className="modal-right">
               <h4>읽기 자료가 마음에 드나요?</h4>
+              <button
+
+                className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}
+                onClick={() => handleFeedback('good')}
+              >
+                😎 적당해요
+              </button>
               <button
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'too_easy' ? 'selected' : ''}`}
                 onClick={() => handleFeedback('too_easy')}
@@ -112,7 +149,7 @@ const FeedbackModal = ({
             <button
               className="confirm-btn"
               disabled={finalChoiceIndex === null}
-              onClick={() => handleConfirmSelection(generations[finalChoiceIndex])}
+              onClick={ConfirmSelection}
             >
               문제 풀기
             </button>

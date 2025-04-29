@@ -313,91 +313,11 @@ router.post('/generate-text-low', textController.generateTextLow);
 router.get('/test', textController.testTextConnection);
 
 
-/**
- * @swagger
- * /api/text/filter:
- *   get:
- *     summary: Filter text based on the given keyword, level, and user ID
- *     tags: [Text]
- *     parameters:
- *       - in: query
- *         name: keyword
- *         required: true
- *         schema:
- *           type: string
- *         description: The keyword to filter the text
- *       - in: query
- *         name: level
- *         required: true
- *         schema:
- *           type: string
- *         description: The level of difficulty to filter the text
- *       - in: query
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the user requesting the text
- *     responses:
- *       200:
- *         description: Successfully filtered or generated the text
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 keyword:
- *                   type: string
- *                 level:
- *                   type: string
- *                 passage:
- *                   type: string
- *                 question:
- *                   type: string
- *                 answer:
- *                   type: string
- *                 solution:
- *                   type: string
- *       500:
- *         description: Failed to filter text
- */
+router.post('/feedback', verifyToken, textController.saveFeedbackController);
+
+
 router.get('/filter', textController.filterText);
 
-/**
- * @swagger
- * /api/text/{id}/feedback:
- *   post:
- *     summary: Save user feedback for a specific text
- *     tags: [Text]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the text to provide feedback for
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 description: The ID of the user providing feedback
- *               feedback:
- *                 type: string
- *                 description: The feedback value (e.g., easy, hard, boring)
- *     responses:
- *       201:
- *         description: Feedback saved successfully
- *       400:
- *         description: Invalid feedback value
- *       500:
- *         description: Failed to save feedback
- */
-router.post('/:id/feedback', textController.saveFeedback);
 
 /**
  * @swagger

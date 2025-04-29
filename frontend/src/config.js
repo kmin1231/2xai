@@ -47,6 +47,7 @@ const CONFIG = {
       VALIDATE_KEYWORD: '/validate-keyword',
       GENERATE_TEXT: '/generate-text',
       GENERATE_TEXT_LOW: '/generate-text-low',
+      SAVE_FEEDBACK: '/feedback',
     },
   },
 };

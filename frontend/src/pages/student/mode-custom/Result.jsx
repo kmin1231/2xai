@@ -2,11 +2,21 @@
 
 import React, { useState } from 'react';
 import FeedbackModal from '../feedback/FeedbackModal';
+import { useLocation } from 'react-router-dom';
 
 import StudentHeader from '../header/StudentHeader';
 import './result.css';
 
 const CustomLevelResult = () => {
+  const location = useLocation();
+  const apiResponseData = location.state?.data;
+
+  const generations = [
+    apiResponseData.generation0,
+    apiResponseData.generation1,
+    apiResponseData.generation2,
+  ];
+
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbacks, setFeedbacks] = useState([]);
   const [finalChoiceIndex, setFinalChoiceIndex] = useState(null);
@@ -16,9 +26,9 @@ const CustomLevelResult = () => {
 
   const [userAnswers, setUserAnswers] = useState({});
 
-  const handleConfirmSelection = (generation) => {
-    console.log('selected generation:', generation);
-    setSelectedGeneration(generation);
+  const handleConfirmSelection = (selectedGeneration) => {
+    console.log('selected generation index:', selectedGeneration);
+    setSelectedGeneration(selectedGeneration);
     setIsModalOpen(false);
   };
 
@@ -49,6 +59,7 @@ const CustomLevelResult = () => {
         finalChoiceIndex={finalChoiceIndex}
         setFinalChoiceIndex={setFinalChoiceIndex}
         onConfirmSelection={handleConfirmSelection}
+        generations={generations} // actual data (API response)
       />
       {selectedGeneration && (
         <div className="result-container">
@@ -66,40 +77,46 @@ const CustomLevelResult = () => {
           </div>
           <div className="result-right">
             <h3>Questions</h3>
-            {selectedGeneration.questions.map((q, index) => (
-              <div key={index}>
-                <p>
-                  <strong>
-                    Q{index + 1}. {q.question}
-                  </strong>
-                </p>
-                <ul>
-                  {q.options.map((opt, optIdx) => {
-                    const optionId = `q${index}_opt${optIdx}`;
-                    return (
-                      <li key={optIdx} style={{ listStyleType: 'none' }}>
-                        <label htmlFor={optionId}>
-                          <input
-                            type="radio"
-                            name={`question-${index}`}
-                            id={optionId}
-                            value={optIdx}
-                            checked={userAnswers[index] === optIdx}
-                            onChange={() =>
-                              setUserAnswers((prev) => ({
-                                ...prev,
-                                [index]: optIdx,
-                              }))
-                            }
-                          />
-                          {String.fromCharCode(97 + optIdx)}. {opt}
-                        </label>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
+            {selectedGeneration.question.map((q, index) => {
+              const questionParts = q.split('\n');
+              const questionText = questionParts[0];
+              const options = questionParts.slice(1);
+
+              return (
+                <div key={index} className="question-text">
+                  <p>
+                    <strong>
+                      Q{index + 1}. {questionText}
+                    </strong>
+                  </p>
+                  <ul>
+                    {options.map((opt, optIdx) => {
+                      const optionId = `q${index}_opt${optIdx}`;
+                      return (
+                        <li key={optIdx} style={{ listStyleType: 'none' }}>
+                          <label htmlFor={optionId}>
+                            <input
+                              type="radio"
+                              name={`question-${index}`}
+                              id={optionId}
+                              value={optIdx}
+                              checked={userAnswers[index] === optIdx}
+                              onChange={() =>
+                                setUserAnswers((prev) => ({
+                                  ...prev,
+                                  [index]: optIdx,
+                                }))
+                              }
+                            />
+                            {String.fromCharCode(97 + optIdx)}. {opt}
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
             <div className="question-submit-wrapper">
               <button
                 className="question-submit-btn"
@@ -115,4 +132,5 @@ const CustomLevelResult = () => {
     </div>
   );
 };
+
 export default CustomLevelResult;

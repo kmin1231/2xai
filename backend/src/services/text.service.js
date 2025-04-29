@@ -135,6 +135,31 @@ const testConnection = async () => {
 };
 
 
+const saveFeedback = async (feedbackData) => {
+  try {
+    const feedback = new Feedback(feedbackData);
+    const result = await feedback.save();
+
+    return result;
+  } catch (error) {
+    throw new Error('Error saving feedback: ' + error.message);
+  }
+};
+
+
+const generateFeedbackData = (keyword, level, feedbacks) => {
+
+  console.log('Feedbacks:', feedbacks);
+
+  const feedbackData = {
+    keyword: keyword,
+    level: level,
+    feedbacks,
+  };
+  return feedbackData;
+};
+
+
 const filterText = async (keyword, level) => {
   try {
     return await Text.findOne({ keyword, level });
@@ -149,16 +174,6 @@ const checkRecord = async (userId, textId) => {
     return await Record.findOne({ userId, textId });
   } catch (error) {
     throw new Error('Failed to check user record.');
-  }
-};
-
-
-const saveFeedback = async (userId, textId, feedback) => {
-  try {
-    const newFeedback = new Feedback({ userId, textId, feedback });
-    await newFeedback.save();
-  } catch (error) {
-    throw new Error('Failed to save feedback.');
   }
 };
 
@@ -223,10 +238,11 @@ module.exports = {
   containsForbiddenKeyword,
   requestGeneration,
   testConnection,
+  saveFeedback,
+  generateFeedbackData,
 
   filterText,
   checkRecord,
-  saveFeedback,
   saveHighlight,
   checkAnswer,
   saveResult,

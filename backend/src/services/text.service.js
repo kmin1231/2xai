@@ -160,6 +160,17 @@ const generateFeedbackData = (keyword, level, feedbacks) => {
 };
 
 
+const saveHighlight = async (highlightData) => {
+  try {
+    const highlight = new Highlight(highlightData);
+    await highlight.save();
+    return highlight;
+  } catch (error) {
+    throw new Error('Error while saving highlight: ' + error.message);
+  }
+};
+
+
 const filterText = async (keyword, level) => {
   try {
     return await Text.findOne({ keyword, level });
@@ -178,20 +189,20 @@ const checkRecord = async (userId, textId) => {
 };
 
 
-const saveHighlight = async (userId, textId, start, end, highlightText) => {
-  try {
-    const newHighlight = new Highlight({
-      userId,
-      textId,
-      start,
-      end,
-      text: highlightText,
-    });
-    await newHighlight.save();
-  } catch (error) {
-    throw new Error('Failed to save highlight.');
-  }
-};
+// const saveHighlight = async (userId, textId, start, end, highlightText) => {
+//   try {
+//     const newHighlight = new Highlight({
+//       userId,
+//       textId,
+//       start,
+//       end,
+//       text: highlightText,
+//     });
+//     await newHighlight.save();
+//   } catch (error) {
+//     throw new Error('Failed to save highlight.');
+//   }
+// };
 
 
 const checkAnswer = async (userId, textId, answer) => {
@@ -240,10 +251,10 @@ module.exports = {
   testConnection,
   saveFeedback,
   generateFeedbackData,
+  saveHighlight,
 
   filterText,
   checkRecord,
-  saveHighlight,
   checkAnswer,
   saveResult,
 };

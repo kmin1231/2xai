@@ -68,6 +68,11 @@ body {
   margin-bottom: 1rem;
 }
 
+.highlighted-text  {
+  background-color: var(--highlight-color);
+  font-weight: bold;
+}
+
 .question-submit-wrapper {
   text-align: right;
 }

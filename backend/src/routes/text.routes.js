@@ -314,51 +314,12 @@ router.get('/test', textController.testTextConnection);
 
 
 router.post('/feedback', verifyToken, textController.saveFeedbackController);
-
+router.post('/highlight', verifyToken,textController.saveHighlightController);
 
 router.get('/filter', textController.filterText);
 
 
 /**
- * @swagger
- * /api/text/{id}/highlight:
- *   post:
- *     summary: Save a highlight for a specific text
- *     tags: [Text]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the text to highlight
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 description: The ID of the user creating the highlight
- *               start:
- *                 type: integer
- *                 description: The starting position of the highlight in the text
- *               end:
- *                 type: integer
- *                 description: The ending position of the highlight in the text
- *               text:
- *                 type: string
- *                 description: The text being highlighted
- *     responses:
- *       201:
- *         description: Highlight saved successfully
- *       500:
- *         description: Failed to save highlight
- */
-router.post('/:id/highlight', textController.saveHighlight);
-
 /**
  * @swagger
  * /api/text/{id}/answer:

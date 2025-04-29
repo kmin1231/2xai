@@ -147,24 +147,27 @@ exports.saveFeedbackController = async (req, res) => {
 };
 
 
-// POST /api/text/:id/highlight
-exports.saveHighlight = async (req, res) => {
-  const { id } = req.params;
-  const { userId, start, end, text } = req.body;
-
+// POST /api/text/highlight
+exports.saveHighlightController = async (req, res) => {
   try {
-    const newHighlight = new Highlight({
-      userId,
-      textId: id,
-      start,
-      end,
-      text,
-    });
+    const { userId } = req.user;
+    const { text } = req.body;
 
-    await newHighlight.save();
-    return res.status(201).json({ message: 'Highlight saved successfully.' });
+    if (!text) {
+      return res.status(400).json({ message: 'Text is required for highlight.' });
+    }
+
+    const highlightData = {
+      userId,
+      text,  // highlighted text
+    };
+
+    const result = await textService.saveHighlight(highlightData);
+
+    res.status(200).json({ message: 'Highlight saved successfully!', data: result });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to save highlight.', error });
+    console.error('Error in saving highlight:', error.message);
+    res.status(500).json({ message: 'Failed to save highlight', error: error.message });
   }
 };
 

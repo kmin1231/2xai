@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useLocation } from 'react-router-dom';
+import { api } from '@/config';
+import CONFIG from '@/config';
 
 import './feedback-modal.css';
 // import sampleData from '@/data/sampleResponse.json';
@@ -20,6 +21,8 @@ const FeedbackModal = ({
   setFinalChoiceIndex,
   onConfirmSelection,
   generations,
+  keyword={keyword},
+  level={level},
 }) => {
   const totalPages = generations.length + 1;
 
@@ -30,7 +33,11 @@ const FeedbackModal = ({
 
   const handleFeedback = (choice) => {
     const updated = [...feedbacks];
-    updated[currentPage] = { choice };
+    updated[currentPage] = {
+      feedback: choice,
+      title: currentGeneration?.title,
+      passage: currentGeneration?.passage,
+    };
     setFeedbacks(updated);
   };
 
@@ -38,11 +45,29 @@ const FeedbackModal = ({
     setFinalChoiceIndex(index);
   };
 
-  const ConfirmSelection = () => {
+  const ConfirmSelection = async () => {
+    console.log(generations);
+
     const selectedGeneration = generations[finalChoiceIndex];
     onConfirmSelection(selectedGeneration);
+
+    console.log('selected generation index:', finalChoiceIndex);
     console.log('selected generation:', selectedGeneration);
+
+    try {
+      const response = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_FEEDBACK}`, {
+          keyword,
+          level,
+          feedbacks,
+       }
+      );
+      console.log('Feedback saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving feedback:', error);
+    }
   };
+
 
   return (
     <Modal

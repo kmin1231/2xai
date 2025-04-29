@@ -17,6 +17,9 @@ const CustomLevelResult = () => {
     apiResponseData.generation2,
   ];
 
+  const keyword = apiResponseData.keyword;
+  const level = apiResponseData.level;
+
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbacks, setFeedbacks] = useState([]);
   const [finalChoiceIndex, setFinalChoiceIndex] = useState(null);
@@ -60,6 +63,8 @@ const CustomLevelResult = () => {
         setFinalChoiceIndex={setFinalChoiceIndex}
         onConfirmSelection={handleConfirmSelection}
         generations={generations} // actual data (API response)
+        keyword={keyword}
+        level={level}
       />
       {selectedGeneration && (
         <div className="result-container">

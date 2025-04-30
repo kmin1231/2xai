@@ -6,11 +6,19 @@
   padding-bottom: 0rem;
 }
 
+.score-box-left p {
+  text-align: justify;
+}
+
 .score-table {
   max-width: 90vw;
   width: 100%;
   border-collapse: collapse;
   margin-top: 2rem;
+}
+
+th {
+  font-size: 18px;
 }
 
 th, td {
@@ -22,6 +30,24 @@ th, td {
   padding: 5rem;
 }
 
+.solution-modal-left-question li {
+  margin-bottom: 1.3rem;
+}
+
+.solution-modal-right-solution {
+  gap: 1rem;
+  min-height: 30vh;
+  justify-content: center;
+  display: grid;
+  text-align: center;
+}
+
 .solution-close-btn {
-  margin-top: 3rem;
+  border: none;
+  max-height: 6vh;
+  padding: 0 0;
+}
+
+.solution-close-btn:hover {
+  background-color: var(--keyword-button-hover-color);
 }

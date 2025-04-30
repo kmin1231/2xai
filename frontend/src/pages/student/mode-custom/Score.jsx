@@ -71,11 +71,12 @@ const CustomLevelScore = () => {
       <StudentHeader />
       <div className="score-box" style={{ display: 'flex', gap: '2rem' }}>
         <div
+          className="score-box-left"
           style={{
             flex: '1',
             whiteSpace: 'pre-wrap',
             borderRight: '1px solid #ccc',
-            paddingRight: '1rem',
+            paddingRight: '2rem',
           }}
         >
           <h2>{title}</h2>
@@ -88,25 +89,30 @@ const CustomLevelScore = () => {
           <p>
             <strong>Score:</strong> {score} / 5
           </p>
-          {/* <p><strong>Level:</strong> {newLevel}</p> */}
 
           <table className="score-table">
             <thead>
               <tr>
-                <th style={{ maxWidth: '5vw' }}>Question</th>
-                <th style={{ minWidth: '5vw' }}>Answer</th>
-                <th style={{ minWidth: '5vw' }}>User Answer</th>
-                <th style={{ minWidth: '5vw' }}>Correct</th>
-                <th style={{ minWidth: '10vw' }}>Check Solution</th>
+                <th style={{ maxWidth: '5vw' }}>No.</th>
+                <th style={{ minWidth: '5vw' }}>내 답변</th>
+                <th style={{ minWidth: '5vw' }}>정답</th>
+                <th style={{ minWidth: '5vw' }}>결과</th>
+                <th style={{ minWidth: '10vw' }}>풀이</th>
               </tr>
             </thead>
 
             <tbody>
               {correctness.map((isCorrect, index) => (
                 <tr key={index}>
-                  <td style={{ minWidth: '100px' }}>Q{index + 1}</td>
+                  <td style={{ minWidth: '100px', fontWeight: 'bold' }}>
+                    Q{index + 1}
+                  </td>
+                  <td style={{ minWidth: '100px' }}>
+                    {typeof userAnswer?.[index] === 'number'
+                      ? String.fromCharCode(97 + userAnswer[index])
+                      : userAnswer?.[index]}
+                  </td>
                   <td style={{ minWidth: '100px' }}>{answers[index]}</td>
-                  <td style={{ minWidth: '100px' }}>{userAnswer?.[index]}</td>
                   <td style={{ minWidth: '100px' }}>
                     {getAnswerSymbol(isCorrect)}
                   </td>
@@ -141,7 +147,10 @@ const CustomLevelScore = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* solution-modal-left */}
-                <div style={{ flex: 1, whiteSpace: 'pre-wrap' }}>
+                <div
+                  className="solution-modal-left-question"
+                  style={{ flex: 1, whiteSpace: 'pre-wrap' }}
+                >
                   {selectedQuestion && (
                     <>
                       <h3>
@@ -163,7 +172,10 @@ const CustomLevelScore = () => {
                 </div>
 
                 {/* solution-modal-right */}
-                <div style={{ flex: 1, whiteSpace: 'pre-wrap' }}>
+                <div
+                  className="solution-modal-right-solution"
+                  style={{ flex: 1, whiteSpace: 'pre-wrap' }}
+                >
                   <h3>Solution</h3>
                   <p>{selectedSolution}</p>
                   <button className="solution-close-btn" onClick={closeModal}>

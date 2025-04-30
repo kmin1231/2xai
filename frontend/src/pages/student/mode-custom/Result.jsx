@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import FeedbackModal from '../feedback/FeedbackModal';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { api } from '@/config';
 import CONFIG from '@/config';
@@ -114,6 +114,9 @@ const CustomLevelResult = () => {
     return elements;
   };
 
+
+  const navigate = useNavigate();
+
   const submitAnswers = async () => {
 
     const selectedGeneration = generations[finalChoiceIndex];
@@ -122,8 +125,6 @@ const CustomLevelResult = () => {
 
     console.log("selected generation: ", selectedGeneration);
     console.log("user answers: ", answers)
-    // onConfirmSelection(selectedGeneration);
-
 
     try {
       const response = await api.post(
@@ -139,6 +140,21 @@ const CustomLevelResult = () => {
         }
       );
       console.log('Requested successfully:', response.data);
+
+      navigate('/student/mode/custom/score', {
+        state: {
+          score: response.data.score,
+          correctness: response.data.correctness,
+          newLevel: response.data.newLevel,
+          title: selectedGeneration.title,
+          passage: selectedGeneration.passage,
+          question: selectedGeneration.question,
+          answer: selectedGeneration.answer,
+          solution: selectedGeneration.solution,
+          userAnswer: answers,
+        },
+      });
+      
     } catch (error) {
       console.error('Error checking answers:', error);
     }

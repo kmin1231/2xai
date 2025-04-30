@@ -1,0 +1,27 @@
+/* src/pages/student/mode-custom/score.css */
+
+.score-header h2 {
+  font-size: 16px;
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
+}
+
+.score-table {
+  max-width: 90vw;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+th, td {
+  padding: 8px 0px;
+}
+
+.solution-modal-content {
+  min-width: 80vw;
+  padding: 5rem;
+}
+
+.solution-close-btn {
+  margin-top: 3rem;
+}

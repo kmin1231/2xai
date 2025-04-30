@@ -1,6 +1,8 @@
 // controllers/text.controller.js
 
 const textService = require('../services/text.service');
+const Text = require('../models/text');
+const Record = require('../models/record');
 
 // POST /api/text/validate-keyword
 exports.validateKeyword = (req, res) => {
@@ -172,31 +174,53 @@ exports.saveHighlightController = async (req, res) => {
 };
 
 
-// POST /api/text/:id/answer
-exports.checkAnswer = async (req, res) => {
-  const { id } = req.params;
-  const { userId, answer } = req.body;
+// POST /api/text/check-answer
+exports.checkAnswerController = async (req, res) => {
 
+  const { userId } = req.user;
+  const { keyword, level, title, passage, question, answer, solution, userAnswer } = req.body;
+  
   try {
-    const text = await Text.findById(id);
+    const correctAnswers = answer;
+    const correctness = textService.checkAnswer(userAnswer, correctAnswers);
 
-    if (!text) {
-      return res.status(404).json({ message: 'Text not found.' });
-    }
+    const score = correctness.filter(isCorrect => isCorrect).length;
 
-    const isCorrect = text.answer === answer;
+    // save data in 'Text' collection
+    const newText = new Text({
+      keyword,
+      level,
+      title,
+      passage,
+      question,
+      answer,
+      solution,
+    });
+    await newText.save();
 
+    // save data in 'Record' collection
     const newRecord = new Record({
       userId,
-      textId: id,
-      isCorrect,
+      textId: newText._id,
+      correctness,
+      score,
     });
-
     await newRecord.save();
 
-    return res.status(200).json({ isCorrect });
+    const newLevel = await textService.updateLevel(userId, score);
+
+    return res.status(200).json({
+      score,
+      correctness,
+      newLevel,
+      message: 'Answers checked!',
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to check answer.', error });
+    console.error('Error checking answers:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to check answers.',
+    });
   }
 };
 

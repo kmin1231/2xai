@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const textSchema = new mongoose.Schema({
   keyword: { type: String, required: true },
   level: { type: String, required: true, enum: ['high', 'middle', 'low'] },
+  title: { type: String, required: true },
   passage: { type: String, required: true },
   question: {
     type: [String],

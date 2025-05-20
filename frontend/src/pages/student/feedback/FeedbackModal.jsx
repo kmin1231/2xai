@@ -22,8 +22,8 @@ const FeedbackModal = ({
   setFinalChoiceIndex,
   onConfirmSelection,
   generations,
-  keyword={keyword},
-  level={level},
+  keyword = { keyword },
+  level = { level },
 }) => {
   const totalPages = generations.length + 1;
 
@@ -49,7 +49,6 @@ const FeedbackModal = ({
     setFinalChoiceIndex(index);
   };
 
-
   const ConfirmSelection = async () => {
     console.log(generations);
 
@@ -65,7 +64,7 @@ const FeedbackModal = ({
           keyword,
           level,
           feedbacks,
-       }
+        },
       );
       console.log('Feedback saved successfully:', response.data);
     } catch (error) {
@@ -102,7 +101,6 @@ const FeedbackModal = ({
             <div className="modal-right">
               <h4>읽기 자료가 마음에 드나요?</h4>
               <button
-
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}
                 onClick={() => handleFeedback('good')}
               >
@@ -138,15 +136,36 @@ const FeedbackModal = ({
                   className={`final-option ${finalChoiceIndex === index ? 'selected' : ''}`}
                 >
                   <p>{gen.passage.slice(0, 200)}...</p>
-                  <button
-                    className="final-select-button"
-                    onClick={() => handleFinalSelect(index)}
-                  >
-                    {index + 1}번 선택
-                  </button>
+
+                  <div className="button-feedback-container">
+                    <button
+                      className="final-select-button"
+                      onClick={() => handleFinalSelect(index)}
+                    >
+                      {index + 1}번 선택
+                    </button>
+
+                    {/* 사용자가 선택한 피드백 표시 */}
+                    {feedbacks[index]?.feedback || feedbacks[index]?.choice ? (
+                      <p className="user-feedback">
+                        {
+                          {
+                            good: '😎 적당해요',
+                            too_easy: '😌 너무 쉬워요',
+                            too_hard: '😩 너무 어려워요',
+                            not_interesting: '😐 흥미롭지 않아요',
+                          }[
+                            feedbacks[index]?.feedback ||
+                              feedbacks[index]?.choice
+                          ]
+                        }
+                      </p>
+                    ) : null}
+                  </div>
                 </li>
               ))}
             </ul>
+
             <button
               className="confirm-btn"
               disabled={finalChoiceIndex === null}

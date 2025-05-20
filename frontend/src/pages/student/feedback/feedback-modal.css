@@ -102,10 +102,10 @@
 
 .final-option {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 12px, 20px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
   width: 55vw;
 }
 
@@ -113,21 +113,43 @@
   max-width: 40vw;
 }
 
+.button-feedback-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5px;
+  min-width: 80px;
+  width: 30vw;
+}
+
+.button-feedback-container p {
+  text-align: center;
+  width: 90%;
+}
+
 .final-select-button {
   margin-left: 3vw;
+  margin-right: 3vw;
   white-space: nowrap;
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  align-items: center;
+  width: 90%;
+  background-color: var(--blue-color-4);
 }
 
 .final-select-button:hover {
   background-color: var(--keyword-button-hover-color);
 }
 
+.final-select-button.selected {
+  background-color: var(--keyword-button-hover-color);
+}
+
 .final-option.selected {
-  background-color: #f0f8ff;
-  border: 2px solid #007bff;
+  background-color: var(--blue-color-4);
+  border: 2px solid var(--blue-color-2);
 }
 
 .modal-final {
@@ -159,6 +181,11 @@
 
 .confirm-btn:hover {
   background-color: var(--keyword-button-hover-color);
+}
+
+.confirm-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .move-btn {

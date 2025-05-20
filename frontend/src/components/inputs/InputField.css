@@ -68,5 +68,5 @@ body {
 }
 
 .next-button:hover {
-  background-color: rgb(69, 68, 71);
+  background-color: var(--gray-button-hover-color);
 }

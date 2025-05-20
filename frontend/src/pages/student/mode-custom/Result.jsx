@@ -50,8 +50,9 @@ const CustomLevelResult = () => {
     const selectedText = selection.toString();
     if (!selectedText) return;
   
-    const isSaveConfirmed = window.confirm('하이라이트를 저장하시겠습니까?');
-    if (!isSaveConfirmed) return;
+    // 하이라이트 저장 확인 메시지
+    // const isSaveConfirmed = window.confirm('하이라이트를 저장하시겠습니까?');
+    // if (!isSaveConfirmed) return;
   
     const passageText = selectedGeneration.passage;
     const start = passageText.indexOf(selectedText);
@@ -78,7 +79,7 @@ const CustomLevelResult = () => {
         text: highlight.text,
       });
       console.log('Highlights saved successfully:', response.data);
-      alert('하이라이트가 저장되었습니다.');
+      // alert('하이라이트가 저장되었습니다.');
     } catch (error) {
       console.error('Failed to save highlights:', error);
       alert('하이라이트 저장에 실패했습니다.');

@@ -51,22 +51,29 @@ const FeedbackModal = ({
 
   const ConfirmSelection = async () => {
     console.log(generations);
+    event.preventDefault();
 
     const selectedGeneration = generations[finalChoiceIndex];
-    onConfirmSelection(selectedGeneration);
 
     console.log('selected generation index:', finalChoiceIndex);
     console.log('selected generation:', selectedGeneration);
+
+    const payloadFeedbacks = feedbacks.map(f => ({
+      feedback: f.choice,
+      title: f.title,
+      passage: f.passage,
+    }));
 
     try {
       const response = await api.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_FEEDBACK}`, {
           keyword,
           level,
-          feedbacks,
+          feedbacks: payloadFeedbacks,
         },
       );
       console.log('Feedback saved successfully:', response.data);
+      onConfirmSelection(selectedGeneration);
     } catch (error) {
       console.error('Error saving feedback:', error);
     }
@@ -167,8 +174,9 @@ const FeedbackModal = ({
             </ul>
 
             <button
+              type="button"
               className="confirm-btn"
-              disabled={finalChoiceIndex === null}
+              disabled={finalChoiceIndex === null || finalChoiceIndex === undefined || finalChoiceIndex < 0}
               onClick={ConfirmSelection}
             >
               문제 풀기

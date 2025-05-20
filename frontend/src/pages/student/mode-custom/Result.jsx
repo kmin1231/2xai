@@ -238,6 +238,10 @@ const CustomLevelResult = () => {
               <button
                 className="question-submit-btn"
                 onClick={submitAnswers}
+                disabled={
+                  selectedGeneration &&
+                  selectedGeneration.question.some((_, idx) => userAnswers[idx] === undefined)
+                }
               >
                 답안 제출
               </button>

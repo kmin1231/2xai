@@ -36,7 +36,8 @@ const FeedbackModal = ({
     const updated = [...feedbacks];
 
     updated[currentPage] = {
-      feedback: choice,
+      ...updated[currentPage],
+      choice: choice,
       title: currentGeneration?.title,
       passage: currentGeneration?.passage,
     };
@@ -158,14 +159,16 @@ const FeedbackModal = ({
       </div>
 
       <div className="modal-footer">
-        <button className="move-btn"
+        <button
+          className="move-btn"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
         >
           ← 이전
         </button>
         {currentPage < totalPages - 1 && (
-          <button className="move-btn"
+          <button
+            className="move-btn"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
             }

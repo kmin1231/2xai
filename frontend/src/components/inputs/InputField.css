@@ -30,9 +30,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 5px solid black;
-  border-radius: 50px;
-  height: 110px;
+  border: 5px solid var(--gray-button-color);
+  border-radius: 40px;
+  height: 90px;
   width: 100%;
   max-width: 50vw;
   padding: 0 20px;
@@ -42,7 +42,7 @@ body {
 .input-field {
   flex: 1;
   font-family: 'IBM Plex Sans KR', sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   border: none;
   outline: none;
   height: 5vh;
@@ -51,16 +51,16 @@ body {
 }
 
 .next-button {
-  background-color: black;
+  background-color: var(--gray-button-color);
   color: white;
   font-family: 'IBM Plex Sans KR', sans-serif;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   border: none;
   cursor: pointer;
-  border-radius: 60px;
+  border-radius: 20px;
   width: 90px;
-  height: 70px;
+  height: 50px;
   line-height: 50px;
   text-align: center;
   margin-right: 0px;

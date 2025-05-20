@@ -68,8 +68,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .modal-right h4 {
@@ -83,14 +82,21 @@
   justify-content: space-between;
   margin-top: 4vh;
 }
+
 .feedback-btn {
   font-size: 20px;
   cursor: pointer;
   border: none;
   width: 22vw;
+  background-color: var(--blue-color-5);
+  height: 60px;
 }
 
 .feedback-btn:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.feedback-btn.selected {
   background-color: var(--keyword-button-hover-color);
 }
 
@@ -117,10 +123,6 @@
 
 .final-select-button:hover {
   background-color: var(--keyword-button-hover-color);
-}
-
-.feedback-btn.selected {
-  background-color: #dff0d8;
 }
 
 .final-option.selected {
@@ -157,4 +159,20 @@
 
 .confirm-btn:hover {
   background-color: var(--keyword-button-hover-color);
+}
+
+.move-btn {
+  background-color: var(--blue-color-5);
+  color: black;
+  border: none;
+}
+
+.move-btn:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.move-btn:disabled {
+  background-color: var(--blue-color-5);
+  color: var(--placeholder-color);
+  cursor: not-allowed;
 }

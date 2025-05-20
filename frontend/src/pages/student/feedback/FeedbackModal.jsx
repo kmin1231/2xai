@@ -158,14 +158,14 @@ const FeedbackModal = ({
       </div>
 
       <div className="modal-footer">
-        <button
+        <button className="move-btn"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
         >
           ← 이전
         </button>
         {currentPage < totalPages - 1 && (
-          <button
+          <button className="move-btn"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
             }

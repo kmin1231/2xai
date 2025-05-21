@@ -317,8 +317,7 @@ router.post('/feedback', verifyToken, textController.saveFeedbackController);
 router.post('/highlight', verifyToken,textController.saveHighlightController);
 router.delete('/highlight', verifyToken,textController.deleteHighlightController);
 router.post('/check-answer', verifyToken, textController.checkAnswerController);
-
-router.get('/filter', textController.filterText);
+router.get('/records', verifyToken, textController.getUserRecordsController);
 
 
 module.exports = router;

@@ -249,22 +249,16 @@ exports.checkAnswerController = async (req, res) => {
 };
 
 
-// POST /api/text/:id/answer
-exports.saveResult = async (req, res) => {
-  const { id } = req.params;
-  const { userId, answer, isCorrect } = req.body;
-
+// POST /api/text/records
+exports.getUserRecordsController = async (req, res) => {
   try {
-    const newRecord = new Record({
-      userId,
-      textId: id,
-      isCorrect,
-    });
+    const { userId } = req.user;
 
-    await newRecord.save();
+    const records = await textService.getRecordsByUser(userId);
 
-    return res.status(201).json({ message: 'Learning result saved successfully.' });
+    res.status(200).json({ message: 'User records fetched successfully', data: records });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to save learning result.', error });
+    console.error('Error in fetching user records:', error.message);
+    res.status(500).json({ message: 'Failed to fetch user records', error: error.message });
   }
 };

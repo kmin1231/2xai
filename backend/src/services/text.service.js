@@ -229,6 +229,15 @@ const checkAnswer = (userAnswers, correctAnswers) => {
   });
 };
 
+const getRecordsByUser = async (userId) => {
+  try {
+    const records = await Record.find({ userId });
+    return records;
+  } catch (error) {
+    throw new Error('Error while fetching records: ' + error.message);
+  }
+};
+
 
 module.exports = {
   loadForbiddenKeywordsFromJson,
@@ -241,6 +250,5 @@ module.exports = {
   deleteHighlight,
   updateLevel,
   checkAnswer,
-
-  // filterText,
+  getRecordsByUser,
 };

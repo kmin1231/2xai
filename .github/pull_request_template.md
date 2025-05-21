@@ -3,8 +3,6 @@
 ## 🔗 Issue
 - refs #
 
-<br>
-
 ## 📌 Summary
 
 - ✨ **feat**: 
@@ -14,11 +12,10 @@
 - 🧹 **chore**: 
 - 🎨 **style**: 
 - 🧩 **feat(FE)**: 
-- 🧪 **test(BE)**: 
-- 🔧 **ci/cd**: 
-- 🔀 **merge**
-
-<br>
+- 🧪 **test(BE)**:
+- 🔧 **ci/cd**:
+- 🧪 local test completed
+- 🔀 merge
 
 ## ✅ Checklist
 - [ ] list1

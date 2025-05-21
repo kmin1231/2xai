@@ -73,12 +73,32 @@ const questionsFormatted = text.question?.map((q, i) => {
     link.click();
     URL.revokeObjectURL(url);
   } else if (type === 'pdf') {
-    const doc = new jsPDF();
-    doc.setFont('Helvetica');
-    doc.setFontSize(12);
+  const doc = new jsPDF({
+    unit: 'mm',
+    format: 'a4',
+    putOnlyUsedFonts: true,
+  });
 
-    const pdfLines = doc.splitTextToSize(content, 180);
-    doc.text(pdfLines, 10, 10);
-    doc.save(`${filename}.pdf`);
-  }
-};
+  const margin = 15;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
+  const lineHeight = 7;
+  let currentY = margin;
+
+  doc.setFont('Helvetica');
+  doc.setFontSize(12);
+
+  const lines = doc.splitTextToSize(content, maxLineWidth);
+
+  lines.forEach((line) => {
+    if (currentY + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      currentY = margin;
+    }
+
+    doc.text(line, margin, currentY);
+    currentY += lineHeight;
+  });
+
+  doc.save(`${filename}.pdf`);
+}}

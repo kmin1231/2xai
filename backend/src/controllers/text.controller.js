@@ -262,3 +262,17 @@ exports.getUserRecordsController = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch user records', error: error.message });
   }
 };
+
+
+// GET /api/text/:textId
+exports.getTextByIdController = async (req, res) => {
+  try {
+    const { textId } = req.params;
+
+    const text = await textService.getTextById(textId);
+    return res.status(200).json({ message: 'Text fetched successfully', data: text });
+  } catch (error) {
+    console.error('Error in getTextByIdController:', error.message);
+    return res.status(500).json({ message: 'Failed to fetch text', error: error.message });
+  }
+};

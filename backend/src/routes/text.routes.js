@@ -318,6 +318,7 @@ router.post('/highlight', verifyToken,textController.saveHighlightController);
 router.delete('/highlight', verifyToken,textController.deleteHighlightController);
 router.post('/check-answer', verifyToken, textController.checkAnswerController);
 router.get('/records', verifyToken, textController.getUserRecordsController);
+router.get('/:textId', verifyToken, textController.getTextByIdController);
 
 
 module.exports = router;

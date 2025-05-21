@@ -238,6 +238,18 @@ const getRecordsByUser = async (userId) => {
   }
 };
 
+const getTextById = async (textId) => {
+  try {
+    const text = await Text.findById(textId).lean();
+    if (!text) {
+      throw new Error('Text not found');
+    }
+    return text;
+  } catch (error) {
+    throw new Error('Error while fetching text: ' + error.message);
+  }
+};
+
 
 module.exports = {
   loadForbiddenKeywordsFromJson,
@@ -251,4 +263,5 @@ module.exports = {
   updateLevel,
   checkAnswer,
   getRecordsByUser,
+  getTextById,
 };

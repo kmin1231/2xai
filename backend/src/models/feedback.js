@@ -12,6 +12,9 @@ const feedbackSchema = new mongoose.Schema({
     passage: { type: String, required: true, },
     feedback: { type: String, required: true, enum: ['good', 'too_easy', 'too_hard', 'not_interesting'], },
   }],
+}, {
+  timestamps: { createdAt: true, updatedAt: false },
+  versionKey: false,
 });
 
 const Feedback = mongoose.model('Feedback', feedbackSchema, "feedbacks");

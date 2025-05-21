@@ -23,7 +23,7 @@ const textSchema = new mongoose.Schema({
     validate: [arr => arr.length === 5, 'FIVE solutions required']
   },
 }, {
-  timestamps: true,
+  timestamps: { createdAt: true, updatedAt: false },
   versionKey: false,
 });
 

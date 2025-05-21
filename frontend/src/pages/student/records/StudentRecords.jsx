@@ -21,12 +21,7 @@ const StudentRecords = () => {
     const fetchRecords = async () => {
       try {
         const resRecords = await api.get(
-          `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          },
+          `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`
         );
 
         const sortedRecords = resRecords.data.data.sort(

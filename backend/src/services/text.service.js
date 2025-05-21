@@ -11,6 +11,7 @@ const Text = require('../models/text');
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
 const Highlight = require('../models/highlight');
+const Class = require('../models/class');
 
 
 const loadForbiddenKeywordsFromJson = () => {
@@ -250,6 +251,12 @@ const getTextById = async (textId) => {
   }
 };
 
+const getClassInfoByStudent = async (classId) => {
+  return await Class.findById(classId)
+    .select('class_name school_name class_keyword')
+    .lean();
+};
+
 
 module.exports = {
   loadForbiddenKeywordsFromJson,
@@ -264,4 +271,5 @@ module.exports = {
   checkAnswer,
   getRecordsByUser,
   getTextById,
+  getClassInfoByStudent,
 };

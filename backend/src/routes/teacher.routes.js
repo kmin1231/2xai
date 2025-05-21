@@ -3,69 +3,17 @@
 const express = require('express');
 const router = express.Router();
 const teacherController = require('../controllers/teacher.controller');
+const { verifyToken } = require('../middleware/auth.middleware');
 
 
-/**
- * @swagger
- * /api/teacher/student:
- *   get:
- *     summary: Get list of students in the same class as the teacher
- *     tags: [Teacher]
- *     responses:
- *       200:
- *         description: List of students
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   username:
- *                     type: string
- *                   name:
- *                     type: string
- *                   level:
- *                     type: string
- *                   class:
- *                     type: string
- *       500:
- *         description: Failed to get students
- */
-router.get('/student', teacherController.getStudents);
+router.get('/classes', verifyToken, teacherController.getTeacherClassListController);
+router.get('/classes/:classId/students', verifyToken, teacherController.getStudentListByClassController);
+router.get('/students/:studentId/records', verifyToken, teacherController.getRecordsByStudentIdController);
 
+router.post('/students/:studentId/level', verifyToken, teacherController.setStudentAssignedLevelController);
+router.post('/classes/:classId/level', verifyToken, teacherController.setClassAssignedLevelController);
 
-/**
- * @swagger
- * /api/teacher/student/{id}/records:
- *   get:
- *     summary: Get learning records of a student
- *     tags: [Teacher]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Student ID
- *     responses:
- *       200:
- *         description: List of student records
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   textId:
- *                     type: string
- *                   isCorrect:
- *                     type: boolean
- *       500:
- *         description: Failed to get student records
- */
-router.get('/student/:id/records', teacherController.getStudentRecords);
+router.post('/classes/:classId/keyword', verifyToken, teacherController.setClassKeywordController);
 
 
 module.exports = router;

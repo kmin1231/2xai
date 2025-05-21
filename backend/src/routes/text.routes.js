@@ -318,6 +318,9 @@ router.post('/highlight', verifyToken,textController.saveHighlightController);
 router.delete('/highlight', verifyToken,textController.deleteHighlightController);
 router.post('/check-answer', verifyToken, textController.checkAnswerController);
 router.get('/records', verifyToken, textController.getUserRecordsController);
+router.get('/class-info', verifyToken, textController.getClassInfoByStudentController);
+
+// [Attention] Static routes should be defined BEFORE dynamic ones!
 router.get('/:textId', verifyToken, textController.getTextByIdController);
 
 

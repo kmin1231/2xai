@@ -14,8 +14,7 @@ const StudentHeader = () => {
   const navigate = useNavigate();
 
   const handleMenuClick = () => {
-    // [check] student result page routing
-    navigate('/student/results');
+    navigate('/student/records');
   };
 
   const handleLogoutClick = () => {

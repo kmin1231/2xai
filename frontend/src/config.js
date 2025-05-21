@@ -54,6 +54,18 @@ const CONFIG = {
       GET_RECORDS: '/records',
     },
   },
+
+  TEACHER: {
+    BASE_URL: `${BASE_URL}/teacher`,
+    ENDPOINTS: {
+      GET_CLASSES: '/classes',
+      GET_CLASS_STUDENTS: (classId) => `/classes/${classId}/students`,
+      GET_STUDENT_RECORDS: (studentId) => `/students/${studentId}/records`,
+      SET_STUDENT_LEVEL: (studentId) => `/students/${studentId}/level`,
+      SET_CLASS_LEVEL: (classId) => `/classes/${classId}/level`,
+      SET_CLASS_KEYWORD: (classId) => `/classes/${classId}/keyword`,
+    },
+  },
 };
 
 export { api };

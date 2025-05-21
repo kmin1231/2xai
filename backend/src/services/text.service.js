@@ -229,6 +229,27 @@ const checkAnswer = (userAnswers, correctAnswers) => {
   });
 };
 
+const getRecordsByUser = async (userId) => {
+  try {
+    const records = await Record.find({ userId });
+    return records;
+  } catch (error) {
+    throw new Error('Error while fetching records: ' + error.message);
+  }
+};
+
+const getTextById = async (textId) => {
+  try {
+    const text = await Text.findById(textId).lean();
+    if (!text) {
+      throw new Error('Text not found');
+    }
+    return text;
+  } catch (error) {
+    throw new Error('Error while fetching text: ' + error.message);
+  }
+};
+
 
 module.exports = {
   loadForbiddenKeywordsFromJson,
@@ -241,6 +262,6 @@ module.exports = {
   deleteHighlight,
   updateLevel,
   checkAnswer,
-
-  // filterText,
+  getRecordsByUser,
+  getTextById,
 };

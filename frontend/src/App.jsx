@@ -14,6 +14,7 @@ import StudentMain from './pages/student/main/StudentMain';
 import CustomLevelKeyword from './pages/student/mode-custom/Keyword';
 import CustomLevelResult from './pages/student/mode-custom/Result';
 import CustomLevelScore from './pages/student/mode-custom/Score';
+import StudentRecords from './pages/student/records/StudentRecords';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/student" element={<StudentMain />} />
+          <Route path="/student/records" element={<StudentRecords />} />
           <Route path="/student/mode/custom" element={<CustomLevelKeyword />} />
           <Route path="/student/mode/custom/result" element={<CustomLevelResult />} />
           <Route path="/student/mode/custom/score" element={<CustomLevelScore />} />

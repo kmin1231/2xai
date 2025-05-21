@@ -51,6 +51,7 @@ const CONFIG = {
       SAVE_HIGHLIGHT: '/highlight',
       DELETE_HIGHLIGHT: '/highlight',
       CHECK_ANSWER: '/check-answer',
+      GET_RECORDS: '/records',
     },
   },
 };

@@ -6,14 +6,15 @@
   --blue-color-2: #588bb2;
   --blue-color-3: #b4cce3;
   --blue-color-4: #e5f2fb;
+  --blue-color-5: #f2f6f9;
   --main-gray-color: #454444;
-  --keyword-button-hover-color: #e7edf0;
+  --keyword-button-hover-color: #cce0eb;
   --khu-color: #8c201e;
-  --gray-button-color: #8d9196;
-  --gray-button-hover-color: #abb5be;
+  --gray-button-color: #323232;
+  --gray-button-hover-color: #99a6b2;
   --border-color: #dbdbdb;
   --placeholder-color: #7a7777;
-  --highlight-color: #e5f2fb;
+  --highlight-color: #dae7f0;
   --primary-font: 'IBM Plex Sans KR', sans-serif;
 }
 

@@ -68,7 +68,7 @@ const Splash = () => {
             variants={letterVariant}
             style={{
               display: 'inline-block',
-              fontSize: '4.5rem',
+              fontSize: '5.0rem',
               marginLeft: '3px',
               marginRight: '3px',
               fontWeight: '700',
@@ -93,10 +93,10 @@ const Splash = () => {
               display: 'inline-block',
               marginLeft: '2px',
               marginRight: '2px',
-              fontSize: '2.2rem',
+              fontSize: '2.5rem',
               fontWeight: '400',
               fontFamily: `'charm', sans-serif`,
-              background: `linear-gradient(135deg,rgb(65, 137, 185), #8aaec5,rgb(183, 211, 233))`,
+              background: `linear-gradient(135deg,rgb(65, 137, 185),rgb(124, 160, 182),rgb(142, 172, 196))`,
               WebkitBackgroundClip: 'text',
               color: 'transparent',
             }}

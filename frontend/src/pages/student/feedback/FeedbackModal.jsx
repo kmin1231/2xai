@@ -22,8 +22,8 @@ const FeedbackModal = ({
   setFinalChoiceIndex,
   onConfirmSelection,
   generations,
-  keyword={keyword},
-  level={level},
+  keyword = { keyword },
+  level = { level },
 }) => {
   const totalPages = generations.length + 1;
 
@@ -36,7 +36,8 @@ const FeedbackModal = ({
     const updated = [...feedbacks];
 
     updated[currentPage] = {
-      feedback: choice,
+      ...updated[currentPage],
+      choice: choice,
       title: currentGeneration?.title,
       passage: currentGeneration?.passage,
     };
@@ -48,25 +49,31 @@ const FeedbackModal = ({
     setFinalChoiceIndex(index);
   };
 
-
   const ConfirmSelection = async () => {
     console.log(generations);
+    event.preventDefault();
 
     const selectedGeneration = generations[finalChoiceIndex];
-    onConfirmSelection(selectedGeneration);
 
     console.log('selected generation index:', finalChoiceIndex);
     console.log('selected generation:', selectedGeneration);
+
+    const payloadFeedbacks = feedbacks.map(f => ({
+      feedback: f.choice,
+      title: f.title,
+      passage: f.passage,
+    }));
 
     try {
       const response = await api.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_FEEDBACK}`, {
           keyword,
           level,
-          feedbacks,
-       }
+          feedbacks: payloadFeedbacks,
+        },
       );
       console.log('Feedback saved successfully:', response.data);
+      onConfirmSelection(selectedGeneration);
     } catch (error) {
       console.error('Error saving feedback:', error);
     }
@@ -101,7 +108,6 @@ const FeedbackModal = ({
             <div className="modal-right">
               <h4>읽기 자료가 마음에 드나요?</h4>
               <button
-
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}
                 onClick={() => handleFeedback('good')}
               >
@@ -137,18 +143,40 @@ const FeedbackModal = ({
                   className={`final-option ${finalChoiceIndex === index ? 'selected' : ''}`}
                 >
                   <p>{gen.passage.slice(0, 200)}...</p>
-                  <button
-                    className="final-select-button"
-                    onClick={() => handleFinalSelect(index)}
-                  >
-                    {index + 1}번 선택
-                  </button>
+
+                  <div className="button-feedback-container">
+                    <button
+                      className="final-select-button"
+                      onClick={() => handleFinalSelect(index)}
+                    >
+                      {index + 1}번 선택
+                    </button>
+
+                    {/* 사용자가 선택한 피드백 표시 */}
+                    {feedbacks[index]?.feedback || feedbacks[index]?.choice ? (
+                      <p className="user-feedback">
+                        {
+                          {
+                            good: '😎 적당해요',
+                            too_easy: '😌 너무 쉬워요',
+                            too_hard: '😩 너무 어려워요',
+                            not_interesting: '😐 흥미롭지 않아요',
+                          }[
+                            feedbacks[index]?.feedback ||
+                              feedbacks[index]?.choice
+                          ]
+                        }
+                      </p>
+                    ) : null}
+                  </div>
                 </li>
               ))}
             </ul>
+
             <button
+              type="button"
               className="confirm-btn"
-              disabled={finalChoiceIndex === null}
+              disabled={finalChoiceIndex === null || finalChoiceIndex === undefined || finalChoiceIndex < 0}
               onClick={ConfirmSelection}
             >
               문제 풀기
@@ -159,6 +187,7 @@ const FeedbackModal = ({
 
       <div className="modal-footer">
         <button
+          className="move-btn"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
         >
@@ -166,6 +195,7 @@ const FeedbackModal = ({
         </button>
         {currentPage < totalPages - 1 && (
           <button
+            className="move-btn"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
             }

@@ -171,6 +171,14 @@ const saveHighlight = async (highlightData) => {
   }
 };
 
+const deleteHighlight = async (userId, text) => {
+  try {
+    const result = await Highlight.findOneAndDelete({ userId, text });
+    return result;
+  } catch (error) {
+    throw new Error('Error while deleting highlight: ' + error.message);
+  }
+};
 
 const updateLevel = async (userId, score) => {
   const user = await User.findById(userId);
@@ -230,6 +238,7 @@ module.exports = {
   saveFeedback,
   generateFeedbackData,
   saveHighlight,
+  deleteHighlight,
   updateLevel,
   checkAnswer,
 

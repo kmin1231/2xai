@@ -174,6 +174,30 @@ exports.saveHighlightController = async (req, res) => {
 };
 
 
+// DELETE /api/text/highlight
+exports.deleteHighlightController = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { text } = req.body;
+
+    if (!text) {
+      return res.status(400).json({ message: 'Text is required to delete highlight.' });
+    }
+
+    const result = await textService.deleteHighlight(userId, text);
+
+    if (!result) {
+      return res.status(404).json({ message: 'Highlight not found.' });
+    }
+
+    res.status(200).json({ message: 'Highlight deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting highlight:', error.message);
+    res.status(500).json({ message: 'Failed to delete highlight', error: error.message });
+  }
+};
+
+
 // POST /api/text/check-answer
 exports.checkAnswerController = async (req, res) => {
 

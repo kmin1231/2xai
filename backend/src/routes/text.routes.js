@@ -315,6 +315,7 @@ router.get('/test', textController.testTextConnection);
 
 router.post('/feedback', verifyToken, textController.saveFeedbackController);
 router.post('/highlight', verifyToken,textController.saveHighlightController);
+router.delete('/highlight', verifyToken,textController.deleteHighlightController);
 router.post('/check-answer', verifyToken, textController.checkAnswerController);
 
 router.get('/filter', textController.filterText);

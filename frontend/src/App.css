@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.Toastify__toast-body {
+  display: flex;
+  align-items: center;
+}
+
+.Toastify__toast-icon {
+  margin-right: 6px;
+}

@@ -49,6 +49,7 @@ const CONFIG = {
       GENERATE_TEXT_LOW: '/generate-text-low',
       SAVE_FEEDBACK: '/feedback',
       SAVE_HIGHLIGHT: '/highlight',
+      DELETE_HIGHLIGHT: '/highlight',
       CHECK_ANSWER: '/check-answer',
     },
   },

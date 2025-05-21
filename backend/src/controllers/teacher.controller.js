@@ -51,3 +51,54 @@ exports.getRecordsByStudentIdController = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch records', error: error.message });
   }
 };
+
+
+// GET /api/teacher/classes/:classId/level
+exports.setStudentAssignedLevelController = async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied. Only teachers allowed.' });
+    }
+
+    const { studentId } = req.params;
+    const { assigned_level } = req.body;
+
+    if (!assigned_level) {
+      return res.status(400).json({ message: 'assigned_level is required' });
+    }
+
+    const result = await teacherService.setStudentAssignedLevel(studentId, assigned_level);
+    res.status(200).json({ message: 'Assigned level updated successfully', data: result });
+
+  } catch (error) {
+    console.error('Error updating assigned level:', error.message);
+    res.status(500).json({ message: 'Failed to update assigned level', error: error.message });
+  }
+};
+
+
+exports.setClassAssignedLevelController = async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied. Only teachers allowed.' });
+    }
+
+    const teacherId = req.user.userId;
+    const { classId } = req.params;
+    const { assigned_level } = req.body;
+
+    if (!assigned_level) {
+      return res.status(400).json({ message: 'assigned_level is required' });
+    }
+
+    const result = await teacherService.setClassAssignedLevel(teacherId, classId, assigned_level);
+    res.status(200).json({
+      message: `All students in class ${classId} updated to '${assigned_level}'`,
+      modifiedCount: result.modifiedCount
+    });
+
+  } catch (error) {
+    console.error('Error in bulk level assignment:', error.message);
+    res.status(500).json({ message: 'Failed to update levels', error: error.message });
+  }
+};

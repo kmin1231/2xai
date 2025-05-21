@@ -249,7 +249,7 @@ exports.checkAnswerController = async (req, res) => {
 };
 
 
-// POST /api/text/records
+// GET /api/text/records
 exports.getUserRecordsController = async (req, res) => {
   try {
     const { userId } = req.user;

@@ -106,7 +106,7 @@ const StudentRecords = () => {
                   <td>{text?.title || '-'}</td>
                   <td>{shortPassage || '-'}</td>
                   <td>
-                    {moment(record.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                    {moment(record.createdAt).utcOffset(9 * 60).format('YYYY-MM-DD HH:mm:ss')}
                   </td>
                   <td>
                     {record.correctness.map((isCorrect, i) => (

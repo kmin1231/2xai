@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import StudentRecordsHeader from './RecordsHeader';
+import TextDetailModal from './TextDetailModal';
+import { handleDownload } from '@/utils/download-text';
 import './student-records.css';
 
 import { api } from '@/config';
@@ -13,6 +15,7 @@ const StudentRecords = () => {
   const [records, setRecords] = useState([]);
   const [textsMap, setTextsMap] = useState({});
   const [loading, setLoading] = useState(true);
+  const [selectedText, setSelectedText] = useState(null);
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -75,92 +78,63 @@ const StudentRecords = () => {
     <div className="records-page-container">
       <StudentRecordsHeader />
       <div className="records-container">
-        {records.length === 0 ? (
-          <p>학습 기록이 없습니다.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>키워드</th>
-                <th>난이도</th>
-                <th>지문 제목</th>
-                <th>지문</th>
-                <th>문제</th>
-                <th>정답</th>
-                <th>풀이</th>
-                <th>시간</th>
-                <th>결과</th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((record, idx) => {
-                const text = textsMap[record.textId];
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>키워드</th>
+              <th>난이도</th>
+              <th>지문 제목</th>
+              <th>지문</th>
+              <th>시간</th>
+              <th>결과</th>
+            </tr>
+          </thead>
+          <tbody>
+            {records.map((record, idx) => {
+              const text = textsMap[record.textId];
+              const shortPassage = (text?.passage || '').replace(/\n/g, ' ').slice(0, 200) || '-';
 
-                return (
-                  <tr key={record._id}>
-                    <td>{idx + 1}</td>
-                    <td>{text?.keyword || '-'}</td>
-                    <td>{text?.level || '-'}</td>
-                    <td>{text?.title || '-'}</td>
-                    <td
-                      style={{
-                        whiteSpace: 'pre-wrap',
-                        wordBreak: 'break-word',
-                      }}
-                    >
-                      {text?.passage || '-'}
-                    </td>
-                    <td>
-                      {text?.question
-                        ? text.question.map((q, i) => (
-                            <div key={i}>
-                              Q{i + 1}: {q}
-                            </div>
-                          ))
-                        : '-'}
-                    </td>
-                    <td>
-                      {text?.answer
-                        ? text.answer.map((a, i) => (
-                            <div key={i}>
-                              Q{i + 1}. {a}
-                            </div>
-                          ))
-                        : '-'}
-                    </td>
-                    <td>
-                      {text?.solution
-                        ? text.solution.map((s, i) => (
-                            <div key={i}>
-                              Q{i + 1}. {s}
-                            </div>
-                          ))
-                        : '-'}
-                    </td>
-                    <td>
-                      {moment(record.createdAt).format('YYYY-MM-DD HH:mm:ss')}
-                    </td>
-                    <td>
-                      {record.correctness.map((isCorrect, i) => (
-                        <span
-                          key={i}
-                          style={{
-                            color: isCorrect ? 'green' : 'red',
-                            marginRight: 4,
-                          }}
-                        >
-                          {isCorrect ? 'O' : 'X'}
-                        </span>
-                      ))}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+              return (
+                <tr key={record._id} onClick={() => setSelectedText(text)}>
+                  {' '}
+
+                  {/* open TextDetailModal */}
+                  <td>{idx + 1}</td>
+                  <td>{text?.keyword || '-'}</td>
+                  <td>{text?.level || '-'}</td>
+                  <td>{text?.title || '-'}</td>
+                  <td>{shortPassage || '-'}</td>
+                  <td>
+                    {moment(record.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                  </td>
+                  <td>
+                    {record.correctness.map((isCorrect, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          color: isCorrect ? 'green' : 'red',
+                          marginRight: 4,
+                        }}
+                      >
+                        {isCorrect ? 'O' : 'X'}
+                      </span>
+                    ))}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+
+      {selectedText && (
+        <TextDetailModal
+          text={selectedText}
+          onClose={() => setSelectedText(null)}
+          onDownload={(type) => handleDownload(selectedText, type)}
+        />
+      )}
     </div>
   );
 };

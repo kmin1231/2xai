@@ -1,0 +1,76 @@
+/* src/pages/student/records/text-detail-modal.css */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90vw;
+  max-width: 700px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.download-btn {
+  background-color: var(--blue-color-5);
+  border: none;
+}
+
+.download-btn:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.modal-body {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-left: 30px;
+  padding-right: 35px;
+}
+
+.modal-body section {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-body hr {
+  border: none;
+  border-top: 1px solid #e3e2e2;
+  height: 0;
+  margin: 0px 0;
+  background: none;
+  width: 80%;
+}

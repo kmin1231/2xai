@@ -73,3 +73,13 @@ exports.setClassAssignedLevel = async (teacherId, classId, assignedLevel) => {
 
   return result;
 };
+
+
+exports.setClassKeyword = async (classId, keyword) => {
+  const updatedClass = await Class.findByIdAndUpdate(
+    classId,
+    { class_keyword: keyword },
+    { new: true }
+  );
+  return updatedClass;
+};

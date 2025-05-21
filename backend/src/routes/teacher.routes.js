@@ -13,5 +13,7 @@ router.get('/students/:studentId/records', verifyToken, teacherController.getRec
 router.post('/students/:studentId/level', verifyToken, teacherController.setStudentAssignedLevelController);
 router.post('/classes/:classId/level', verifyToken, teacherController.setClassAssignedLevelController);
 
+router.post('/classes/:classId/keyword', verifyToken, teacherController.setClassKeywordController);
+
 
 module.exports = router;

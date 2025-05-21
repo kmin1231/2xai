@@ -53,7 +53,7 @@ exports.getRecordsByStudentIdController = async (req, res) => {
 };
 
 
-// GET /api/teacher/classes/:classId/level
+// GET /api/teacher/students/:studentId/level
 exports.setStudentAssignedLevelController = async (req, res) => {
   try {
     if (req.user.role !== 'teacher') {
@@ -77,6 +77,7 @@ exports.setStudentAssignedLevelController = async (req, res) => {
 };
 
 
+// GET /api/teacher/classes/:classId/level
 exports.setClassAssignedLevelController = async (req, res) => {
   try {
     if (req.user.role !== 'teacher') {
@@ -100,5 +101,33 @@ exports.setClassAssignedLevelController = async (req, res) => {
   } catch (error) {
     console.error('Error in bulk level assignment:', error.message);
     res.status(500).json({ message: 'Failed to update levels', error: error.message });
+  }
+};
+
+
+// POST /api/teacher/classes/:classId/keyword
+exports.setClassKeywordController = async (req, res) => {
+  try {
+    const { classId } = req.params;
+    const { keyword } = req.body;
+
+    // authorization check (role-based)
+    if (req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied. Only teachers can set class keywords.' });
+    }
+
+    const updatedClass = await teacherService.setClassKeyword(classId, keyword);
+
+    if (!updatedClass) {
+      return res.status(404).json({ message: 'Class not found' });
+    }
+
+    return res.status(200).json({
+      message: 'Keyword updated successfully',
+      data: updatedClass
+    });
+  } catch (error) {
+    console.error('Error in setClassKeywordController:', error);
+    return res.status(500).json({ message: 'Failed to update keyword' });
   }
 };

@@ -93,31 +93,28 @@ const CustomLevelScore = () => {
           <table className="score-table">
             <thead>
               <tr>
-                <th style={{ maxWidth: '5vw' }}>No.</th>
-                <th style={{ minWidth: '5vw' }}>내 답변</th>
-                <th style={{ minWidth: '5vw' }}>정답</th>
-                <th style={{ minWidth: '5vw' }}>결과</th>
-                <th style={{ minWidth: '10vw' }}>풀이</th>
+                <th className="col-no">No.</th>
+                <th className="col-my-answer">내 답변</th>
+                <th className="col-correct-answer">정답</th>
+                <th className="col-result">결과</th>
+                <th className="col-solution">풀이</th>
               </tr>
             </thead>
 
             <tbody>
               {correctness.map((isCorrect, index) => (
                 <tr key={index}>
-                  <td style={{ minWidth: '100px', fontWeight: 'bold' }}>
-                    Q{index + 1}
-                  </td>
-                  <td style={{ minWidth: '100px' }}>
+                  <td className="col-no">Q{index + 1}</td>
+                  <td className="col-my-answer">
                     {typeof userAnswer?.[index] === 'number'
                       ? String.fromCharCode(97 + userAnswer[index])
                       : userAnswer?.[index]}
                   </td>
-                  <td style={{ minWidth: '100px' }}>{answers[index]}</td>
-                  <td style={{ minWidth: '100px' }}>
-                    {getAnswerSymbol(isCorrect)}
-                  </td>
-                  <td style={{ minWidth: '100px' }}>
+                  <td className="col-correct-answer">{answers[index]}</td>
+                  <td className="col-result">{getAnswerSymbol(isCorrect)}</td>
+                  <td className="col-solution">
                     <button
+                      className="solution-view-btn"
                       onClick={() =>
                         openModal(question[index], solutions[index], index)
                       }

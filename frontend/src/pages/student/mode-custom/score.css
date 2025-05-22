@@ -12,17 +12,47 @@
 
 .score-table {
   max-width: 90vw;
-  width: 100%;
+  width: 100% !important;
   border-collapse: collapse;
-  margin-top: 2rem;
+  margin-top: 1.0rem;
+  table-layout: fixed;
 }
 
-th {
-  font-size: 18px;
+.score-table th {
+  max-height: 3vh;
 }
 
-th, td {
-  padding: 8px 0px;
+.score-table td {
+  max-height: 3vh;
+}
+
+.score-table th,
+.score-table td {
+  padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-table tbody tr {
+  background-color: transparent !important;
+}
+
+/* score table column width */
+.col-no { width: 5% !important; }
+.col-my-answer { width: 10% !important; }
+.col-correct-answer { width: 10% !important; }
+.col-result { width: 10% !important; }
+.col-solution { width: 15% !important; }
+
+.solution-view-btn {
+  background-color: var(--blue-color-5);
+  border: none;
+  cursor: pointer;
+}
+
+.solution-view-btn:hover {
+  background-color: var(--keyword-button-hover-color);
 }
 
 .solution-modal-content {
@@ -46,6 +76,7 @@ th, td {
   border: none;
   max-height: 6vh;
   padding: 0 0;
+  background-color: var(--blue-color-5);
 }
 
 .solution-close-btn:hover {

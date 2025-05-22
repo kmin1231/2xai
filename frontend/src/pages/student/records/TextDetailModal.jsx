@@ -35,7 +35,7 @@ const TextDetailModal = ({ text, onClose, onDownload }) => {
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="text-detail-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-buttons">
           <button className="download-btn" onClick={() => onDownload('txt')}>
             ⬇️ TXT 다운로드

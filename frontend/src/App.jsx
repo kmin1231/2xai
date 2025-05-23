@@ -15,6 +15,7 @@ import CustomLevelKeyword from './pages/student/mode-custom/Keyword';
 import CustomLevelResult from './pages/student/mode-custom/Result';
 import CustomLevelScore from './pages/student/mode-custom/Score';
 import StudentRecords from './pages/student/records/StudentRecords';
+import TeacherMain from './pages/teacher/main/TeacherMain';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/student/mode/custom" element={<CustomLevelKeyword />} />
           <Route path="/student/mode/custom/result" element={<CustomLevelResult />} />
           <Route path="/student/mode/custom/score" element={<CustomLevelScore />} />
+          <Route path="/teacher" element={<TeacherMain />} />
         </Routes>
 
         <ToastContainer position="bottom-center" autoClose={3000} />

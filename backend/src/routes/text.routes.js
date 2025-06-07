@@ -7,7 +7,7 @@ const { verifyToken } = require('../middleware/auth.middleware');
 
 /**
  * @swagger
- * /api/text/validate-keyword:
+ * /api/text/keywords/validate:
  *   post:
  *     summary: Validate if the given keyword is allowed (must not include any forbidden terms)
  *     tags: [Text]
@@ -54,7 +54,7 @@ const { verifyToken } = require('../middleware/auth.middleware');
  *                   type: string
  *                   example: '키워드 검증 중 오류가 발생했습니다.'
  */
-router.post('/validate-keyword', textController.validateKeyword);
+router.post('/keywords/validate', textController.validateKeyword);
 
 
 /**
@@ -313,15 +313,207 @@ router.post('/generate-text-low', textController.generateTextLow);
 router.get('/test', textController.testTextConnection);
 
 
+/**
+ * @swagger
+ * /api/text/feedback:
+ *   post:
+ *     summary: Save user feedback on a text
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *               level:
+ *                 type: string
+ *               feedbacks:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Feedback saved successfully
+ *       500:
+ *         description: Failed to save feedback
+ */
 router.post('/feedback', verifyToken, textController.saveFeedbackController);
+
+
+/**
+ * @swagger
+ * /api/text/highlight:
+ *   post:
+ *     summary: Save highlighted text
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Highlight saved successfully
+ *       400:
+ *         description: Text is required
+ *       500:
+ *         description: Failed to save highlight
+ */
 router.post('/highlight', verifyToken,textController.saveHighlightController);
+
+
+/**
+ * @swagger
+ * /api/text/highlight:
+ *   delete:
+ *     summary: Delete a user's highlighted text
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Highlight deleted successfully
+ *       400:
+ *         description: Text is required
+ *       404:
+ *         description: Highlight not found
+ *       500:
+ *         description: Failed to delete highlight
+ */
 router.delete('/highlight', verifyToken,textController.deleteHighlightController);
-router.post('/check-answer', verifyToken, textController.checkAnswerController);
+
+
+/**
+ * @swagger
+ * /api/text/answers/verify:
+ *   post:
+ *     summary: Check user answer and return score and correctness
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *               level:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               passage:
+ *                 type: string
+ *               question:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               answer:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               solution:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               userAnswer:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Answers checked successfully
+ *       500:
+ *         description: Failed to check answers
+ */
+router.post('/answers/verify', verifyToken, textController.checkAnswerController);
+
+
+/**
+ * @swagger
+ * /api/text/records:
+ *   get:
+ *     summary: Get records of the current user
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User records fetched successfully
+ *       500:
+ *         description: Failed to fetch records
+ */
 router.get('/records', verifyToken, textController.getUserRecordsController);
+
+
+/**
+ * @swagger
+ * /api/text/class-info:
+ *   get:
+ *     summary: Get class info for the current student
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Class info fetched successfully
+ *       400:
+ *         description: Student is not assigned to any class
+ *       403:
+ *         description: Only students can access class info
+ *       404:
+ *         description: Class not found
+ *       500:
+ *         description: Failed to fetch class info
+ */
 router.get('/class-info', verifyToken, textController.getClassInfoByStudentController);
 
+
 // [Attention] Static routes should be defined BEFORE dynamic ones!
-router.get('/:textId', verifyToken, textController.getTextByIdController);
+/**
+ * @swagger
+ * /api/text/contents/{textId}:
+ *   get:
+ *     summary: Get text by its ID
+ *     tags: [Text]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: textId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the text
+ *     responses:
+ *       200:
+ *         description: Text fetched successfully
+ *       500:
+ *         description: Failed to fetch text
+ */
+router.get('/contents/:textId', verifyToken, textController.getTextByIdController);
 
 
 module.exports = router;

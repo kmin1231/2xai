@@ -6,7 +6,7 @@ const Class = require('../models/class')
 const Text = require('../models/text');
 const Record = require('../models/record');
 
-// POST /api/text/validate-keyword
+// POST /api/text/keywords/validate
 exports.validateKeyword = (req, res) => {
   const { keyword } = req.body;
 
@@ -103,32 +103,6 @@ exports.testTextConnection = async (req, res) => {
 };
 
 
-// GET /api/text/filter 
-exports.filterText = async (req, res) => {
-  const { keyword, level, userId } = req.query;
-
-  try {
-    let text = await textService.filterText(keyword, level);
-
-    if (!text) {
-      text = await textService.requestGeneration(keyword, level);
-    }
-
-    const userRecord = await textService.checkRecord(userId, text._id);
-
-    if (userRecord) {
-      const externalText = await textService.requestGeneration(keyword, level);
-      return res.status(200).json(externalText);
-    }
-
-    return res.status(200).json(text);
-
-  } catch (error) {
-    return res.status(500).json({ message: 'Failed to filter text.', error });
-  }
-};
-
-
 // POST /api/text/feedback
 exports.saveFeedbackController = async (req, res) => {
   try {
@@ -200,7 +174,7 @@ exports.deleteHighlightController = async (req, res) => {
 };
 
 
-// POST /api/text/check-answer
+// POST /api/text/answers/verify
 exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
@@ -266,7 +240,7 @@ exports.getUserRecordsController = async (req, res) => {
 };
 
 
-// GET /api/text/:textId
+// GET /api/text/contents/:textId
 exports.getTextByIdController = async (req, res) => {
   try {
     const { textId } = req.params;
@@ -296,7 +270,6 @@ exports.getClassInfoByStudentController = async (req, res) => {
       return res.status(400).json({ message: 'Student is not assigned to any class.' });
     }
 
-    // Class 정보 조회
     const classInfo = await Class.findById(user.class_id);
 
     if (!classInfo) {
@@ -311,5 +284,31 @@ exports.getClassInfoByStudentController = async (req, res) => {
   } catch (error) {
     console.error('Error in getClassInfoByStudentController:', error);
     return res.status(500).json({ message: 'Failed to fetch class info', error: error.message });
+  }
+};
+
+
+// GET /api/text/filter
+exports.filterText = async (req, res) => {
+  const { keyword, level, userId } = req.query;
+
+  try {
+    let text = await textService.filterText(keyword, level);
+
+    if (!text) {
+      text = await textService.requestGeneration(keyword, level);
+    }
+
+    const userRecord = await textService.checkRecord(userId, text._id);
+
+    if (userRecord) {
+      const externalText = await textService.requestGeneration(keyword, level);
+      return res.status(200).json(externalText);
+    }
+
+    return res.status(200).json(text);
+
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to filter text.', error });
   }
 };

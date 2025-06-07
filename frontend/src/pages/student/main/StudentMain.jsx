@@ -12,17 +12,17 @@ const StudentMain = () => {
   const modes = [
     {
       title: '맞춤형 난이도',
-      action: () => navigate('/student/mode/custom'),
+      action: () => navigate('/student/mode/personal'),
     },
 
     {
       title: '난이도 직접 설정',
-      action: () => navigate('/student/mode/select'),
+      action: () => navigate('/student/mode/manual'),
     },
 
     {
       title: '선생님 추천 난이도',
-      action: () => navigate('/student/mode/recommend'),
+      action: () => navigate('/student/mode/assigned'),
     },
   ];
 

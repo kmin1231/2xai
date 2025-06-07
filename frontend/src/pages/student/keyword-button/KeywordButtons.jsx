@@ -1,4 +1,4 @@
-// src/pages/student/keywords/KeywordButtons.jsx
+// src/pages/student/keyword-button/KeywordButtons.jsx
 
 import React from 'react';
 

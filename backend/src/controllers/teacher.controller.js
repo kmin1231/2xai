@@ -6,7 +6,7 @@ const teacherService = require('../services/teacher.service');
 // GET /api/teacher/class-list
 exports.getTeacherClassListController = async (req, res) => {
   try {
-    const teacherId = req.user.userId;  // verifyToken에서 저장된 정보 사용
+    const teacherId = req.user.userId;
     const classes = await teacherService.getTeacherClassList(teacherId);
     res.json(classes);
   } catch (err) {

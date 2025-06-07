@@ -1,6 +1,6 @@
 # test/main.py
 
-from fastapi import FastAPI, HTTPException, Depends, Security
+from fastapi import FastAPI, HTTPException, Depends, Security, Query, Path
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, conlist
@@ -179,121 +179,167 @@ async def get_swagger():
 
 ###
 
-@app.post("/generate/low", response_model=SampleResponse)
-async def generate_low(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("inferred_level")
+@app.post("/generate/{level}", response_model=SampleResponse)
+async def generate_contents(
+    request: RequestModel,
+    level: str = Path(..., description="Target level: low, middle, high"),
+    type: str = Query(..., regex="^(inferred|assigned|selected)$"),
+    user_info: dict = Depends(verify_token)
+):
+    if type == "inferred":
+        user_level = user_info["inferred_level"]
+    elif type == "assigned":
+        user_level = user_info["assigned_level"]
+    elif type == "selected":
+        user_level = level.lower()
+    else:
+        raise HTTPException(status_code=400, detail="Invalid type")
 
-    if user_level != "low":
-        raise HTTPException(status_code=403, detail="User does not have access to 'low' level")
+    if type != "selected" and user_level != level.lower():
+        raise HTTPException(status_code=403, detail=f"Access denied to {level} level with current mode: {type}")
 
     try:
-        file_path = get_file_path_by_level("low", request.keyword)
+        file_path = get_file_path_by_level(level.lower(), request.keyword)
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
-        # print(f"Loaded data: {data}")
-        
-        # keyword check
-        if normalize(request.keyword) != normalize(data.get("keyword", "")):
-            logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
-            raise HTTPException(status_code=400, detail="Invalid keyword provided.")
 
-        response_data = SampleResponse(
+        if normalize(request.keyword) != normalize(data.get("keyword", "")):
+            raise HTTPException(status_code=400, detail="Keyword mismatch")
+
+        return SampleResponse(
             keyword=request.keyword,
-            level=user_level,
-            generation0=Generation(**data.get("generation0")),
-            generation1=Generation(**data.get("generation1")),
-            generation2=Generation(**data.get("generation2"))
+            level=level,
+            generation0=Generation(**data["generation0"]),
+            generation1=Generation(**data["generation1"]),
+            generation2=Generation(**data["generation2"]),
         )
 
-        return response_data
-
     except ValueError as ve:
-        logger.error(str(ve))
         raise HTTPException(status_code=400, detail=str(ve))
     except FileNotFoundError:
-        logger.error(f"File not found: {file_path}")
-        raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
+        raise HTTPException(status_code=500, detail="Data file missing")
     except json.JSONDecodeError:
-        logger.error("Error decoding JSON data.")
-        raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")
+        raise HTTPException(status_code=500, detail="Failed to parse data")
 
 
 ###
 
 
-@app.post("/generate/middle", response_model=SampleResponse)
-async def generate_middle(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("inferred_level")
+# @app.post("/generate/low", response_model=SampleResponse)
+# async def generate_low(request: RequestModel, user_info: dict = Depends(verify_token)):
+#     user_level = user_info.get("inferred_level")
 
-    if user_level != "middle":
-        raise HTTPException(status_code=403, detail="User does not have access to 'middle' level")
+#     if user_level != "low":
+#         raise HTTPException(status_code=403, detail="User does not have access to 'low' level")
 
-    try:
-        file_path = get_file_path_by_level("middle", request.keyword)
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+#     try:
+#         file_path = get_file_path_by_level("low", request.keyword)
+#         with open(file_path, "r", encoding="utf-8") as f:
+#             data = json.load(f)
         
-        if normalize(request.keyword) != normalize(data.get("keyword", "")):
-            logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
-            raise HTTPException(status_code=400, detail="Invalid keyword provided.")
+#         # print(f"Loaded data: {data}")
+        
+#         # keyword check
+#         if normalize(request.keyword) != normalize(data.get("keyword", "")):
+#             logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
+#             raise HTTPException(status_code=400, detail="Invalid keyword provided.")
 
-        response_data = SampleResponse(
-            keyword=request.keyword,
-            level=user_level,
-            generation0=Generation(**data.get("generation0")),
-            generation1=Generation(**data.get("generation1")),
-            generation2=Generation(**data.get("generation2"))
-        )
+#         response_data = SampleResponse(
+#             keyword=request.keyword,
+#             level=user_level,
+#             generation0=Generation(**data.get("generation0")),
+#             generation1=Generation(**data.get("generation1")),
+#             generation2=Generation(**data.get("generation2"))
+#         )
 
-        return response_data
+#         return response_data
 
-    except ValueError as ve:
-        logger.error(str(ve))
-        raise HTTPException(status_code=400, detail=str(ve))
-    except FileNotFoundError:
-        logger.error(f"File not found: {file_path}")
-        raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
-    except json.JSONDecodeError:
-        logger.error("Error decoding JSON data.")
-        raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")
+#     except ValueError as ve:
+#         logger.error(str(ve))
+#         raise HTTPException(status_code=400, detail=str(ve))
+#     except FileNotFoundError:
+#         logger.error(f"File not found: {file_path}")
+#         raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
+#     except json.JSONDecodeError:
+#         logger.error("Error decoding JSON data.")
+#         raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")
 
 
 ###
 
 
-@app.post("/generate/high", response_model=SampleResponse)
-async def generate_high(request: RequestModel, user_info: dict = Depends(verify_token)):
-    user_level = user_info.get("inferred_level")
+# @app.post("/generate/middle", response_model=SampleResponse)
+# async def generate_middle(request: RequestModel, user_info: dict = Depends(verify_token)):
+#     user_level = user_info.get("inferred_level")
 
-    if user_level != "high":
-        raise HTTPException(status_code=403, detail="User does not have access to 'high' level")
+#     if user_level != "middle":
+#         raise HTTPException(status_code=403, detail="User does not have access to 'middle' level")
 
-    try:
-        file_path = get_file_path_by_level("high", request.keyword)
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        
-        if normalize(request.keyword) != normalize(data.get("keyword", "")):
-            logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
-            raise HTTPException(status_code=400, detail="Invalid keyword provided.")
+#     try:
+#         file_path = get_file_path_by_level("middle", request.keyword)
+#         with open(file_path, "r", encoding="utf-8") as f:
+#             data = json.load(f)
 
-        response_data = SampleResponse(
-            keyword=request.keyword,
-            level=user_level,
-            generation0=Generation(**data.get("generation0")),
-            generation1=Generation(**data.get("generation1")),
-            generation2=Generation(**data.get("generation2"))
-        )
+#         if normalize(request.keyword) != normalize(data.get("keyword", "")):
+#             logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
+#             raise HTTPException(status_code=400, detail="Invalid keyword provided.")
 
-        return response_data
+#         response_data = SampleResponse(
+#             keyword=request.keyword,
+#             level=user_level,
+#             generation0=Generation(**data.get("generation0")),
+#             generation1=Generation(**data.get("generation1")),
+#             generation2=Generation(**data.get("generation2"))
+#         )
 
-    except ValueError as ve:
-        logger.error(str(ve))
-        raise HTTPException(status_code=400, detail=str(ve))
-    except FileNotFoundError:
-        logger.error(f"File not found: {file_path}")
-        raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
-    except json.JSONDecodeError:
-        logger.error("Error decoding JSON data.")
-        raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")
+#         return response_data
+
+#     except ValueError as ve:
+#         logger.error(str(ve))
+#         raise HTTPException(status_code=400, detail=str(ve))
+#     except FileNotFoundError:
+#         logger.error(f"File not found: {file_path}")
+#         raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
+#     except json.JSONDecodeError:
+#         logger.error("Error decoding JSON data.")
+#         raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")
+
+
+###
+
+
+# @app.post("/generate/high", response_model=SampleResponse)
+# async def generate_high(request: RequestModel, user_info: dict = Depends(verify_token)):
+#     user_level = user_info.get("inferred_level")
+
+#     if user_level != "high":
+#         raise HTTPException(status_code=403, detail="User does not have access to 'high' level")
+
+#     try:
+#         file_path = get_file_path_by_level("high", request.keyword)
+#         with open(file_path, "r", encoding="utf-8") as f:
+#             data = json.load(f)
+
+#         if normalize(request.keyword) != normalize(data.get("keyword", "")):
+#             logger.error(f"Keyword mismatch: expected {data.get('keyword')}, got {request.keyword}")
+#             raise HTTPException(status_code=400, detail="Invalid keyword provided.")
+
+#         response_data = SampleResponse(
+#             keyword=request.keyword,
+#             level=user_level,
+#             generation0=Generation(**data.get("generation0")),
+#             generation1=Generation(**data.get("generation1")),
+#             generation2=Generation(**data.get("generation2"))
+#         )
+
+#         return response_data
+
+#     except ValueError as ve:
+#         logger.error(str(ve))
+#         raise HTTPException(status_code=400, detail=str(ve))
+#     except FileNotFoundError:
+#         logger.error(f"File not found: {file_path}")
+#         raise HTTPException(status_code=500, detail="Internal server error. Data file missing.")
+#     except json.JSONDecodeError:
+#         logger.error("Error decoding JSON data.")
+#         raise HTTPException(status_code=500, detail="Internal server error. Failed to parse data.")

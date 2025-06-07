@@ -1,12 +1,12 @@
-// src/pages/student/mode-custom/Score.jsx
+// src/pages/student/keyword-learning/KeywordScore.jsx
 
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import StudentHeader from '../header/StudentHeader';
-import './score.css';
+import './keyword-score.css';
 
-const CustomLevelScore = () => {
+const KeywordScore = () => {
   const location = useLocation();
   const [score, setScore] = useState(0);
   const [correctness, setCorrectness] = useState([]);
@@ -188,7 +188,7 @@ const CustomLevelScore = () => {
   );
 };
 
-export default CustomLevelScore;
+export default KeywordScore;
 
 const styles = {
   overlay: {

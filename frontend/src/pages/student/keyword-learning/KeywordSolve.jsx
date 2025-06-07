@@ -1,4 +1,4 @@
-// src/pages/student/mode-custom/Result.jsx
+// src/pages/student/keyword-learning/KeywordSolve.jsx
 
 import React, { useState, useEffect, useRef } from 'react';
 import FeedbackModal from '../feedback/FeedbackModal';
@@ -11,9 +11,9 @@ import CONFIG from '@/config';
 import StudentHeader from '../header/StudentHeader';
 import { HighlightToast, HighlightUndoToast } from '../toast/HighlightToast';
 
-import './result.css';
+import './keyword-solve.css';
 
-const CustomLevelResult = () => {
+const KeywordSolve = () => {
   const location = useLocation();
   const apiResponseData = location.state?.data;
 
@@ -203,7 +203,7 @@ const CustomLevelResult = () => {
       );
       console.log('Requested successfully:', response.data);
 
-      navigate('/student/mode/custom/score', {
+      navigate('/student/mode/${mode}/score', {
         state: {
           score: response.data.score,
           correctness: response.data.correctness,
@@ -315,4 +315,4 @@ const CustomLevelResult = () => {
   );
 };
 
-export default CustomLevelResult;
+export default KeywordSolve;

@@ -47,11 +47,13 @@ const CONFIG = {
       VALIDATE_KEYWORD: '/keywords/validate',
       GENERATE_TEXT: '/generate-text',
       GENERATE_TEXT_LOW: '/generate-text-low',
+      GENERATE_TEXT_CONTENTS: '/contents',
       SAVE_FEEDBACK: '/feedback',
       SAVE_HIGHLIGHT: '/highlight',
       DELETE_HIGHLIGHT: '/highlight',
       CHECK_ANSWER: '/answers/verify',
       GET_RECORDS: '/records',
+      CONTENTS_BY_ID: (textId) => `/contents/${textId}`,
     },
   },
 

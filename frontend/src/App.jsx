@@ -11,9 +11,9 @@ import '@fontsource/ibm-plex-sans-kr/700.css';
 import SplashPage from './pages/splash/Splash';
 import Login from './pages/login/Login';
 import StudentMain from './pages/student/main/StudentMain';
-import CustomLevelKeyword from './pages/student/mode-custom/Keyword';
-import CustomLevelResult from './pages/student/mode-custom/Result';
-import CustomLevelScore from './pages/student/mode-custom/Score';
+import KeywordInput from './pages/student/keyword-learning/KeywordInput';
+import KeywordSolve from './pages/student/keyword-learning/KeywordSolve';
+import KeywordScore from './pages/student/keyword-learning/KeywordScore';
 import StudentRecords from './pages/student/records/StudentRecords';
 
 import TeacherMain from './pages/teacher/main/TeacherMain';
@@ -28,9 +28,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/student" element={<StudentMain />} />
           <Route path="/student/records" element={<StudentRecords />} />
-          <Route path="/student/mode/custom" element={<CustomLevelKeyword />} />
-          <Route path="/student/mode/custom/result" element={<CustomLevelResult />} />
-          <Route path="/student/mode/custom/score" element={<CustomLevelScore />} />
+          <Route path="/student/mode/:mode" element={<KeywordInput />} />
+          <Route path="/student/mode/:mode/solve" element={<KeywordSolve />} />
+          <Route path="/student/mode/:mode/score" element={<KeywordScore />} />
 
           <Route path="/teacher" element={<TeacherMain />} />
           <Route path="/teacher/dashboard" element={<TeacherDashboardLayout />}>

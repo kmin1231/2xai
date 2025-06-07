@@ -44,14 +44,16 @@ const CONFIG = {
   TEXT: {
     BASE_URL: `${BASE_URL}/text`,
     ENDPOINTS: {
-      VALIDATE_KEYWORD: '/validate-keyword',
+      VALIDATE_KEYWORD: '/keywords/validate',
       GENERATE_TEXT: '/generate-text',
       GENERATE_TEXT_LOW: '/generate-text-low',
+      GENERATE_TEXT_CONTENTS: '/contents',
       SAVE_FEEDBACK: '/feedback',
       SAVE_HIGHLIGHT: '/highlight',
       DELETE_HIGHLIGHT: '/highlight',
-      CHECK_ANSWER: '/check-answer',
+      CHECK_ANSWER: '/answers/verify',
       GET_RECORDS: '/records',
+      CONTENTS_BY_ID: (textId) => `/contents/${textId}`,
     },
   },
 

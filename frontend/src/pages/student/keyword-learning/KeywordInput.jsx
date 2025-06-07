@@ -1,19 +1,34 @@
-// src/pages/student/mode-custom/Keyword.jsx
+// src/pages/student/keyword-learning/KeywordInput.jsx
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { api } from '@/config';
 
 import StudentHeader from '../header/StudentHeader';
 import InputField from '@/components/inputs/InputField';
-import KeywordButtons from '../keywords/KeywordButtons';
+import KeywordButtons from '../keyword-button/KeywordButtons';
 
 import CONFIG from '@/config';
 
-const CustomLevelKeyword = () => {
+// API request config for each mode
+const modeToApiConfig = {
+  personal: {
+    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=inferred`,
+  },
+  manual: {
+    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=selected`,
+  },
+  assigned: {
+    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=assigned`,
+  },
+};
+
+
+const KeywordInput = () => {
+  const { mode } = useParams();  // 'personal', 'manual', 'assigned'
+
   const [keyword, setKeyword] = useState('');
   const navigate = useNavigate();
 
@@ -32,48 +47,48 @@ const CustomLevelKeyword = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const handleCustomLevel = async () => {
+  const handleGenerateContents = async () => {
     const token = localStorage.getItem('token');
-
+  
     if (!token) {
       alert('로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
       return;
     }
-
+  
     if (!keyword) {
       alert('키워드를 입력해주세요!');
       return;
     }
-
-
-    const level = userInfo?.inferredLevel || 'low';
-
-    console.log('Sending request to API with token:', token);
-    console.log('Sending request with keyword:', keyword);
-    console.log('Inferred level based on performance:', level);
-
+  
+    // 유저 정보에서 난이도 가져오기
+    const userLevel =
+      mode === 'manual'
+        ? userInfo?.inferredLevel || 'low'  // manual은 level 직접 선택했을 경우지만 default 대입
+        : mode === 'assigned'
+          ? userInfo?.assignedLevel || 'low'
+          : userInfo?.inferredLevel || 'low';
+  
+    const urlBuilder = modeToApiConfig[mode];
+  
+    if (!urlBuilder) {
+      alert('잘못된 학습 모드입니다.');
+      return;
+    }
+  
+    const url = urlBuilder.url(userLevel);
+  
     try {
       const response = await api.post(
-        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT}`,
+        url,
         { keyword },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
       );
-
-      console.log('API response:', response.data);
-      navigate('/student/mode/custom/result', { state: { data: response.data } });
+  
+      navigate(`/student/mode/${mode}/solve`, { state: { data: response.data } });
     } catch (error) {
       console.error('Error generating text:', error);
-      if (error.response) {
-        const errorMessage =
-          error.response.data.message || '텍스트 생성 중 오류가 발생했습니다.';
-        alert(errorMessage);
-      } else {
-        alert('텍스트 생성 중 오류가 발생했습니다.');
-      }
+      const message =
+        error.response?.data?.message || '텍스트 생성 중 오류가 발생했습니다.';
+      alert(message);
     }
   };
 
@@ -86,7 +101,7 @@ const CustomLevelKeyword = () => {
           placeholder="keyword"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          onButtonClick={handleCustomLevel}
+          onButtonClick={handleGenerateContents}
           buttonText="검색"
         />
 
@@ -99,4 +114,4 @@ const CustomLevelKeyword = () => {
   );
 };
 
-export default CustomLevelKeyword;
+export default KeywordInput;

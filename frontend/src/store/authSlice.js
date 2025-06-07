@@ -71,15 +71,30 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.token = action.payload.token;
-        state.redirect = action.payload.redirect;
+        const { token, redirect, role, name, classInfo, studentLevels, school } = action.payload;
+
+        state.token = token;
+        state.redirect = redirect;
         state.isLoggedIn = true;
-        state.userInfo = {
-          school: action.payload.classInfo?.schoolName || '',
-          name: action.payload.name || '',
-          inferredLevel: action.payload.studentLevels?.inferredLevel || 'low',
-          assignedLevel: action.payload.studentLevels?.assignedLevel || 'low',
+
+        let userInfo = {
+          name: name || '',
+          school: '',
+          inferredLevel: 'low',
+          assignedLevel: 'low',
         };
+
+        if (role === 'student') {
+          userInfo.school = classInfo?.schoolName || '';
+          userInfo.inferredLevel = studentLevels?.inferredLevel || 'low';
+          userInfo.assignedLevel = studentLevels?.assignedLevel || 'low';
+        } else if (role === 'teacher') {
+          userInfo.school = classInfo?.schoolName || '';
+        } else if (role === 'admin') {
+          userInfo.school = '2xAI';
+        }
+
+        state.userInfo = userInfo;
         state.status = 'succeeded';
 
         localStorage.setItem('token', action.payload.token);

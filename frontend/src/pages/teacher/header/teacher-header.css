@@ -1,0 +1,52 @@
+/* src/pages/teacher/header/teacher-header.css */
+
+@import '@/styles/theme.css';
+
+.teacher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12vh;
+  padding: 0 20px;
+  background-color: #f4f4f4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.teacher-header-info {
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 45px;
+  font-weight: bold;
+  color: black;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.teacher-header-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-grow: 0;
+  margin-right: 10px;
+}
+
+.teacher-header-buttons button {
+  padding: 8px 20px;
+  background-color: var(--gray-button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.teacher-header-buttons button:hover {
+  background-color: var(--gray-button-hover-color);
+}

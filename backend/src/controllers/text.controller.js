@@ -6,7 +6,7 @@ const Class = require('../models/class')
 const Text = require('../models/text');
 const Record = require('../models/record');
 
-// POST /api/text/validate-keyword
+// POST /api/text/keywords/validate
 exports.validateKeyword = (req, res) => {
   const { keyword } = req.body;
 
@@ -27,23 +27,50 @@ exports.validateKeyword = (req, res) => {
 };
 
 
-// POST /api/text/generate-text
-exports.generateText = async (req, res) => {
+// POST /api/text/contents/:level?type=xxx
+exports.generateContents = async (req, res) => {
+
   try {
-
-    console.log('req.user:', req.user);
+    // console.log('req.user:', req.user);
+    const { level } = req.params;
+    const type = req.query.type;
     const { keyword } = req.body;
-    const inferredLevel = req.user?.inferredLevel;
-
-
-    if (!inferredLevel || !['low', 'middle', 'high'].includes(inferredLevel)) {
-      console.error('Invalid inferred level:', inferredLevel);
-      return res.status(400).json({ message: 'ERROR: invalid level' });
-    }
 
     const token = req.headers.authorization?.split(' ')[1];  // extract token
 
-    const result = await textService.requestGeneration(keyword, inferredLevel, token);  // token
+    // const token = req.token;
+
+    // level validation
+    if (!['low', 'middle', 'high'].includes(level)) {
+      return res.status(400).json({ message: 'ERROR: invalid level' });
+    }
+
+    // type validation
+    if (!['inferred', 'assigned', 'selected'].includes(type)) {
+      return res.status(400).json({ message: 'ERROR: invalid type' });
+    }
+
+    const userInfo = req.user || {};
+
+    let userLevel;
+    if (type === 'inferred') {
+      userLevel = userInfo.inferredLevel;
+    } else if (type === 'assigned') {
+      userLevel = userInfo.assignedLevel;
+    } else if (type === 'selected') {
+      userLevel = level;
+    }
+
+    if (!userLevel) {
+      return res.status(403).json({ message: 'Access denied: user level info missing' });
+    }
+
+    // validation for selected type
+    if (type !== 'selected' && userLevel !== level) {
+      return res.status(403).json({ message: `Access denied: user level mismatch (${userLevel} !== ${level})` });
+    }
+
+    const result = await textService.requestGeneration(keyword, level, type, token);  // token
     
     res.status(200).json(result);
 
@@ -99,32 +126,6 @@ exports.testTextConnection = async (req, res) => {
       message: result.message,
       error: result.error
     });
-  }
-};
-
-
-// GET /api/text/filter 
-exports.filterText = async (req, res) => {
-  const { keyword, level, userId } = req.query;
-
-  try {
-    let text = await textService.filterText(keyword, level);
-
-    if (!text) {
-      text = await textService.requestGeneration(keyword, level);
-    }
-
-    const userRecord = await textService.checkRecord(userId, text._id);
-
-    if (userRecord) {
-      const externalText = await textService.requestGeneration(keyword, level);
-      return res.status(200).json(externalText);
-    }
-
-    return res.status(200).json(text);
-
-  } catch (error) {
-    return res.status(500).json({ message: 'Failed to filter text.', error });
   }
 };
 
@@ -200,7 +201,7 @@ exports.deleteHighlightController = async (req, res) => {
 };
 
 
-// POST /api/text/check-answer
+// POST /api/text/answers/verify
 exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
@@ -266,7 +267,7 @@ exports.getUserRecordsController = async (req, res) => {
 };
 
 
-// GET /api/text/:textId
+// GET /api/text/contents/:textId
 exports.getTextByIdController = async (req, res) => {
   try {
     const { textId } = req.params;
@@ -296,7 +297,6 @@ exports.getClassInfoByStudentController = async (req, res) => {
       return res.status(400).json({ message: 'Student is not assigned to any class.' });
     }
 
-    // Class 정보 조회
     const classInfo = await Class.findById(user.class_id);
 
     if (!classInfo) {
@@ -311,5 +311,31 @@ exports.getClassInfoByStudentController = async (req, res) => {
   } catch (error) {
     console.error('Error in getClassInfoByStudentController:', error);
     return res.status(500).json({ message: 'Failed to fetch class info', error: error.message });
+  }
+};
+
+
+// GET /api/text/filter
+exports.filterText = async (req, res) => {
+  const { keyword, level, userId } = req.query;
+
+  try {
+    let text = await textService.filterText(keyword, level);
+
+    if (!text) {
+      text = await textService.requestGeneration(keyword, level);
+    }
+
+    const userRecord = await textService.checkRecord(userId, text._id);
+
+    if (userRecord) {
+      const externalText = await textService.requestGeneration(keyword, level);
+      return res.status(200).json(externalText);
+    }
+
+    return res.status(200).json(text);
+
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to filter text.', error });
   }
 };

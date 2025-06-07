@@ -3,7 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// import TeacherHeader from '../header/TeacherHeader';
+import TeacherHeader from '../header/TeacherHeader';
 import './teacher-main.css';
 
 const TeacherMain = () => {
@@ -28,7 +28,7 @@ const TeacherMain = () => {
 
   return (
     <div className="teacher-main-container">
-      {/* <TeacherHeader /> */}
+      <TeacherHeader />
 
       <h2 className="main-header-text">항목을 선택해 주세요</h2>
 

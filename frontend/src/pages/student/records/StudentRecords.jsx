@@ -37,12 +37,7 @@ const StudentRecords = () => {
           uniqueTextIds.map(async (textId) => {
             try {
               const resText = await api.get(
-                `${CONFIG.TEXT.BASE_URL}/${textId}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                  },
-                },
+                `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CONTENTS_BY_ID(textId)}`
               );
               textsMapTemp[textId] = resText.data.data;
             } catch (err) {

@@ -37,7 +37,7 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-const requestGeneration = async (keyword, level, token) => {
+const requestGeneration = async (keyword, level, type, token) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
@@ -49,18 +49,18 @@ const requestGeneration = async (keyword, level, token) => {
   try {
     console.log('Requesting generation for keyword:', keyword);
     console.log('Requesting generation for level:', level);
+    console.log('Requesting generation for type:', type);
 
     const generations = [];
 
     for (let i = 0; i < 3; i++) {
       const response = await axios.post(
-        `${process.env.CONTENTS_API}/generate/${level}`,
+        `${process.env.CONTENTS_API}/generate/${level}?type=${type}`,
         { keyword },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+            Authorization: `Bearer ${token}`
+          }
         }
       );
       const generationData = response.data[`generation${i}`];

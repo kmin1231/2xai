@@ -59,6 +59,121 @@ router.post('/keywords/validate', textController.validateKeyword);
 
 /**
  * @swagger
+ * /contents/{level}:
+ *   post:
+ *     summary: Generate text contents based on keyword and level
+ *     tags:
+ *       - Text Generation
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: level
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [low, medium, high]
+ *         description: User's learning level
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 example: "Harry Potter"
+ *     responses:
+ *       200:
+ *         description: Successfully generated contents
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 keyword:
+ *                   type: string
+ *                   example: "Harry Potter"
+ *                 level:
+ *                   type: string
+ *                   example: "low"
+ *                 generation0:
+ *                   type: object
+ *                   properties:
+ *                     title:
+ *                       type: string
+ *                       example: "Who is Harry Potter?"
+ *                     passage:
+ *                       type: string
+ *                       example: "Harry Potter is a young wizard who discovers he has magical powers..."
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example:
+ *                         - "What is Harry Potter?\nA normal boy\nA doctor\nA wizard\nA vampire\nA detective"
+ *                         - "Where does Harry go to learn magic?\nDurmstrang\nBeauxbatons\nHogwarts\nIlvermorny\nUagadou"
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["c", "c", "c", "d", "d"]
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example:
+ *                         - "Harry is a wizard, not a normal boy or vampire."
+ *                         - "Harry studies magic at Hogwarts."
+ *                 generation1:
+ *                   type: object
+ *                   properties:
+ *                     title:
+ *                       type: string
+ *                     passage:
+ *                       type: string
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                 generation2:
+ *                   type: object
+ *                   properties:
+ *                     title:
+ *                       type: string
+ *                     passage:
+ *                       type: string
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *       401:
+ *         description: Unauthorized - missing or invalid token
+ *       500:
+ *         description: Internal Server Error
+ */
+router.post('/contents/:level', verifyToken, textController.generateContents);
+
+
+/**
+ * @swagger
  * /api/text/generate-text:
  *   post:
  *     summary: Generate text based on the provided keyword and user level (Authorization required)
@@ -166,7 +281,7 @@ router.post('/keywords/validate', textController.validateKeyword);
  *                   type: string
  *                   example: "텍스트 생성 중 오류가 발생했습니다."
  */
-router.post('/generate-text', verifyToken, textController.generateText);
+// router.post('/generate-text', verifyToken, textController.generateContents);
 
 
 /**
@@ -275,7 +390,7 @@ router.post('/generate-text', verifyToken, textController.generateText);
  *                   type: string
  *                   example: '텍스트 생성 중 오류가 발생했습니다.'
  */
-router.post('/generate-text-low', textController.generateTextLow);
+// router.post('/generate-text-low', textController.generateTextLow);
 
 
 /**

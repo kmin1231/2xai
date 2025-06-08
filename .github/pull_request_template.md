@@ -1,4 +1,4 @@
-🔀 merge branch '' into ''
+🔀 merge branch '' into 'main'
 
 ## 🔗 Issue
 - refs #
@@ -10,7 +10,7 @@
 - ✨ **feat**: 
 - 🐛 **fix**: 
 - 🔧 **refactor**: 
-- 📝 **docs**: 
+- 📑 **docs**: 
 - 🧹 **chore**: 
 - 🎨 **style**: 
 - 🧩 **feat(FE)**: 

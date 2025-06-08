@@ -45,10 +45,38 @@ exports.getRecordsByStudentIdController = async (req, res) => {
     }
 
     const records = await teacherService.getRecordsByStudentId(studentId);
-    res.status(200).json({ message: 'Student records fetched successfully', data: records });
+    const summary = await teacherService.getStudentRecordSummary(studentId);
+
+    res.status(200).json({
+      message: 'Student records fetched successfully',
+      data: records,
+      summary
+    });
   } catch (error) {
     console.error('Error fetching student records:', error.message);
     res.status(500).json({ message: 'Failed to fetch records', error: error.message });
+  }
+};
+
+
+// GET /api/teacher/students/:studentId/records/summary
+exports.getStudentRecordSummaryController = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    if (req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied: Only teachers allowed.' });
+    }
+
+    const summary = await teacherService.getStudentRecordSummary(studentId);
+
+    res.status(200).json({
+      message: 'Student record summary fetched successfully',
+      data: summary
+    });
+  } catch (error) {
+    console.error('Error fetching student summary:', error.message);
+    res.status(500).json({ message: 'Failed to fetch summary', error: error.message });
   }
 };
 

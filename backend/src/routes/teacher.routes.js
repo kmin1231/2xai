@@ -49,10 +49,36 @@ router.get('/classes/:classId/students', verifyToken, teacherController.getStude
 
 
 /**
+* @swagger
+* /api/teacher/students/{studentId}/records:
+*   get:
+*     summary: Get learning records for a student
+*     tags: [Teacher]
+*     security:
+*       - BearerAuth: []
+*     parameters:
+*       - in: path
+*         name: studentId
+*         required: true
+*         schema:
+*           type: string
+*         description: The ID of the student
+*     responses:
+*       200:
+*         description: Student records fetched successfully
+*       403:
+*         description: Access denied
+*       500:
+*         description: Failed to fetch records
+*/
+router.get('/students/:studentId/records', verifyToken, teacherController.getRecordsByStudentIdController);
+
+
+/**
  * @swagger
- * /api/teacher/students/{studentId}/records:
+ * /api/teacher/students/{studentId}/records/summary:
  *   get:
- *     summary: Get learning records for a student
+ *     summary: Get summary statistics of learning records for a student
  *     tags: [Teacher]
  *     security:
  *       - BearerAuth: []
@@ -65,14 +91,104 @@ router.get('/classes/:classId/students', verifyToken, teacherController.getStude
  *         description: The ID of the student
  *     responses:
  *       200:
- *         description: Student records fetched successfully
+ *         description: Student record summary fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Student record summary fetched successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     studentId:
+ *                       type: string
+ *                     totalRecords:
+ *                       type: integer
+ *                     totalQuestions:
+ *                       type: integer
+ *                     totalCorrect:
+ *                       type: integer
+ *                     averageScore:
+ *                       type: integer
+ *                       description: Percentage score (0-100)
  *       403:
- *         description: Access denied
+ *         description: Access denied - Only teachers allowed
+ *       500:
+ *         description: Failed to fetch summary
+ */
+router.get('/students/:studentId/records/summary', verifyToken, teacherController.getStudentRecordSummaryController);
+
+
+/**
+ * @swagger
+ * /api/teacher/students/{studentId}/records:
+ *   get:
+ *     summary: Get learning records and summary for a student
+ *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: studentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the student
+ *     responses:
+ *       200:
+ *         description: Student records and summary fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Student records fetched successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       userId:
+ *                         type: string
+ *                       textId:
+ *                         type: string
+ *                       correctness:
+ *                         type: array
+ *                         items:
+ *                           type: boolean
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                 summary:
+ *                   type: object
+ *                   properties:
+ *                     studentId:
+ *                       type: string
+ *                     totalRecords:
+ *                       type: integer
+ *                     totalQuestions:
+ *                       type: integer
+ *                     totalCorrect:
+ *                       type: integer
+ *                     averageScore:
+ *                       type: integer
+ *                       description: Percentage score (0-100)
+ *       403:
+ *         description: Access denied - Only teachers allowed
  *       500:
  *         description: Failed to fetch records
  */
 router.get('/students/:studentId/records', verifyToken, teacherController.getRecordsByStudentIdController);
 
+
+router.get('/students/:studentId/records/summary', verifyToken, teacherController.getStudentRecordSummaryController);
 
 /**
  * @swagger

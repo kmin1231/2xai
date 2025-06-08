@@ -13,7 +13,7 @@ const { verifyToken } = require("../middleware/auth.middleware");
  *     summary: Get class info for the current student
  *     tags: [Student]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Class info fetched successfully

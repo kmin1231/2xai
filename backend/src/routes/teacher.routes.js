@@ -12,7 +12,7 @@ const { verifyToken } = require('../middleware/auth.middleware');
  *     summary: Get the list of classes assigned to the teacher
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of classes
@@ -29,7 +29,7 @@ router.get('/classes', verifyToken, teacherController.getTeacherClassListControl
  *     summary: Get list of students in a class
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: classId
@@ -55,7 +55,7 @@ router.get('/classes/:classId/students', verifyToken, teacherController.getStude
  *     summary: Get learning records for a student
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: studentId
@@ -81,7 +81,7 @@ router.get('/students/:studentId/records', verifyToken, teacherController.getRec
  *     summary: Assign a level to a specific student
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: studentId
@@ -119,7 +119,7 @@ router.post('/students/:studentId/level', verifyToken, teacherController.setStud
  *     summary: Assign a level to all students in a class
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: classId
@@ -157,7 +157,7 @@ router.post('/classes/:classId/level', verifyToken, teacherController.setClassAs
  *     summary: Set keyword for a class
  *     tags: [Teacher]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: classId

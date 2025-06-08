@@ -434,7 +434,7 @@ router.get('/test', textController.testTextConnection);
  *     summary: Save user feedback on a text
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -466,7 +466,7 @@ router.post('/feedback', verifyToken, textController.saveFeedbackController);
  *     summary: Save highlighted text
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -494,7 +494,7 @@ router.post('/highlight', verifyToken,textController.saveHighlightController);
  *     summary: Delete a user's highlighted text
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -524,7 +524,7 @@ router.delete('/highlight', verifyToken,textController.deleteHighlightController
  *     summary: Check user answer and return score and correctness
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -572,7 +572,7 @@ router.post('/answers/verify', verifyToken, textController.checkAnswerController
  *     summary: Get records of the current user
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: User records fetched successfully
@@ -590,7 +590,7 @@ router.get('/records', verifyToken, textController.getUserRecordsController);
  *     summary: Get text by its ID
  *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: textId
  *         in: path

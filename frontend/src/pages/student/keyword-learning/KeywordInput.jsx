@@ -16,19 +16,21 @@ import CONFIG from '@/config';
 // API request config for each mode
 const modeToApiConfig = {
   personal: {
-    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=inferred`,
+    url: (level) =>
+      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=inferred`,
   },
   manual: {
-    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=selected`,
+    url: (level) =>
+      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=selected`,
   },
   assigned: {
-    url: (level) => `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=assigned`,
+    url: (level) =>
+      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=assigned`,
   },
 };
 
-
 const KeywordInput = () => {
-  const { mode } = useParams();  // 'personal', 'manual', 'assigned'
+  const { mode } = useParams(); // 'personal', 'manual', 'assigned'
 
   const availableLevels = [
     { label: '상', value: 'high' },
@@ -51,47 +53,46 @@ const KeywordInput = () => {
   ];
 
   const handleKeywordClick = (selectedKeyword) => {
-    setKeyword(selectedKeyword);  // selected keyword into InputField
+    setKeyword(selectedKeyword); // selected keyword into InputField
   };
 
   const { userInfo } = useSelector((state) => state.auth);
 
   const handleGenerateContents = async () => {
     const token = localStorage.getItem('token');
-  
+
     if (!token) {
       alert('로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
       return;
     }
-  
+
     if (!keyword) {
       alert('키워드를 입력해주세요!');
       return;
     }
-  
+
     const userLevel =
       mode === 'manual'
         ? selectedLevel
         : mode === 'assigned'
           ? userInfo?.assignedLevel || 'low'
           : userInfo?.inferredLevel || 'low';
-  
+
     const urlBuilder = modeToApiConfig[mode];
-  
+
     if (!urlBuilder) {
       alert('잘못된 학습 모드입니다.');
       return;
     }
-  
+
     const url = urlBuilder.url(userLevel);
-  
+
     try {
-      const response = await api.post(
-        url,
-        { keyword },
-      );
-  
-      navigate(`/student/mode/${mode}/solve`, { state: { data: response.data } });
+      const response = await api.post(url, { keyword });
+
+      navigate(`/student/mode/${mode}/solve`, {
+        state: { data: response.data },
+      });
     } catch (error) {
       console.error('Error generating text:', error);
       const message =
@@ -105,7 +106,6 @@ const KeywordInput = () => {
       <StudentHeader />
 
       <div className="keyword-container">
-
         {mode === 'manual' && (
           <div className="level-button-group">
             <label className="level-button-label">학습 난이도 선택</label>

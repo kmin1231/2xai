@@ -53,7 +53,7 @@ exports.getRecordsByStudentIdController = async (req, res) => {
 };
 
 
-// GET /api/teacher/students/:studentId/level
+// POST /api/teacher/students/:studentId/level
 exports.setStudentAssignedLevelController = async (req, res) => {
   try {
     if (req.user.role !== 'teacher') {
@@ -77,7 +77,7 @@ exports.setStudentAssignedLevelController = async (req, res) => {
 };
 
 
-// GET /api/teacher/classes/:classId/level
+// POST /api/teacher/classes/:classId/level
 exports.setClassAssignedLevelController = async (req, res) => {
   try {
     if (req.user.role !== 'teacher') {

@@ -1,4 +1,4 @@
-// src/routes/admin.routes.js
+// routes/admin.routes.js
 
 const express = require("express");
 const router = express.Router();

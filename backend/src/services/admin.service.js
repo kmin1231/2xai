@@ -1,4 +1,4 @@
-// src/services/admin.service.js
+// services/admin.service.js
 
 const User = require("../models/user.js");
 const Class = require("../models/class.js");

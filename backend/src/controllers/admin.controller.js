@@ -1,4 +1,4 @@
-// src/controllers/admin.controller.js
+// controllers/admin.controller.js
 
 const adminService = require("../services/admin.service");
 

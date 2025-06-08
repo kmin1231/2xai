@@ -26,10 +26,7 @@ const { verifyToken } = require("../middleware/auth.middleware");
  *       500:
  *         description: Failed to fetch class info
  */
-router.get(
-  "/class-info",
-  verifyToken,
-  studentController.getClassInfoByStudentController,
-);
+router.get("/class-info", verifyToken, studentController.getClassInfoByStudentController);
+
 
 module.exports = router;

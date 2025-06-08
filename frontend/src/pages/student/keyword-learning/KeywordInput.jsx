@@ -9,6 +9,7 @@ import { api } from '@/config';
 import StudentHeader from '../header/StudentHeader';
 import InputField from '@/components/inputs/InputField';
 import KeywordButtons from '../keyword-button/KeywordButtons';
+import './keyword-input.css';
 
 import CONFIG from '@/config';
 
@@ -28,6 +29,14 @@ const modeToApiConfig = {
 
 const KeywordInput = () => {
   const { mode } = useParams();  // 'personal', 'manual', 'assigned'
+
+  const availableLevels = [
+    { label: '상', value: 'high' },
+    { label: '중', value: 'middle' },
+    { label: '하', value: 'low' },
+  ];
+
+  const [selectedLevel, setSelectedLevel] = useState('low');
 
   const [keyword, setKeyword] = useState('');
   const navigate = useNavigate();
@@ -60,10 +69,9 @@ const KeywordInput = () => {
       return;
     }
   
-    // 유저 정보에서 난이도 가져오기
     const userLevel =
       mode === 'manual'
-        ? userInfo?.inferredLevel || 'low'  // manual은 level 직접 선택했을 경우지만 default 대입
+        ? selectedLevel
         : mode === 'assigned'
           ? userInfo?.assignedLevel || 'low'
           : userInfo?.inferredLevel || 'low';
@@ -95,20 +103,44 @@ const KeywordInput = () => {
   return (
     <div className="student-custom-container">
       <StudentHeader />
-      <div className="keyword-container">
-        <InputField
-          label="주제를 입력해 보세요."
-          placeholder="keyword"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          onButtonClick={handleGenerateContents}
-          buttonText="검색"
-        />
 
-        <KeywordButtons
-          keywords={recommendedKeywords}
-          onKeywordClick={handleKeywordClick}
-        />
+      <div className="keyword-container">
+
+        {mode === 'manual' && (
+          <div className="level-button-group">
+            <label className="level-button-label">학습 난이도 선택</label>
+            <div className="level-buttons">
+              {availableLevels.map(({ label, value }) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={`level-button ${selectedLevel === value ? 'selected' : ''}`}
+                  onClick={() => setSelectedLevel(value)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="keyword-input-wrapper">
+          <InputField
+            label="키워드를 입력해 보세요."
+            placeholder="keyword"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onButtonClick={handleGenerateContents}
+            buttonText="검색"
+          />
+        </div>
+
+        <div className="keyword-buttons-wrapper">
+          <KeywordButtons
+            keywords={recommendedKeywords}
+            onKeywordClick={handleKeywordClick}
+          />
+        </div>
       </div>
     </div>
   );

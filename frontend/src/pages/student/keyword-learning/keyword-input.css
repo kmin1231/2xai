@@ -1,0 +1,61 @@
+/* src/pages/student/keyword-learning/keyword-input.css */
+
+.keyword-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.level-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -3vh;
+  margin-bottom: 15vh;
+}
+
+.keyword-input-wrapper {
+  margin-top: 1.5vh;
+  margin-bottom: 0vh;
+}
+
+.keyword-buttons-wrapper {
+  margin-top: 0vh;
+}
+
+.level-button-label {
+  font-size: 1.4rem;
+  margin-bottom: 1.8vh;
+  font-weight: bold;
+  color: black;
+}
+
+.level-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.level-button {
+  padding: 8px 16px;
+  border: 2px solid;
+  border-radius: 20px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 90px;
+  border-color: var(--keyword-button-hover-color);
+}
+
+.level-button.selected {
+  background-color: var(--keyword-button-hover-color);
+  color: var(--gray-button-color);
+  border: none;
+}
+
+.level-button:hover {
+  background-color: var(--keyword-button-hover-color);
+  color: var(--gray-button-color);
+  border: none;
+}

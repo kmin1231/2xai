@@ -62,17 +62,16 @@ router.post('/keywords/validate', textController.validateKeyword);
  * /contents/{level}:
  *   post:
  *     summary: Generate text contents based on keyword and level
- *     tags:
- *       - Text Generation
+ *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: level
  *         required: true
  *         schema:
  *           type: string
- *           enum: [low, medium, high]
+ *           enum: [low, middle, high]
  *         description: User's learning level
  *     requestBody:
  *       required: true
@@ -581,29 +580,6 @@ router.post('/answers/verify', verifyToken, textController.checkAnswerController
  *         description: Failed to fetch records
  */
 router.get('/records', verifyToken, textController.getUserRecordsController);
-
-
-/**
- * @swagger
- * /api/text/class-info:
- *   get:
- *     summary: Get class info for the current student
- *     tags: [Text]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Class info fetched successfully
- *       400:
- *         description: Student is not assigned to any class
- *       403:
- *         description: Only students can access class info
- *       404:
- *         description: Class not found
- *       500:
- *         description: Failed to fetch class info
- */
-router.get('/class-info', verifyToken, textController.getClassInfoByStudentController);
 
 
 // [Attention] Static routes should be defined BEFORE dynamic ones!

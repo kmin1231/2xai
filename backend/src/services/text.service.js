@@ -251,12 +251,6 @@ const getTextById = async (textId) => {
   }
 };
 
-const getClassInfoByStudent = async (classId) => {
-  return await Class.findById(classId)
-    .select('class_name school_name class_keyword')
-    .lean();
-};
-
 
 module.exports = {
   loadForbiddenKeywordsFromJson,
@@ -271,5 +265,4 @@ module.exports = {
   checkAnswer,
   getRecordsByUser,
   getTextById,
-  getClassInfoByStudent,
 };

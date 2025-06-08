@@ -1,59 +1,44 @@
 // controllers/student.controller.js
 
-const User = require('../models/user');
-const Record = require('../models/record');
+const studentService = require("../services/student.service");
 
-const updateLevels = async (req, res) => {
+const User = require("../models/user");
+const Record = require("../models/record");
+
+
+// GET /api/text/class-info
+exports.getClassInfoByStudentController = async (req, res) => {
   try {
-    const students = await User.find({ role: 'student' });
+    const userId = req.user.userId;
 
-    for (let student of students) {
-      const records = await Record.find({ userId: student._id }).sort({ createdAt: 1 });
+    const user = await User.findById(userId);
 
-      let correctCount = 0;
-      let level = student.level;
-
-      const firstFiveRecords = records.slice(0, 5);
-      if (firstFiveRecords.length === 5) {
-        correctCount = firstFiveRecords.filter(record => record.isCorrect).length;
-        if (correctCount === 5) {
-          level = 'high';
-        } else if (correctCount <= 1) {
-          level = 'low';
-        } else {
-          level = 'middle';
-        }
-      }
-
-      if (firstFiveRecords.length > 0) {
-        let nextFiveRecords = records.slice(5, 10);
-        let correctNextFiveCount = nextFiveRecords.filter(record => record.isCorrect).length;
-
-        if (level === 'high') {
-          if (correctNextFiveCount <= 2) level = 'normal';
-          else if (correctNextFiveCount >= 3) level = 'hard';
-        }
-
-        if (level === 'middle') {
-          if (correctNextFiveCount <= 1) level = 'easy';
-          else if (correctNextFiveCount === 5) level = 'hard';
-        }
-
-        if (level === 'low') {
-          if (correctNextFiveCount <= 3) level = 'easy';
-          else if (correctNextFiveCount >= 4) level = 'normal';
-        }
-      }
-
-      student.level = level;
-      await student.save();
+    if (!user || user.role !== "student") {
+      return res
+        .status(403)
+        .json({ message: "Only students can access class info." });
     }
 
-    return res.status(200).json({ message: 'Levels updated successfully for all students.' });
+    if (!user.class_id) {
+      return res
+        .status(400)
+        .json({ message: "Student is not assigned to any class." });
+    }
+
+    const classInfo = await studentService.getClassInfoByStudent(user.class_id);
+
+    if (!classInfo) {
+      return res.status(404).json({ message: "Class info not found." });
+    }
+
+    return res.status(200).json({
+      message: "Class info fetched successfully",
+      data: classInfo,
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'Error updating student levels.', error });
+    console.error("Error in getClassInfoByStudentController:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch class info", error: error.message });
   }
 };
-
-
-module.exports = { updateLevels };

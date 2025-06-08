@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth.routes');
 const textRoutes = require('./routes/text.routes');
 const teacherRoutes = require('./routes/teacher.routes');
 const studentRoutes = require('./routes/student.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 // Swagger UI
 const { swaggerUi, swaggerSpec } = require('./swagger');
@@ -21,6 +22,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/text', textRoutes);
 app.use('/api/teacher', teacherRoutes);
 app.use('/api/student', studentRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
     res.send('[app.js] Server is running!');

@@ -36,7 +36,7 @@ const Splash = () => {
     animate: {
       opacity: 1,
       transition: {
-        duration: 2.0,
+        duration: 3.0,
         ease: 'easeInOut',
         repeat: Infinity,
         repeatDelay: 1.2,
@@ -72,8 +72,8 @@ const Splash = () => {
               marginLeft: '3px',
               marginRight: '3px',
               fontWeight: '700',
-              fontFamily: `'charm', sans-serif`,
-              background: `linear-gradient(135deg, #0f1d35, #3e7ca6, #8aaec5)`,
+              fontFamily: `'Noto Sans', sans-serif`,
+              background: `linear-gradient(135deg,rgb(20, 39, 71),rgb(74, 138, 180), #8aaec5)`,
               WebkitBackgroundClip: 'text',
               color: 'transparent',
             }}
@@ -95,8 +95,8 @@ const Splash = () => {
               marginRight: '2px',
               fontSize: '2.5rem',
               fontWeight: '400',
-              fontFamily: `'charm', sans-serif`,
-              background: `linear-gradient(135deg,rgb(65, 137, 185),rgb(124, 160, 182),rgb(142, 172, 196))`,
+              fontFamily: `'Noto sans', sans-serif`,
+              background: `linear-gradient(135deg,rgb(65, 137, 185),rgb(124, 160, 182),rgb(168, 196, 219))`,
               WebkitBackgroundClip: 'text',
               color: 'transparent',
             }}

@@ -62,17 +62,16 @@ router.post('/keywords/validate', textController.validateKeyword);
  * /contents/{level}:
  *   post:
  *     summary: Generate text contents based on keyword and level
- *     tags:
- *       - Text Generation
+ *     tags: [Text]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: level
  *         required: true
  *         schema:
  *           type: string
- *           enum: [low, medium, high]
+ *           enum: [low, middle, high]
  *         description: User's learning level
  *     requestBody:
  *       required: true

@@ -582,29 +582,6 @@ router.post('/answers/verify', verifyToken, textController.checkAnswerController
 router.get('/records', verifyToken, textController.getUserRecordsController);
 
 
-/**
- * @swagger
- * /api/text/class-info:
- *   get:
- *     summary: Get class info for the current student
- *     tags: [Text]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Class info fetched successfully
- *       400:
- *         description: Student is not assigned to any class
- *       403:
- *         description: Only students can access class info
- *       404:
- *         description: Class not found
- *       500:
- *         description: Failed to fetch class info
- */
-router.get('/class-info', verifyToken, textController.getClassInfoByStudentController);
-
-
 // [Attention] Static routes should be defined BEFORE dynamic ones!
 /**
  * @swagger

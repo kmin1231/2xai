@@ -27,7 +27,7 @@ const { verifyToken } = require("../middleware/auth.middleware");
  *               - password
  *               - name
  *               - school
- *               - class
+ *               - classes
  *             properties:
  *               username:
  *                 type: string
@@ -55,6 +55,71 @@ const { verifyToken } = require("../middleware/auth.middleware");
  *         description: Server error
  */
 router.post("/users/teachers", verifyToken, adminController.registerTeacher);
+
+
+// POST /api/admin/users/teachers/:username/classes
+/**
+ * @swagger
+ * /api/admin/users/teachers/{username}/classes:
+ *   put:
+ *     summary: Add classes to an existing teacher by username
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         description: Teacher's username
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: teacherid
+ *     requestBody:
+ *       description: Classes to add for the teacher
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - school
+ *               - classes
+ *             properties:
+ *               school:
+ *                 type: string
+ *                 example: 경희중학교
+ *               classes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - className
+ *                   properties:
+ *                     className:
+ *                       type: string
+ *                       example: 1학년 1반
+ *     responses:
+ *       200:
+ *         description: Classes successfully added to the teacher
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 학반이 성공적으로 추가되었습니다.
+ *                 teacher:
+ *                   type: object
+ *                   description: Updated teacher object
+ *       400:
+ *         description: Invalid input or teacher not found
+ *       401:
+ *         description: Unauthorized, token missing or invalid
+ *       500:
+ *         description: Server error
+ */
+router.put("/users/teachers/:username/classes", verifyToken, adminController.addClassesToTeacherByUsername);
 
 
 // POST /api/admin/users/students

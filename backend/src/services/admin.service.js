@@ -3,12 +3,12 @@
 const User = require("../models/user.js");
 const Class = require("../models/class.js");
 
-const createTeacher = async ({
+exports.createTeacher = async ({
   username,
   password,
   name,
   school,
-  className,
+  classes = [],
 }) => {
   if (!username || !password || !name) {
     throw new Error("필수 항목이 누락되었습니다.");
@@ -19,12 +19,16 @@ const createTeacher = async ({
     throw new Error("이미 존재하는 교사 계정입니다.");
   }
 
-  let classDoc = null;
-  if (school && className) {
-    classDoc = await Class.findOne({
+  const classIds = [];
+
+  for (const { className } of classes) {
+    if (!className) continue;
+
+    let classDoc = await Class.findOne({
       school_name: school,
       class_name: className,
     });
+
     if (!classDoc) {
       classDoc = await Class.create({
         school_name: school,
@@ -33,6 +37,8 @@ const createTeacher = async ({
         student_ids: [],
       });
     }
+
+    classIds.push(classDoc._id);
   }
 
   const teacher = new User({
@@ -41,24 +47,84 @@ const createTeacher = async ({
     name,
     role: "teacher",
     school,
-    class_id: classDoc?._id || null,
+    class_id: classIds.length > 0 ? classIds[0] : null, // default class_id
     teacher_info: {
-      class_ids: classDoc ? [classDoc._id] : [],
+      class_ids: classIds,
     },
   });
 
   await teacher.save();
 
-  if (classDoc) {
-    classDoc.teacher = teacher._id;
-    await classDoc.save();
-  }
+  await Class.updateMany(
+    { _id: { $in: classIds } },
+    { $set: { teacher: teacher._id } },
+  );
 
   return teacher;
 };
 
 
-const createStudent = async ({
+exports.addClassesToTeacherByUsername = async (
+  username,
+  school,
+  classes = [],
+) => {
+  if (!username || !school || classes.length === 0) {
+    throw new Error("필수 항목이 누락되었습니다.");
+  }
+
+  const teacher = await User.findOne({ username });
+  if (!teacher || teacher.role !== "teacher") {
+    throw new Error("존재하지 않는 교사 계정입니다.");
+  }
+
+  const existingClassIds = teacher.teacher_info?.class_ids || [];
+  const newClassIds = [];
+
+  for (const { className } of classes) {
+    if (!className) continue;
+
+    let classDoc = await Class.findOne({
+      school_name: school,
+      class_name: className,
+    });
+
+    if (!classDoc) {
+      classDoc = await Class.create({
+        school_name: school,
+        class_name: className,
+        class_level: "low",
+        student_ids: [],
+      });
+    }
+
+    if (classDoc.teacher && !classDoc.teacher.equals(teacher._id)) {
+      throw new Error(`"이미 존재하는 학반입니다.`);
+    }
+
+    if (!classDoc.teacher || !classDoc.teacher.equals(teacher._id)) {
+      classDoc.teacher = teacher._id;
+      await classDoc.save();
+    }
+
+    if (!existingClassIds.some((id) => id.equals(classDoc._id))) {
+      newClassIds.push(classDoc._id);
+    }
+  }
+
+  teacher.teacher_info.class_ids = [...existingClassIds, ...newClassIds];
+
+  if (teacher.teacher_info.class_ids.length > 0 && !teacher.class_id) {
+    teacher.class_id = teacher.teacher_info.class_ids[0];
+  }
+
+  await teacher.save();
+
+  return teacher;
+};
+
+
+exports.createStudent = async ({
   username,
   password,
   name,
@@ -80,9 +146,7 @@ const createStudent = async ({
     role: "teacher",
   });
   if (!teacherDoc) {
-    throw new Error(
-      `존재하지 않는 교사 계정입니다: '${teacherUsername}'.`,
-    );
+    throw new Error(`존재하지 않는 교사 계정입니다: '${teacherUsername}'.`);
   }
 
   let classDoc = null;
@@ -123,9 +187,4 @@ const createStudent = async ({
   }
 
   return student;
-};
-
-module.exports = {
-  createTeacher,
-  createStudent,
 };

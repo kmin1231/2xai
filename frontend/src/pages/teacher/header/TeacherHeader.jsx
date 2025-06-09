@@ -14,7 +14,7 @@ const TeacherHeader = () => {
   const navigate = useNavigate();
 
   const handleMenuClick = () => {
-    // navigate('/teacher/temp-route');
+    navigate('/teacher');
   };
 
   const handleLogoutClick = () => {
@@ -32,7 +32,7 @@ const TeacherHeader = () => {
       </div>
 
       <div className="teacher-header-buttons">
-        <button onClick={handleMenuClick}>tempBtn</button>
+        <button onClick={handleMenuClick}>메인 화면</button>
         <button onClick={handleLogoutClick}>로그아웃</button>
       </div>
     </header>

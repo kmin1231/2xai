@@ -10,7 +10,7 @@ exports.registerTeacher = async (req, res) => {
       password: req.body.password,
       name: req.body.name,
       school: req.body.school,
-      className: req.body.class,
+      classes: req.body.classes || [],
     });
 
     res.status(201).json({ message: "교사 계정 등록 성공", teacher });
@@ -22,6 +22,40 @@ exports.registerTeacher = async (req, res) => {
     res.status(400).json({ message: error.message || "잘못된 요청입니다." });
   }
 };
+
+
+exports.addClassesToTeacherByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { school, classes } = req.body;
+
+    if (!school || !Array.isArray(classes) || classes.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "학교명과 학반 리스트가 필요합니다." });
+    }
+
+    const updatedTeacher = await adminService.addClassesToTeacherByUsername(
+      username,
+      school,
+      classes,
+    );
+
+    res
+      .status(200)
+      .json({ message: "학반 추가 성공", teacher: updatedTeacher });
+  } catch (error) {
+    console.error(error);
+    if (error.message.includes("존재하지 않는 교사")) {
+      return res.status(404).json({ message: error.message });
+    }
+    if (error.message.includes("이미 다른 교사가 담당")) {
+      return res.status(409).json({ message: error.message });
+    }
+    res.status(400).json({ message: error.message || "잘못된 요청입니다." });
+  }
+};
+
 
 // POST /api/admin/users/students
 exports.registerStudent = async (req, res) => {

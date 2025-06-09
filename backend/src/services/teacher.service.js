@@ -26,7 +26,46 @@ exports.getStudentListByClass = async (classId) => {
 
 
 exports.getRecordsByStudentId = async (studentId) => {
-  return await Record.find({ userId: studentId }).lean();
+  const records = await Record.find({ userId: studentId }).lean();
+
+  // 점수 계산
+  return records.map(record => {
+    const total = record.correctness.length;
+    const correct = record.correctness.filter(Boolean).length;
+    const score = Math.round((correct / total) * 100);
+
+    return {
+      ...record,
+      score,
+      correctCount: correct,
+      totalCount: total,
+    };
+  });
+};
+
+
+exports.getStudentRecordSummary = async (studentId) => {
+  const records = await Record.find({ userId: studentId }).lean();
+
+  let totalQuestions = 0;
+  let totalCorrect = 0;
+
+  records.forEach(record => {
+    totalQuestions += record.correctness.length;
+    totalCorrect += record.correctness.filter(Boolean).length;
+  });
+
+  const averageScore = totalQuestions === 0
+    ? 0
+    : Math.round((totalCorrect / totalQuestions) * 100);
+
+  return {
+    studentId,
+    totalRecords: records.length,
+    totalQuestions,
+    totalCorrect,
+    averageScore,
+  };
 };
 
 

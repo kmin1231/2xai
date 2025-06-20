@@ -1,66 +1,71 @@
 // src/components/splash/Splash.jsx
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 
-import logoImage from '@/assets/logo-image.png';
+import logoImage from '@/assets/logo-image-without-bg.png';
 
 import '@fontsource/charm/400.css';
 import '@fontsource/charm/700.css';
 
 const Splash = () => {
+  const controls = useAnimation();
 
-  // animation
-  const parentVariant = {
-    animate: {
-      transition: {
-        staggerChildren: 0.05,
-        repeat: Infinity,
-        repeatDelay: 0.3,
-      },
-    },
-  };
+  useEffect(() => {
+    const sequence = async () => {
 
-  const letterVariant = {
-    initial: { opacity: 0 },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 3.0,
-        ease: 'easeInOut',
-        repeat: Infinity,
-        repeatDelay: 1.2,
-      },
-    },
-  };
+      // slide in animation
+      await controls.start({
+        width: '500px',
+        opacity: 1,
+        transition: {
+          duration: 2.0,
+          ease: 'easeInOut',
+        },
+      });
+
+      // vertical bounce animation
+      controls.start({
+        y: [0, -20, 0, 0, 0],
+        transition: {
+          duration: 1.5,
+          ease: 'easeInOut',
+          repeat: Infinity,
+        },
+      });
+    };
+
+    sequence();
+  }, [controls]);
 
   return (
-    <motion.div
-      className="splash"
-      initial="initial"
-      animate="animate"
-      variants={parentVariant}
+    <div
       style={{
         display: 'flex',
-        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center',
+        height: '100vh',
       }}
     >
-
-      <motion.div variants={parentVariant}>
-        <motion.img
+      <motion.div
+        initial={{ width: 0, opacity: 0 }}
+        animate={controls}
+        style={{
+          overflow: 'hidden',
+        }}
+      >
+        <img
           src={logoImage}
-          alt="Splash Logo"
-          variants={letterVariant}
+          alt="Splash Logo Image"
           style={{
-            width: '400px',
+            width: '500px',
             height: 'auto',
-            marginBottom: '2rem',
+            display: 'block',
+            cursor: 'pointer',
           }}
         />
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 

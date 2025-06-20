@@ -1,0 +1,91 @@
+/* src/pages/teacher/results/results-detail.css */
+
+.results-detail-container {
+  height: 95vh;
+  max-width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+}
+
+.results-detail-container .results-detail-header {
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 0px;
+  box-sizing: border-box;
+}
+
+.results-detail-container .records-container {
+  flex: 1 1 auto;
+  max-width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.results-detail-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  table-layout: fixed;
+}
+
+.results-detail-container thead {
+  background-color: var(--blue-color-3, #cce4ff);
+  color: black;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.results-detail-container tbody {
+  background: white;
+}
+
+.results-detail-container tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.results-detail-container th,
+.results-detail-container td {
+  border: 1px solid #e3e1e1;
+  padding: 8px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-detail-container tbody tr:nth-child(even) {
+  background-color: var(--blue-color-5, #f5f9ff);
+}
+
+.results-detail-container tbody tr:hover {
+  background-color: var(--blue-color-5, #f5f9ff);
+}
+
+/* column width */
+.results-detail-container th:nth-child(1), .results-detail-container td:nth-child(1) { width: 0.5vw; }  /* No. */
+.results-detail-container th:nth-child(2), .results-detail-container td:nth-child(2) { width: 4vw; }    /* 키워드 */
+.results-detail-container th:nth-child(3), .results-detail-container td:nth-child(3) { width: 1.5vw; }  /* 난이도 */
+.results-detail-container th:nth-child(4), .results-detail-container td:nth-child(4) { width: 5vw; }    /* 제목 */
+.results-detail-container th:nth-child(5), .results-detail-container td:nth-child(5) { width: 13vw; }   /* 지문 */
+.results-detail-container th:nth-child(6), .results-detail-container td:nth-child(6) { width: 2.5vw; }  /* 풀이 시간 */
+.results-detail-container th:nth-child(7), .results-detail-container td:nth-child(7) { width: 2.5vw; }  /* 풀이 결과 */
+
+.results-detail-container td {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

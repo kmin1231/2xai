@@ -3,22 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import logoImage from '@/assets/logo-image.png';
+
 import '@fontsource/charm/400.css';
 import '@fontsource/charm/700.css';
 
 const Splash = () => {
-  const textA = '2xAI   Research   Lab';
-  const textB = 'eXplainable  &  eXchangeable  AI';
-
-  const splitTextA = textA.split('').map((char, index) => ({
-    char,
-    color: index % 3,
-  }));
-
-  const splitTextB = textB.split('').map((char, index) => ({
-    char,
-    color: index % 3,
-  }));
 
   // animation
   const parentVariant = {
@@ -57,53 +47,18 @@ const Splash = () => {
         textAlign: 'center',
       }}
     >
-      {/* animiation #1: 2xAI Research Lab */}
-      <motion.div
-        style={{ display: 'flex', marginBottom: '1rem' }}
-        variants={parentVariant}
-      >
-        {splitTextA.map((item, index) => (
-          <motion.span
-            key={`a-${index}`}
-            variants={letterVariant}
-            style={{
-              display: 'inline-block',
-              fontSize: '5.0rem',
-              marginLeft: '3px',
-              marginRight: '3px',
-              fontWeight: '700',
-              fontFamily: `'Noto Sans', sans-serif`,
-              background: `linear-gradient(135deg,rgb(20, 39, 71),rgb(74, 138, 180), #8aaec5)`,
-              WebkitBackgroundClip: 'text',
-              color: 'transparent',
-            }}
-          >
-            {item.char}
-          </motion.span>
-        ))}
-      </motion.div>
 
-      {/* animiation #2: eXplainable & eXchangeable AI */}
-      <motion.div style={{ display: 'flex' }} variants={parentVariant}>
-        {splitTextB.map((item, index) => (
-          <motion.span
-            key={`b-${index}`}
-            variants={letterVariant}
-            style={{
-              display: 'inline-block',
-              marginLeft: '2px',
-              marginRight: '2px',
-              fontSize: '2.5rem',
-              fontWeight: '400',
-              fontFamily: `'Noto sans', sans-serif`,
-              background: `linear-gradient(135deg,rgb(65, 137, 185),rgb(124, 160, 182),rgb(168, 196, 219))`,
-              WebkitBackgroundClip: 'text',
-              color: 'transparent',
-            }}
-          >
-            {item.char}
-          </motion.span>
-        ))}
+      <motion.div variants={parentVariant}>
+        <motion.img
+          src={logoImage}
+          alt="Splash Logo"
+          variants={letterVariant}
+          style={{
+            width: '400px',
+            height: 'auto',
+            marginBottom: '2rem',
+          }}
+        />
       </motion.div>
     </motion.div>
   );

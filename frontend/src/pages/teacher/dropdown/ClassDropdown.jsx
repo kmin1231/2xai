@@ -17,11 +17,22 @@ const ClassDropdown = ({ classes, selectedClassId, onSelectClass }) => {
       }}
     >
       <option value="all">전체</option>
-      {classes.map((cls) => (
-        <option key={cls._id} value={cls._id}>
-          [{cls.school_name}] {cls.class_name}
-        </option>
-      ))}
+
+      {[...classes]
+        .sort((a, b) => {
+          // 학교 이름, 학반 이름 기준으로 정렬
+          const schoolCompare = a.school_name.localeCompare(
+            b.school_name,
+            'ko',
+          );
+          if (schoolCompare !== 0) return schoolCompare;
+          return a.class_name.localeCompare(b.class_name, 'ko');
+        })
+        .map((cls) => (
+          <option key={cls._id} value={cls._id}>
+            [{cls.school_name}] {cls.class_name}
+          </option>
+        ))}
     </select>
   );
 };

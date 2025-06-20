@@ -24,6 +24,7 @@ exports.registerTeacher = async (req, res) => {
 };
 
 
+// PUT /api/admin/users/teachers/:username/classes
 exports.addClassesToTeacherByUsername = async (req, res) => {
   try {
     const { username } = req.params;
@@ -44,6 +45,36 @@ exports.addClassesToTeacherByUsername = async (req, res) => {
     res
       .status(200)
       .json({ message: "학반 추가 성공", teacher: updatedTeacher });
+  } catch (error) {
+    console.error(error);
+    if (error.message.includes("존재하지 않는 교사")) {
+      return res.status(404).json({ message: error.message });
+    }
+    if (error.message.includes("이미 다른 교사가 담당")) {
+      return res.status(409).json({ message: error.message });
+    }
+    res.status(400).json({ message: error.message || "잘못된 요청입니다." });
+  }
+};
+
+
+// PATCH /api/admin/users/teachers/:username/classes
+exports.patchAddClassesToTeacherByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { school, classes } = req.body;
+
+    if (!school || !Array.isArray(classes) || classes.length === 0) {
+      return res.status(400).json({ message: "학교명과 학반 리스트가 필요합니다." });
+    }
+
+    const updatedTeacher = await adminService.patchAddClassesToTeacherByUsername(
+      username,
+      school,
+      classes,
+    );
+
+    res.status(200).json({ message: "학반 추가 성공", teacher: updatedTeacher });
   } catch (error) {
     console.error(error);
     if (error.message.includes("존재하지 않는 교사")) {

@@ -124,6 +124,62 @@ exports.addClassesToTeacherByUsername = async (
 };
 
 
+exports.patchAddClassesToTeacherByUsername = async (username, school, classes = []) => {
+  if (!username || !school || classes.length === 0) {
+    throw new Error("필수 항목이 누락되었습니다.");
+  }
+
+  const teacher = await User.findOne({ username });
+  if (!teacher || teacher.role !== "teacher") {
+    throw new Error("존재하지 않는 교사 계정입니다.");
+  }
+
+  const existingClassIds = teacher.teacher_info?.class_ids || [];
+  const newClassIds = [];
+
+  for (const { className } of classes) {
+    if (!className) continue;
+
+    let classDoc = await Class.findOne({
+      school_name: school,
+      class_name: className,
+    });
+
+    if (!classDoc) {
+      classDoc = await Class.create({
+        school_name: school,
+        class_name: className,
+        class_level: "low",
+        student_ids: [],
+      });
+    }
+
+    if (classDoc.teacher && !classDoc.teacher.equals(teacher._id)) {
+      throw new Error(`이미 다른 교사가 담당 중인 학반입니다: ${className}`);
+    }
+
+    if (!classDoc.teacher || !classDoc.teacher.equals(teacher._id)) {
+      classDoc.teacher = teacher._id;
+      await classDoc.save();
+    }
+
+    if (!existingClassIds.some((id) => id.equals(classDoc._id))) {
+      newClassIds.push(classDoc._id);
+    }
+  }
+
+  teacher.teacher_info.class_ids = [...existingClassIds, ...newClassIds];
+
+  if (teacher.teacher_info.class_ids.length > 0 && !teacher.class_id) {
+    teacher.class_id = teacher.teacher_info.class_ids[0];
+  }
+
+  await teacher.save();
+
+  return teacher;
+};
+
+
 exports.createStudent = async ({
   username,
   password,

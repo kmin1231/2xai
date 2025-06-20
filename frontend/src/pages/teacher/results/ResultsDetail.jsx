@@ -1,17 +1,23 @@
-// src/pages/student/records/StudentRecords.jsx
+// src/pages/teacher/results/ResultsDetail.jsx
 
 import React, { useEffect, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import moment from 'moment';
 
-import StudentRecordsHeader from './RecordsHeader';
-import TextDetailModal from './TextDetailModal';
+import TextDetailModal from '@/pages/student/records/TextDetailModal';
 import { handleDownload } from '@/utils/download-text';
-import './student-records.css';
 
 import { api } from '@/config';
 import CONFIG from '@/config';
 
-const StudentRecords = () => {
+import './results-detail.css';
+
+const ResultsDetail = () => {
+  const { studentId } = useParams();
+  const location = useLocation();
+  const passedStudentName = location.state?.studentName || '';
+
+  const [studentName, setStudentName] = useState(passedStudentName);
   const [records, setRecords] = useState([]);
   const [textsMap, setTextsMap] = useState({});
   const [loading, setLoading] = useState(true);
@@ -24,16 +30,30 @@ const StudentRecords = () => {
   };
 
   useEffect(() => {
+    const fetchStudentInfo = async () => {
+      try {
+        const res = await api.get(
+          `${CONFIG.TEACHER.BASE_URL}/students/${studentId}`,
+        );
+        setStudentName(res.data.name || '');
+      } catch (err) {
+        console.error('Failed to fetch student info', err);
+      }
+    };
+
+    fetchStudentInfo();
+  }, [studentId]);
+
+  useEffect(() => {
     const fetchRecords = async () => {
       try {
         const resRecords = await api.get(
-          `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`
+          `${CONFIG.TEACHER.BASE_URL}/students/${studentId}/records`,
         );
 
         const sortedRecords = resRecords.data.data.sort(
           (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         );
-
         setRecords(sortedRecords);
 
         const uniqueTextIds = [...new Set(sortedRecords.map((r) => r.textId))];
@@ -43,7 +63,7 @@ const StudentRecords = () => {
           uniqueTextIds.map(async (textId) => {
             try {
               const resText = await api.get(
-                `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CONTENTS_BY_ID(textId)}`
+                `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CONTENTS_BY_ID(textId)}`,
               );
               textsMapTemp[textId] = resText.data.data;
             } catch (err) {
@@ -58,21 +78,21 @@ const StudentRecords = () => {
         setTextsMap(textsMapTemp);
         setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch records:', error);
+        console.error('Failed to fetch student records:', error);
         setLoading(false);
       }
     };
 
     fetchRecords();
-  }, []);
+  }, [studentId]);
 
   if (loading) return <p>Loading...</p>;
 
-  if (records.length === 0) return <p>학습 기록이 없습니다.</p>;
+  if (records.length === 0) return <p>해당 학생의 학습 기록이 없습니다.</p>;
 
   return (
-    <div className="records-page-container">
-      <StudentRecordsHeader />
+    <div className="results-detail-container">
+      <h3 className="results-detail-header">{studentName} 학생의 학습 결과</h3>
       <div className="records-container">
         <table>
           <thead>
@@ -89,20 +109,24 @@ const StudentRecords = () => {
           <tbody>
             {records.map((record, idx) => {
               const text = textsMap[record.textId];
-              const shortPassage = (text?.passage || '').replace(/\n/g, ' ').slice(0, 200) || '-';
+              const shortPassage =
+                (text?.passage || '').replace(/\n/g, ' ').slice(0, 200) || '-';
 
               return (
-                <tr key={record._id} onClick={() => setSelectedText(text)}>
-                  {' '}
-
-                  {/* open TextDetailModal */}
+                <tr
+                  key={record._id}
+                  onClick={() => setSelectedText(text)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <td>{idx + 1}</td>
                   <td>{text?.keyword || '-'}</td>
                   <td>{levelMap[text?.level] || '-'}</td>
                   <td>{text?.title || '-'}</td>
-                  <td>{shortPassage || '-'}</td>
+                  <td>{shortPassage}</td>
                   <td>
-                    {moment(record.createdAt).utcOffset(9 * 60).format('YYYY-MM-DD HH:mm:ss')}
+                    {moment(record.createdAt)
+                      .utcOffset(9 * 60)
+                      .format('YYYY-MM-DD HH:mm:ss')}
                   </td>
                   <td>
                     {record.correctness.map((isCorrect, i) => (
@@ -135,4 +159,4 @@ const StudentRecords = () => {
   );
 };
 
-export default StudentRecords;
+export default ResultsDetail;

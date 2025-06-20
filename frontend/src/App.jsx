@@ -18,6 +18,8 @@ import StudentRecords from './pages/student/records/StudentRecords';
 
 import TeacherMain from './pages/teacher/main/TeacherMain';
 import TeacherDashboardLayout from '@/layouts/TeacherDashboardLayout';
+import ResultsOverview from './pages/teacher/results/ResultsOverview';
+import ResultsDetail from './pages/teacher/results/ResultsDetail';
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
 
           <Route path="/teacher" element={<TeacherMain />} />
           <Route path="/teacher/dashboard" element={<TeacherDashboardLayout />}>
+          <Route path="/teacher/dashboard/results" element={<ResultsOverview />} />
+          <Route path="/teacher/dashboard/results/student/:studentId" element={<ResultsDetail />} />
+
             {/* <Route path="results" element={<TeacherLearningOverview />} />
             <Route path="keywords" element={<TeacherKeywordSettings />} />
             <Route path="levels" element={<TeacherLevelSettings />} /> */}

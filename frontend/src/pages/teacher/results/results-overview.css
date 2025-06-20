@@ -1,0 +1,80 @@
+/* src/pages/teacher/results/results-overview.css */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.learning-results-container {
+  height: 80vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding: 0 10px;
+}
+
+.learning-results-title {
+  margin: 35px 0 10px 0;
+  position: sticky;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 30;
+}
+
+.dropdown-wrapper {
+  margin-bottom: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.learning-results-table-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.learning-results-table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 1.0rem;
+  border-collapse: collapse;
+}
+
+.learning-results-table thead tr {
+  background-color: var(--blue-color-3, #cce4ff);
+  color: black;
+  text-align: center;
+}
+
+.table-body-wrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: calc(80vh - 120px);
+  overflow-x: hidden;
+}
+
+.learning-results-table th,
+.learning-results-table td {
+  padding: 8px 0 8px 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th:nth-child(1), td:nth-child(1) { width: 0.6vw; }  /* No. */
+th:nth-child(2), td:nth-child(2) { width: 2.5vw; }  /* 학교 */
+th:nth-child(3), td:nth-child(3) { width: 2.5vw; }  /* 학반 */
+th:nth-child(4), td:nth-child(4) { width: 3.0vw; }  /* 이름 */
+th:nth-child(5), td:nth-child(5) { width: 3.0vw; }  /* 점수 */
+
+.learning-results-table td.name {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.1rem;
+}

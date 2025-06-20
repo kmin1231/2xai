@@ -63,6 +63,7 @@ const CONFIG = {
       GET_CLASSES: '/classes',
       GET_CLASS_STUDENTS: (classId) => `/classes/${classId}/students`,
       GET_STUDENT_RECORDS: (studentId) => `/students/${studentId}/records`,
+      GET_STUDENT_RECORDS_SUMMARY: (studentId) => `/students/${studentId}/records/summary`,
       SET_STUDENT_LEVEL: (studentId) => `/students/${studentId}/level`,
       SET_CLASS_LEVEL: (classId) => `/classes/${classId}/level`,
       SET_CLASS_KEYWORD: (classId) => `/classes/${classId}/keyword`,

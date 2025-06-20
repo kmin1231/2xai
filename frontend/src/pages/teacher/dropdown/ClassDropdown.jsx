@@ -13,7 +13,7 @@ const ClassDropdown = ({ classes, selectedClassId, onSelectClass }) => {
         border: '1px solid #ccc',
         borderRadius: '6px',
         backgroundColor: '#f9f9f9',
-        fontSize: '15px',
+        fontSize: '1.0rem',
       }}
     >
       <option value="all">전체</option>

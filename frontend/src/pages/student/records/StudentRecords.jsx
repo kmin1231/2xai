@@ -17,6 +17,12 @@ const StudentRecords = () => {
   const [loading, setLoading] = useState(true);
   const [selectedText, setSelectedText] = useState(null);
 
+  const levelMap = {
+    low: '하',
+    middle: '중',
+    high: '상',
+  };
+
   useEffect(() => {
     const fetchRecords = async () => {
       try {
@@ -92,7 +98,7 @@ const StudentRecords = () => {
                   {/* open TextDetailModal */}
                   <td>{idx + 1}</td>
                   <td>{text?.keyword || '-'}</td>
-                  <td>{text?.level || '-'}</td>
+                  <td>{levelMap[text?.level] || '-'}</td>
                   <td>{text?.title || '-'}</td>
                   <td>{shortPassage || '-'}</td>
                   <td>

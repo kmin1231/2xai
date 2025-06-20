@@ -16,6 +16,29 @@ const { verifyToken } = require('../middleware/auth.middleware');
  *     responses:
  *       200:
  *         description: List of classes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: "6810875d2d28a6f12e544cac"
+ *                   class_name:
+ *                     type: string
+ *                     example: "2학년 3반"
+ *                   school_name:
+ *                     type: string
+ *                     example: "경희중학교"
+ *                   class_level:
+ *                     type: string
+ *                     enum: [high, middle, low]
+ *                     example: "low"
+ *                   class_keyword:
+ *                     type: string
+ *                     example: "climate change"
  *       500:
  *         description: Server error
  */

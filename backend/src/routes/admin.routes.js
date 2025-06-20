@@ -57,7 +57,7 @@ const { verifyToken } = require("../middleware/auth.middleware");
 router.post("/users/teachers", verifyToken, adminController.registerTeacher);
 
 
-// POST /api/admin/users/teachers/:username/classes
+// PUT /api/admin/users/teachers/:username/classes
 /**
  * @swagger
  * /api/admin/users/teachers/{username}/classes:
@@ -120,6 +120,75 @@ router.post("/users/teachers", verifyToken, adminController.registerTeacher);
  *         description: Server error
  */
 router.put("/users/teachers/:username/classes", verifyToken, adminController.addClassesToTeacherByUsername);
+
+
+// PATCH /api/admin/users/teachers/:username/classes
+/**
+ * @swagger
+ * /api/admin/users/teachers/{username}/classes:
+ *   patch:
+ *     summary: Add new classes to an existing teacher by username (preserve existing classes)
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         description: Teacher's username
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: teacherid
+ *     requestBody:
+ *       description: New classes to append for the teacher
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - school
+ *               - classes
+ *             properties:
+ *               school:
+ *                 type: string
+ *                 example: 경희중학교
+ *               classes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - className
+ *                   properties:
+ *                     className:
+ *                       type: string
+ *                       example: 2학년 3반
+ *     responses:
+ *       200:
+ *         description: New classes successfully added (existing classes preserved)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 학반 추가 성공
+ *                 teacher:
+ *                   type: object
+ *                   description: Updated teacher object
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Unauthorized (token missing or invalid)
+ *       404:
+ *         description: Teacher not found
+ *       409:
+ *         description: One or more classes are already assigned to another teacher
+ *       500:
+ *         description: Server error
+ */
+router.patch("/users/teachers/:username/classes", verifyToken, adminController.patchAddClassesToTeacherByUsername);
 
 
 // POST /api/admin/users/students

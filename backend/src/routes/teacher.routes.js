@@ -211,7 +211,6 @@ router.get('/students/:studentId/records/summary', verifyToken, teacherControlle
 router.get('/students/:studentId/records', verifyToken, teacherController.getRecordsByStudentIdController);
 
 
-router.get('/students/:studentId/records/summary', verifyToken, teacherController.getStudentRecordSummaryController);
 
 /**
  * @swagger
@@ -325,6 +324,55 @@ router.post('/classes/:classId/level', verifyToken, teacherController.setClassAs
  *         description: Failed to update keyword
  */
 router.post('/classes/:classId/keyword', verifyToken, teacherController.setClassKeywordController);
+
+
+/**
+ * @swagger
+ * /api/teacher/highlights:
+ *   get:
+ *     summary: Get student highlights depending on user role
+ *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
+ *     description: |
+ *       Returns highlights depending on the user's role.
+ *       
+ *       - If the user is an **admin**, returns all students' highlights.
+ *       - If the user is a **teacher**, returns highlights only from students in their assigned classes.
+ *     responses:
+ *       200:
+ *         description: Highlights fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Highlights fetched
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: 6654c8e4e2fa49eb21db8caa
+ *                       userId:
+ *                         type: string
+ *                         example: 681086b22d28a6f12e544ca7
+ *                       text:
+ *                         type: string
+ *                         example: 지구 온난화는 대기 중 이산화탄소 증가로 인해 발생한다.
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *       403:
+ *         description: Unauthorized access - token invalid or missing
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/highlights', verifyToken, teacherController.getHighlightsController);
 
 
 module.exports = router;

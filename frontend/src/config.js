@@ -67,6 +67,7 @@ const CONFIG = {
       SET_STUDENT_LEVEL: (studentId) => `/students/${studentId}/level`,
       SET_CLASS_LEVEL: (classId) => `/classes/${classId}/level`,
       SET_CLASS_KEYWORD: (classId) => `/classes/${classId}/keyword`,
+      GET_HIGHLIGHTS: '/highlights',
     },
   },
 };

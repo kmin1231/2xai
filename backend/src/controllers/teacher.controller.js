@@ -159,3 +159,15 @@ exports.setClassKeywordController = async (req, res) => {
     return res.status(500).json({ message: 'Failed to update keyword' });
   }
 };
+
+
+// GET /api/teacher/highlights
+exports.getHighlightsController = async (req, res) => {
+  try {
+    const highlights = await teacherService.getHighlightsByUserRole(req.user);
+    res.status(200).json({ message: 'Highlights fetched', data: highlights });
+  } catch (error) {
+    console.error('Error fetching highlights:', error);
+    res.status(500).json({ message: 'Failed to fetch highlights' });
+  }
+};

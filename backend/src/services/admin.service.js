@@ -244,3 +244,10 @@ exports.createStudent = async ({
 
   return student;
 };
+
+
+exports.getAllClasses = async () => {
+  return await Class.find()
+    .select('_id class_name school_name class_level class_keyword teacher')
+    .lean();
+};

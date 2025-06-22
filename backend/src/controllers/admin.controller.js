@@ -124,3 +124,19 @@ exports.registerStudent = async (req, res) => {
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };
+
+
+// GET /api/admin/classes
+exports.getAllClassesController = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: '관리자만 이용 가능합니다.' });
+    }
+
+    const classes = await adminService.getAllClasses();
+    res.status(200).json({ message: '학반 목록 조회 성공', data: classes });
+  } catch (error) {
+    console.error('학반 목록 조회 중 오류 발생:', error);
+    res.status(500).json({ message: '학반 목록 조회에 실패했습니다.' });
+  }
+};

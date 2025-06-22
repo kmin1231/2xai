@@ -251,4 +251,47 @@ router.patch("/users/teachers/:username/classes", verifyToken, adminController.p
 router.post("/users/students", verifyToken, adminController.registerStudent);
 
 
+/**
+ * @swagger
+ * /api/admin/classes:
+ *   get:
+ *     summary: Get all classes (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all classes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       class_name:
+ *                         type: string
+ *                       school_name:
+ *                         type: string
+ *                       class_level:
+ *                         type: string
+ *                       class_keyword:
+ *                         type: string
+ *                       teacher:
+ *                         type: string
+ *       403:
+ *         description: Access denied (not admin)
+ *       500:
+ *         description: Server error
+ */
+router.get('/classes', verifyToken, adminController.getAllClassesController);
+
+
 module.exports = router;

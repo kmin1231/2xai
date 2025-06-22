@@ -70,6 +70,13 @@ const CONFIG = {
       GET_HIGHLIGHTS: '/highlights',
     },
   },
+
+  ADMIN: {
+    BASE_URL: `${BASE_URL}/admin`,
+    ENDPOINTS: {
+      GET_CLASSES: '/classes',
+    },
+  },
 };
 
 export { api };

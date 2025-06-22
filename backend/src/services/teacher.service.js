@@ -3,6 +3,7 @@
 const User = require('../models/user');
 const Class = require('../models/class');
 const Record = require('../models/record');
+const Highlight = require('../models/highlight');
 
 const mongoose = require('mongoose');
 
@@ -121,4 +122,26 @@ exports.setClassKeyword = async (classId, keyword) => {
     { new: true }
   );
   return updatedClass;
+};
+
+
+exports.getHighlightsByUserRole = async (user) => {
+  if (user.role === 'admin') {
+    return await Highlight.find().populate('userId', 'name class_id').lean();
+  }
+
+  if (user.role === 'teacher') {
+    const teacher = await User.findById(user.userId).lean();
+    const classIds = teacher?.teacher_info?.class_ids || [];
+
+    const students = await User.find({
+      class_id: { $in: classIds },
+      role: 'student',
+    }).select('_id').lean();
+
+    const studentIds = students.map(s => s._id);
+    return await Highlight.find({ userId: { $in: studentIds } }).populate('userId', 'name class_id').lean();
+  }
+
+  throw new Error('Unauthorized role');
 };

@@ -1,0 +1,35 @@
+/* src/pages/teacher/results/highlights-overview.css */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.highlights-overview-container {
+  height: 80vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding: 0 10px;
+}
+
+.highlights-overview-title {
+  margin: 35px 0 10px 0;
+  position: sticky;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 30;
+  top: 0;
+}
+
+.dropdown-wrapper {
+  margin-bottom: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 3.5rem;
+}

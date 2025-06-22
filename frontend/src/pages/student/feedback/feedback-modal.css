@@ -35,25 +35,25 @@
   border: none;
 }
 
-.modal-content {
+.feedback-modal-content {
   display: flex;
   flex-grow: 1;
   max-height: 70vh;
 }
 
-.modal-left {
+.feedback-modal-left {
   flex: 3;
   padding-right: 2rem;
   border-right: 1px solid #ddd;
 }
 
-.modal-left h3 {
+.feedback-modal-left h3 {
   font-size: 22px;
   margin-top: 5vh;
   margin-bottom: 5vh;
 }
 
-.modal-left p {
+.feedback-modal-left p {
   max-height: 55vh;
   overflow-y: auto;
   padding-right: 3rem;
@@ -61,7 +61,7 @@
   font-size: 18px;
 }
 
-.modal-right {
+.feedback-modal-right {
   flex: 2;
   padding-left: 2rem;
   display: flex;
@@ -71,13 +71,13 @@
   gap: 1.5rem;
 }
 
-.modal-right h4 {
+.feedback-modal-right h4 {
   font-size: 24px;
   text-align: center;
   margin-bottom: 1.5vh;
 }
 
-.modal-footer {
+.feedback-modal-footer {
   display: flex;
   justify-content: space-between;
   margin-top: 4vh;
@@ -152,7 +152,7 @@
   border: 2px solid var(--blue-color-2);
 }
 
-.modal-final {
+.feedback-modal-final {
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -163,7 +163,7 @@
   width: 100%;
 }
 
-.modal-final h3 {
+.feedback-modal-final h3 {
   font-size: 22px;
   margin-top: 5vh;
   margin-bottom: 3vh;

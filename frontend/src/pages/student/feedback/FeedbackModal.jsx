@@ -87,10 +87,10 @@ const FeedbackModal = ({
       className="feedback-modal"
       overlayClassName="feedback-modal-overlay"
     >
-      <div className="modal-content">
+      <div className="feedback-modal-content">
         {currentPage < 3 ? (
           <>
-            <div className="modal-left">
+            <div className="feedback-modal-left">
               <h3>
                 [Passage #{currentPage + 1}] {currentGeneration?.title}
               </h3>
@@ -105,7 +105,7 @@ const FeedbackModal = ({
               </p>
             </div>
 
-            <div className="modal-right">
+            <div className="feedback-modal-right">
               <h4>읽기 자료가 마음에 드나요?</h4>
               <button
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}
@@ -134,7 +134,7 @@ const FeedbackModal = ({
             </div>
           </>
         ) : (
-          <div className="modal-final">
+          <div className="feedback-modal-final">
             <h3>지문을 선택하세요</h3>
             <ul className="final-selection-list">
               {generations.map((gen, index) => (
@@ -185,7 +185,7 @@ const FeedbackModal = ({
         )}
       </div>
 
-      <div className="modal-footer">
+      <div className="feedback-modal-footer">
         <button
           className="move-btn"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}

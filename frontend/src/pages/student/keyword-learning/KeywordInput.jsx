@@ -9,6 +9,7 @@ import { api } from '@/config';
 import StudentHeader from '../header/StudentHeader';
 import InputField from '@/components/inputs/InputField';
 import KeywordButtons from '../keyword-button/KeywordButtons';
+import LoadingAnimation from '@/components/loading/LoadingAnimation';
 import './keyword-input.css';
 
 import CONFIG from '@/config';
@@ -41,6 +42,9 @@ const KeywordInput = () => {
   const [selectedLevel, setSelectedLevel] = useState('low');
 
   const [keyword, setKeyword] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const recommendedKeywords = [
@@ -87,14 +91,29 @@ const KeywordInput = () => {
 
     const url = urlBuilder.url(userLevel);
 
+    const startTime = Date.now();
+
     try {
+      setIsLoading(true);
+
       const response = await api.post(url, { keyword });
+
+      const elapsed = Date.now() - startTime;
+      const remainingTime = 5000 - elapsed;
+      if (remainingTime > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
+  
+      setIsLoading(false);
 
       navigate(`/student/mode/${mode}/solve`, {
         state: { data: response.data },
       });
     } catch (error) {
       console.error('Error generating text:', error);
+
+      setIsLoading(false);
+
       const message =
         error.response?.data?.message || '텍스트 생성 중 오류가 발생했습니다.';
       alert(message);
@@ -105,43 +124,47 @@ const KeywordInput = () => {
     <div className="student-custom-container">
       <StudentHeader />
 
-      <div className="keyword-container">
-        {mode === 'manual' && (
-          <div className="level-button-group">
-            <label className="level-button-label">학습 난이도 선택</label>
-            <div className="level-buttons">
-              {availableLevels.map(({ label, value }) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={`level-button ${selectedLevel === value ? 'selected' : ''}`}
-                  onClick={() => setSelectedLevel(value)}
-                >
-                  {label}
-                </button>
-              ))}
+      {isLoading && <LoadingAnimation />}
+      
+      {!isLoading && (
+        <div className="keyword-container">
+          {mode === 'manual' && (
+            <div className="level-button-group">
+              <label className="level-button-label">학습 난이도 선택</label>
+              <div className="level-buttons">
+                {availableLevels.map(({ label, value }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`level-button ${selectedLevel === value ? 'selected' : ''}`}
+                    onClick={() => setSelectedLevel(value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
+          )}
+
+          <div className="keyword-input-wrapper">
+            <InputField
+              label="키워드를 입력해 보세요."
+              placeholder="keyword"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              onButtonClick={handleGenerateContents}
+              buttonText="검색"
+            />
           </div>
-        )}
 
-        <div className="keyword-input-wrapper">
-          <InputField
-            label="키워드를 입력해 보세요."
-            placeholder="keyword"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            onButtonClick={handleGenerateContents}
-            buttonText="검색"
-          />
+          <div className="keyword-buttons-wrapper">
+            <KeywordButtons
+              keywords={recommendedKeywords}
+              onKeywordClick={handleKeywordClick}
+            />
+          </div>
         </div>
-
-        <div className="keyword-buttons-wrapper">
-          <KeywordButtons
-            keywords={recommendedKeywords}
-            onKeywordClick={handleKeywordClick}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

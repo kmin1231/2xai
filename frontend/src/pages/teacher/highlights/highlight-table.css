@@ -1,0 +1,60 @@
+/* src/pages/teacher/highlights/highlight-table.css */
+
+.highlights-overview-table-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.highlights-overview-table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 1rem;
+  border-collapse: collapse;
+}
+
+.highlights-overview-table thead tr {
+  background-color: var(--blue-color-3, #cce4ff);
+  color: black;
+  text-align: center;
+}
+
+.table-body-wrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: calc(80vh - 120px);
+  overflow-x: hidden;
+}
+
+.highlights-overview-table th,
+.highlights-overview-table td {
+  padding: 8px 0 8px 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* column width */
+.highlights-overview-table th:nth-child(1), .highlights-overview-table td:nth-child(1) {
+  width: 0.5vw;
+} /* No. */
+
+.highlights-overview-table th:nth-child(2), .highlights-overview-table td:nth-child(2) {
+  width: 1.5vw;
+} /* 학교 */
+
+.highlights-overview-table th:nth-child(3), .highlights-overview-table td:nth-child(3) {
+  width: 1.5vw;
+} /* 학반 */
+
+.highlights-overview-table th:nth-child(4), .highlights-overview-table td:nth-child(4) {
+  width: 1.5vw;
+} /* 이름 */
+
+.highlights-overview-table th:nth-child(5), .highlights-overview-table td:nth-child(5) {
+  width: 5vw;
+  white-space: normal;
+  word-break: break-word;
+} /* 하이라이트 */

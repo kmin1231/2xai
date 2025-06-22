@@ -23,6 +23,9 @@ import ResultsDetail from './pages/teacher/results/ResultsDetail';
 import ClassConfig from './pages/teacher/class-config/ClassConfig';
 import HighlightsOverview from './pages/teacher/highlights/HighlightsOverview';
 
+import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
+import AdminMain from './pages/admin/main/AdminMain';
+
 function App() {
   return (
     <Router>
@@ -38,10 +41,14 @@ function App() {
 
           <Route path="/teacher" element={<TeacherMain />} />
           <Route path="/teacher/dashboard" element={<TeacherDashboardLayout />}>
-          <Route path="/teacher/dashboard/results" element={<ResultsOverview />} />
-          <Route path="/teacher/dashboard/results/student/:studentId" element={<ResultsDetail />} />
-          <Route path="/teacher/dashboard/class/config" element={<ClassConfig />} />
-          <Route path="/teacher/dashboard/highlights" element={<HighlightsOverview />} />
+            <Route path="results" element={<ResultsOverview />} />
+            <Route path="results/student/:studentId" element={<ResultsDetail />} />
+            <Route path="class/config" element={<ClassConfig />} />
+            <Route path="highlights" element={<HighlightsOverview />} />
+          </Route>
+
+          <Route path="/admin" element={<AdminDashboardLayout />}>
+            <Route index element={<AdminMain />} />
           </Route>
         </Routes>
 

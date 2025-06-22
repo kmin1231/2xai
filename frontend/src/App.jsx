@@ -25,6 +25,7 @@ import HighlightsOverview from './pages/teacher/highlights/HighlightsOverview';
 
 import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
 import AdminMain from './pages/admin/main/AdminMain';
+import AdminResultsOverview from './pages/admin/results/AdminResultsOverview';
 
 function App() {
   return (
@@ -49,6 +50,8 @@ function App() {
 
           <Route path="/admin" element={<AdminDashboardLayout />}>
             <Route index element={<AdminMain />} />
+            <Route path="dashboard/results" element={<AdminResultsOverview />} />
+            <Route path="dashboard/results/student/:studentId" element={<ResultsDetail />} />
           </Route>
         </Routes>
 

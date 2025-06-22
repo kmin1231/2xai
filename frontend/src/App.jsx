@@ -20,6 +20,8 @@ import TeacherMain from './pages/teacher/main/TeacherMain';
 import TeacherDashboardLayout from '@/layouts/TeacherDashboardLayout';
 import ResultsOverview from './pages/teacher/results/ResultsOverview';
 import ResultsDetail from './pages/teacher/results/ResultsDetail';
+import ClassConfig from './pages/teacher/class-config/ClassConfig';
+import HighlightsOverview from './pages/teacher/highlights/HighlightsOverview';
 
 function App() {
   return (
@@ -38,10 +40,8 @@ function App() {
           <Route path="/teacher/dashboard" element={<TeacherDashboardLayout />}>
           <Route path="/teacher/dashboard/results" element={<ResultsOverview />} />
           <Route path="/teacher/dashboard/results/student/:studentId" element={<ResultsDetail />} />
-
-            {/* <Route path="results" element={<TeacherLearningOverview />} />
-            <Route path="keywords" element={<TeacherKeywordSettings />} />
-            <Route path="levels" element={<TeacherLevelSettings />} /> */}
+          <Route path="/teacher/dashboard/class/config" element={<ClassConfig />} />
+          <Route path="/teacher/dashboard/highlights" element={<HighlightsOverview />} />
           </Route>
         </Routes>
 

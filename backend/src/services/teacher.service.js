@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 exports.getTeacherClassList = async (teacherId) => {
   const objectId = new mongoose.Types.ObjectId(teacherId);
   return await Class.find({ teacher: objectId })
-    .select('_id class_name school_name class_level')
+    .select('_id class_name school_name class_level class_keyword')
     .lean();
 };
 

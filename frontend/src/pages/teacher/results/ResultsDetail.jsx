@@ -30,25 +30,10 @@ const ResultsDetail = () => {
   };
 
   useEffect(() => {
-    const fetchStudentInfo = async () => {
-      try {
-        const res = await api.get(
-          `${CONFIG.TEACHER.BASE_URL}/students/${studentId}`,
-        );
-        setStudentName(res.data.name || '');
-      } catch (err) {
-        console.error('Failed to fetch student info', err);
-      }
-    };
-
-    fetchStudentInfo();
-  }, [studentId]);
-
-  useEffect(() => {
     const fetchRecords = async () => {
       try {
         const resRecords = await api.get(
-          `${CONFIG.TEACHER.BASE_URL}/students/${studentId}/records`,
+          `${CONFIG.TEACHER.BASE_URL}${CONFIG.TEACHER.ENDPOINTS.GET_STUDENT_RECORDS(studentId)}`,
         );
 
         const sortedRecords = resRecords.data.data.sort(
@@ -92,7 +77,9 @@ const ResultsDetail = () => {
 
   return (
     <div className="results-detail-container">
-      <h3 className="results-detail-header">{studentName} 학생의 학습 결과</h3>
+      <h3 className="results-detail-header">
+        {studentName ? `${studentName} 학생의 학습 결과` : '학습 결과'}
+      </h3>
       <div className="records-container">
         <table>
           <thead>

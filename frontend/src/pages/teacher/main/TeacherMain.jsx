@@ -11,18 +11,18 @@ const TeacherMain = () => {
 
   const modes = [
     {
-      title: '학습 결과',
+      title: '학습 결과 확인',
       action: () => navigate('/teacher/dashboard/results'),
     },
 
     {
-      title: '키워드 설정',
-      action: () => navigate('/teacher/dashboard/keywords'),
+      title: '학급별 맞춤 설정',
+      action: () => navigate('/teacher/dashboard/class/config'),
     },
 
     {
-      title: '난이도 설정',
-      action: () => navigate('/teacher/dashboard/levels'),
+      title: '하이라이트 확인',
+      action: () => navigate('/teacher/dashboard/highlights'),
     },
   ];
 

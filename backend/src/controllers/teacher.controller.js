@@ -3,7 +3,7 @@
 const teacherService = require('../services/teacher.service');
 
 
-// GET /api/teacher/class-list
+// GET /api/teacher/classes
 exports.getTeacherClassListController = async (req, res) => {
   try {
     const teacherId = req.user.userId;

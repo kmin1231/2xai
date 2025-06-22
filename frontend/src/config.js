@@ -75,6 +75,7 @@ const CONFIG = {
     BASE_URL: `${BASE_URL}/admin`,
     ENDPOINTS: {
       GET_CLASSES: '/classes',
+      GET_FEEDBACKS: '/feedbacks',
     },
   },
 };

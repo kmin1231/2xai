@@ -251,6 +251,7 @@ router.patch("/users/teachers/:username/classes", verifyToken, adminController.p
 router.post("/users/students", verifyToken, adminController.registerStudent);
 
 
+// GET /api/admin/classes
 /**
  * @swagger
  * /api/admin/classes:
@@ -292,6 +293,71 @@ router.post("/users/students", verifyToken, adminController.registerStudent);
  *         description: Server error
  */
 router.get('/classes', verifyToken, adminController.getAllClassesController);
+
+
+// GET /api/admin/feedbacks
+/**
+ * @swagger
+ * /api/admin/feedbacks:
+ *   get:
+ *     summary: Get all feedbacks (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all student feedbacks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       keyword:
+ *                         type: string
+ *                       level:
+ *                         type: string
+ *                       feedbacks:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             title:
+ *                               type: string
+ *                             passage:
+ *                               type: string
+ *                             feedback:
+ *                               type: string
+ *                       userId:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                           name:
+ *                             type: string
+ *                           class_id:
+ *                             type: object
+ *                             properties:
+ *                               _id:
+ *                                 type: string
+ *                               class_name:
+ *                                 type: string
+ *                               school_name:
+ *                                 type: string
+ *       403:
+ *         description: Access denied (not admin)
+ *       500:
+ *         description: Server error
+ */
+router.get('/feedbacks', verifyToken, adminController.getFeedbacksController);
 
 
 module.exports = router;

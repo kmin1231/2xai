@@ -140,3 +140,23 @@ exports.getAllClassesController = async (req, res) => {
     res.status(500).json({ message: '학반 목록 조회에 실패했습니다.' });
   }
 };
+
+
+// GET /api/admin/feedbacks
+exports.getFeedbacksController = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin' && req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied: Only admins allowed.' });
+    }
+
+    const feedbacks = await adminService.getAllFeedbacks();
+
+    res.status(200).json({
+      message: 'Feedbacks fetched successfully',
+      data: feedbacks,
+    });
+  } catch (error) {
+    console.error('Error fetching feedbacks:', error);
+    res.status(500).json({ message: 'Failed to fetch feedbacks', error: error.message });
+  }
+};

@@ -1,7 +1,8 @@
 // services/admin.service.js
 
-const User = require("../models/user.js");
-const Class = require("../models/class.js");
+const User = require("../models/user");
+const Class = require("../models/class");
+const Feedback = require('../models/feedback');
 
 exports.createTeacher = async ({
   username,
@@ -250,4 +251,21 @@ exports.getAllClasses = async () => {
   return await Class.find()
     .select('_id class_name school_name class_level class_keyword teacher')
     .lean();
+};
+
+
+exports.getAllFeedbacks = async () => {
+  const feedbacks = await Feedback.find()
+    .populate({
+      path: 'userId',
+      select: 'name class_id',
+      populate: {
+        path: 'class_id',
+        model: 'Class',
+        select: 'school_name class_name',
+      },
+    })
+    .lean();
+
+  return feedbacks;
 };

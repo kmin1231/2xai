@@ -40,8 +40,8 @@ exports.getRecordsByStudentIdController = async (req, res) => {
     const { studentId } = req.params;
 
     // authorization check (role-based)
-    if (req.user.role !== 'teacher') {
-      return res.status(403).json({ message: 'Access denied: Only teachers allowed.' });
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied: Only teachers or admins allowed.' });
     }
 
     const records = await teacherService.getRecordsByStudentId(studentId);
@@ -64,7 +64,7 @@ exports.getStudentRecordSummaryController = async (req, res) => {
   try {
     const { studentId } = req.params;
 
-    if (req.user.role !== 'teacher') {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Access denied: Only teachers allowed.' });
     }
 

@@ -1,0 +1,116 @@
+/* src/pages/admin/feedbacks/feedback-overview.css */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 60vw;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  font-size: 1rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.feedback-overview-container {
+  height: 80vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding: 0 10px;
+  top: 0;
+  margin-top: 10px;
+}
+
+.feedback-overview-title {
+  margin: 35px 0 10px 0;
+  position: sticky;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 30;
+}
+
+.dropdown-wrapper {
+  margin-bottom: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.feedback-overview-table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 1rem;
+  border-collapse: collapse;
+}
+
+.feedback-overview-table thead tr {
+  background-color: var(--blue-color-3, #cce4ff);
+  color: black;
+  text-align: center;
+}
+
+.table-body-wrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: calc(80vh - 120px);
+  overflow-x: hidden;
+}
+
+.feedback-overview-table th,
+.feedback-overview-table td {
+  padding: 8px 0 8px 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feedback-overview-table th:nth-child(1), .feedback-overview-table td:nth-child(1) { width: 0.6vw; } /* No. */
+.feedback-overview-table th:nth-child(2), .feedback-overview-table td:nth-child(2) { width: 2.0vw; } /* 학교 */
+.feedback-overview-table th:nth-child(3), .feedback-overview-table td:nth-child(3) { width: 2.0vw; } /* 학반 */
+.feedback-overview-table th:nth-child(4), .feedback-overview-table td:nth-child(4) { width: 1.8vw; } /* 이름 */
+.feedback-overview-table th:nth-child(5), .feedback-overview-table td:nth-child(5) { width: 5.5vw; } /* 키워드 */
+.feedback-overview-table th:nth-child(6), .feedback-overview-table td:nth-child(6) { width: 1.2vw; } /* 난이도 */
+.feedback-overview-table th:nth-child(7), .feedback-overview-table td:nth-child(7) { width: 3.6vw; } /* 시간 */

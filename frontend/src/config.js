@@ -5,8 +5,8 @@ import axios from 'axios';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const BASE_URL = isProduction
-  ? 'http://35.216.79.131/api' // deployment server URL
-  : 'http://localhost:3200/api'; // development server URL
+  ? 'https://www.twoxai.online/api' // deployment server URL
+  : 'http://localhost:3200/api';    // development server URL
 
 
 // axios instance

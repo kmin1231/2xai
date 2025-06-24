@@ -59,9 +59,9 @@ router.post('/keywords/validate', textController.validateKeyword);
 
 /**
  * @swagger
- * /contents/{level}:
+ * /api/text/contents/{level}:
  *   post:
- *     summary: Generate text contents based on keyword and level
+ *     summary: Generate text contents based on keyword, level, and type
  *     tags: [Text]
  *     security:
  *       - BearerAuth: []
@@ -73,6 +73,13 @@ router.post('/keywords/validate', textController.validateKeyword);
  *           type: string
  *           enum: [low, middle, high]
  *         description: User's learning level
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [inferred, selected, assigned]
+ *         description: How the level was determined (inferred, selected, or assigned)
  *     requestBody:
  *       required: true
  *       content:
@@ -112,7 +119,6 @@ router.post('/keywords/validate', textController.validateKeyword);
  *                         type: string
  *                       example:
  *                         - "What is Harry Potter?\nA normal boy\nA doctor\nA wizard\nA vampire\nA detective"
- *                         - "Where does Harry go to learn magic?\nDurmstrang\nBeauxbatons\nHogwarts\nIlvermorny\nUagadou"
  *                     answer:
  *                       type: array
  *                       items:

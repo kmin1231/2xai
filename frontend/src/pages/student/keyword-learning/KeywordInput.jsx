@@ -15,18 +15,20 @@ import './keyword-input.css';
 import CONFIG from '@/config';
 
 // API request config for each mode
+const DIRECT_API_BASE = 'https://api.twoxai.online'
+
 const modeToApiConfig = {
   personal: {
     url: (level) =>
-      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=inferred`,
+      `${DIRECT_API_BASE}/api/text/contents/${level}?type=inferred`,
   },
   manual: {
     url: (level) =>
-      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=selected`,
+      `${DIRECT_API_BASE}/api/text/contents/${level}?type=selected`,
   },
   assigned: {
     url: (level) =>
-      `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GENERATE_TEXT_CONTENTS}/${level}?type=assigned`,
+      `${DIRECT_API_BASE}/api/text/contents/${level}?type=assigned`,
   },
 };
 

@@ -77,6 +77,8 @@ const KeywordScore = () => {
             whiteSpace: 'pre-wrap',
             borderRight: '1px solid #ccc',
             paddingRight: '2rem',
+            maxHeight: '60vh',
+            overflowY: 'auto',
           }}
         >
           <h2>{title}</h2>
@@ -84,7 +86,7 @@ const KeywordScore = () => {
         </div>
 
         <div style={{ flex: '1' }}>
-          <h2 className="score-header">Result</h2>
+          <h2 className="score-header">채점 결과</h2>
           <hr />
           <p>
             <strong>Score:</strong> {score} / 5

@@ -1,6 +1,6 @@
 // src/components/splash/Splash.jsx
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
 import logoImage from '@/assets/logo-image-without-bg.png';
@@ -10,9 +10,14 @@ import '@fontsource/charm/700.css';
 
 const Splash = () => {
   const controls = useAnimation();
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const sequence = async () => {
+
+      if (!isMounted) return;
 
       // slide in animation
       await controls.start({
@@ -24,8 +29,13 @@ const Splash = () => {
         },
       });
 
+      if (!isMounted) return;
+
+      // START button
+      setShowButton(true);
+
       // vertical bounce animation
-      controls.start({
+      await controls.start({
         y: [0, -20, 0, 0, 0],
         transition: {
           duration: 1.5,
@@ -36,12 +46,19 @@ const Splash = () => {
     };
 
     sequence();
+
+    return () => {
+      isMounted = false;
+    };
+
   }, [controls]);
 
   return (
     <div
       style={{
+        position: 'relative',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
@@ -58,13 +75,37 @@ const Splash = () => {
           src={logoImage}
           alt="Splash Logo Image"
           style={{
-            width: '500px',
+            width: '480px',
             height: 'auto',
             display: 'block',
             cursor: 'pointer',
           }}
         />
       </motion.div>
+
+      {showButton && (
+        <div
+          style={{ position: 'absolute', bottom: '23%', textAlign: 'center' }}
+        >
+          <button
+            style={{
+              padding: '10px 15px',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              backgroundColor: '#ff0000',
+              color: 'white',
+              borderRadius: '30px',
+              cursor: 'pointer',
+              width: '180px',
+              height: '60px',
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = '#f78181')}
+            onMouseOut={(e) => (e.target.style.backgroundColor = '#ff0000')}
+          >
+            START ▶
+          </button>
+        </div>
+      )}
     </div>
   );
 };

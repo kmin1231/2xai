@@ -23,17 +23,20 @@
 
 .mode-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1200px;
+  gap: 30px;
+  padding: 20px 30px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .mode-card {
   background: white;
-  width: 22vw;
+  width: 100%;
+  max-width: 2000px;
   height: 40vh;
+  max-height: 450px;
   border-radius: 20px;
   text-align: center;
   box-shadow:

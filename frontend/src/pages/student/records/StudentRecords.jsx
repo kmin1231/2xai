@@ -15,7 +15,7 @@ const StudentRecords = () => {
   const [records, setRecords] = useState([]);
   const [textsMap, setTextsMap] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedText, setSelectedText] = useState(null);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
   const levelMap = {
     low: '하',
@@ -27,7 +27,7 @@ const StudentRecords = () => {
     const fetchRecords = async () => {
       try {
         const resRecords = await api.get(
-          `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`
+          `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`,
         );
 
         const sortedRecords = resRecords.data.data.sort(
@@ -43,7 +43,7 @@ const StudentRecords = () => {
           uniqueTextIds.map(async (textId) => {
             try {
               const resText = await api.get(
-                `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CONTENTS_BY_ID(textId)}`
+                `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CONTENTS_BY_ID(textId)}`,
               );
               textsMapTemp[textId] = resText.data.data;
             } catch (err) {
@@ -92,8 +92,11 @@ const StudentRecords = () => {
               const shortPassage = (text?.passage || '').replace(/\n/g, ' ').slice(0, 200) || '-';
 
               return (
-                <tr key={record._id} onClick={() => setSelectedText(text)}>
-                  {' '}
+                <tr
+                  key={record._id}
+                  onClick={() => setSelectedRecord({ record, text })}
+                  style={{ cursor: 'pointer' }}
+                >
 
                   {/* open TextDetailModal */}
                   <td>{idx + 1}</td>
@@ -124,11 +127,12 @@ const StudentRecords = () => {
         </table>
       </div>
 
-      {selectedText && (
+      {selectedRecord && (
         <TextDetailModal
-          text={selectedText}
-          onClose={() => setSelectedText(null)}
-          onDownload={(type) => handleDownload(selectedText, type)}
+          text={selectedRecord.text}
+          record={selectedRecord.record}
+          onClose={() => setSelectedRecord(null)}
+          onDownload={(type) => handleDownload(selectedRecord.text, type)}
         />
       )}
     </div>

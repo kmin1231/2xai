@@ -1,6 +1,6 @@
 // src/pages/student/keyword-learning/KeywordInput.jsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
@@ -41,9 +41,12 @@ const KeywordInput = () => {
     { label: '하', value: 'low' },
   ];
 
+  const { userInfo, token } = useSelector((state) => state.auth);
+
   const [selectedLevel, setSelectedLevel] = useState('low');
 
   const [keyword, setKeyword] = useState('');
+  const [classKeyword, setClassKeyword] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +65,24 @@ const KeywordInput = () => {
     setKeyword(selectedKeyword); // selected keyword into InputField
   };
 
-  const { userInfo } = useSelector((state) => state.auth);
+  useEffect(() => {
+    const fetchClassKeyword = async () => {
+      try {
+        const res = await api.get(
+          `${CONFIG.STUDENT.BASE_URL}${CONFIG.STUDENT.ENDPOINTS.GET_CLASS_INFO}`
+        );
+        const keywordFromClass = res.data.data.class_keyword || '';
+        setClassKeyword(keywordFromClass);
+        setKeyword(keywordFromClass);
+      } catch (err) {
+        console.error('학반 키워드 로드에 실패했습니다.', err);
+      }
+    };
+
+    if (mode === 'assigned') {
+      fetchClassKeyword();
+    }
+  }, [mode]);
 
   const handleGenerateContents = async () => {
     const token = localStorage.getItem('token');
@@ -159,9 +179,12 @@ const KeywordInput = () => {
               label="키워드를 입력해 보세요."
               placeholder="keyword"
               value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+              onChange={(e) => {
+                if (mode !== 'assigned') setKeyword(e.target.value);
+              }}
               onButtonClick={handleGenerateContents}
-              buttonText="검색"
+              buttonText="시작"
+              disabled={mode === 'assigned'}
             />
           </div>
 

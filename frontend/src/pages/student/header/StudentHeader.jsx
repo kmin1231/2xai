@@ -13,14 +13,18 @@ const StudentHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleMenuClick = () => {
+  const handleGoToMain = () => {
+    navigate('/student');
+  };
+
+  const handleGoToRecords = () => {
     navigate('/student/records');
   };
 
   const handleLogoutClick = () => {
     dispatch(logout()); // initialize Redux state
-    persistor.purge(); // initialize redux-persist state
-    navigate('/'); // redirect to '/'
+    persistor.purge();  // initialize redux-persist state
+    navigate('/');      // redirect to '/'
   };
 
   return (
@@ -32,7 +36,8 @@ const StudentHeader = () => {
       </div>
 
       <div className="student-header-buttons">
-        <button onClick={handleMenuClick}>학습 결과</button>
+        <button onClick={handleGoToMain}>메인 화면</button>
+        <button onClick={handleGoToRecords}>학습 결과</button>
         <button onClick={handleLogoutClick}>로그아웃</button>
       </div>
     </header>

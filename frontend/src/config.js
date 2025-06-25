@@ -57,6 +57,13 @@ const CONFIG = {
     },
   },
 
+  STUDENT: {
+    BASE_URL: `${BASE_URL}/student`,
+    ENDPOINTS: {
+      GET_CLASS_INFO: '/class-info',
+    },
+  },
+
   TEACHER: {
     BASE_URL: `${BASE_URL}/teacher`,
     ENDPOINTS: {

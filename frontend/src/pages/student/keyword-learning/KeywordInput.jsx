@@ -102,7 +102,7 @@ const KeywordInput = () => {
         url,
         { keyword },
         {
-          timeout: 300000,  // 5 minutes
+          timeout: 900000,  // 15 minutes
         }
       );
 

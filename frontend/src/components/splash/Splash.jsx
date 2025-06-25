@@ -17,6 +17,8 @@ const Splash = () => {
 
     const sequence = async () => {
 
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+
       if (!isMounted) return;
 
       // slide in animation
@@ -79,6 +81,7 @@ const Splash = () => {
             height: 'auto',
             display: 'block',
             cursor: 'pointer',
+            marginBottom: '35px',
           }}
         />
       </motion.div>

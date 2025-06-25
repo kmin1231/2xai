@@ -13,7 +13,12 @@ const Splash = () => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const sequence = async () => {
+
+      if (!isMounted) return;
+
       // slide in animation
       await controls.start({
         width: '500px',
@@ -24,11 +29,13 @@ const Splash = () => {
         },
       });
 
+      if (!isMounted) return;
+
       // START button
       setShowButton(true);
 
       // vertical bounce animation
-      controls.start({
+      await controls.start({
         y: [0, -20, 0, 0, 0],
         transition: {
           duration: 1.5,
@@ -39,6 +46,11 @@ const Splash = () => {
     };
 
     sequence();
+
+    return () => {
+      isMounted = false;
+    };
+
   }, [controls]);
 
   return (

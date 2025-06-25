@@ -59,9 +59,10 @@ const requestGeneration = async (keyword, level, type, token) => {
         { keyword },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+          timeout: 300000,  // 5 minutes
+        },
       );
       const generationData = response.data[`generation${i}`];
 

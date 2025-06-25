@@ -96,7 +96,13 @@ const KeywordInput = () => {
     try {
       setIsLoading(true);
 
-      const response = await api.post(url, { keyword });
+      const response = await api.post(
+        url,
+        { keyword },
+        {
+          timeout: 300000,  // 5 minutes
+        }
+      );
 
       const elapsed = Date.now() - startTime;
       const remainingTime = 5000 - elapsed;

@@ -204,19 +204,18 @@ const updateLevel = async (userId, score) => {
 };
 
 
-const checkAnswer = (userAnswers, correctAnswers) => {
+const checkAnswer = (userAnswerIndexArray, correctAnswerArray) => {
+  const optionLabels = ['a', 'b', 'c', 'd', 'e'];
 
-  // boolean array
-  return userAnswers.map((answer, index) => {
-    
-    // map to 'a', 'b', 'c', 'd', 'e'
-    const options = ['a', 'b', 'c', 'd', 'e'];
-    const selectedOption = options[answer];
-    
-    // correct (true) vs. incorrect (false)
-    return correctAnswers[index] === selectedOption;
-  });
+  const userAnswerStrArray = userAnswerIndexArray.map(index => optionLabels[index] || '-');
+  const correctnessArray = userAnswerStrArray.map((ans, idx) => ans === correctAnswerArray[idx]);
+
+  return {
+    userAnswer: userAnswerStrArray,
+    correctness: correctnessArray,
+  };
 };
+
 
 const getRecordsByUser = async (userId) => {
   try {

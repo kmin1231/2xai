@@ -207,9 +207,9 @@ exports.checkAnswerController = async (req, res) => {
   const { userId } = req.user;
   const { keyword, level, title, passage, question, answer, solution, userAnswer } = req.body;
   
+  
   try {
-    const correctAnswers = answer;
-    const correctness = textService.checkAnswer(userAnswer, correctAnswers);
+    const { userAnswer: userAnswerStrArray, correctness } = textService.checkAnswer(userAnswer, answer);
 
     const score = correctness.filter(isCorrect => isCorrect).length;
 
@@ -230,6 +230,8 @@ exports.checkAnswerController = async (req, res) => {
       userId,
       textId: newText._id,
       correctness,
+      userAnswer: userAnswerStrArray,
+      correctAnswer: answer,
       score,
     });
     await newRecord.save();
@@ -239,6 +241,8 @@ exports.checkAnswerController = async (req, res) => {
     return res.status(200).json({
       score,
       correctness,
+      userAnswer: userAnswerStrArray,
+      correctAnswer: answer,
       newLevel,
       message: 'Answers checked!',
     });

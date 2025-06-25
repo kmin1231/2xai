@@ -51,30 +51,23 @@ const requestGeneration = async (keyword, level, type, token) => {
     console.log('Requesting generation for level:', level);
     console.log('Requesting generation for type:', type);
 
-    const generations = [];
-
-    for (let i = 0; i < 3; i++) {
-      const response = await axios.post(
-        `${process.env.CONTENTS_API}/generate/${level}?type=${type}`,
-        { keyword },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          timeout: 300000,  // 5 minutes
+    const response = await axios.post(
+      `${process.env.CONTENTS_API}/generate/${level}?type=${type}`,
+      { keyword },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      const generationData = response.data[`generation${i}`];
+        timeout: 900000,  // 15 minutes
+      }
+    );
 
-            if (!generationData) {
-              throw new Error(`Generation ${i} data is missing.`);
-            }
-      
-            const { title, passage, question, answer, solution } = generationData;
+    const { generation0, generation1, generation2 } = response.data;
 
-      // console.log(`=== Generation ${i} Response ===`);
-      console.log('=== Generation', i, 'parsed ===', { title, passage, question, answer, solution });
-      // console.log(JSON.stringify(response.data, null, 2));
+    // validation check
+    const generations = [generation0, generation1, generation2];
+    generations.forEach((gen, i) => {
+      const { title, passage, question, answer, solution } = gen;
 
       if (
         typeof title !== 'string' || !title.trim() ||
@@ -86,21 +79,15 @@ const requestGeneration = async (keyword, level, type, token) => {
         throw new Error(`Generation ${i} format is invalid.`);
       }
 
-      generations.push({
-        title,
-        passage,
-        question,
-        answer,
-        solution
-      });
-    }
+      console.log(`=== Generation ${i} parsed ===`, { title, passage, question, answer, solution });
+    });
 
     return {
       keyword,
       level,
-      generation0: generations[0],
-      generation1: generations[1],
-      generation2: generations[2]
+      generation0,
+      generation1,
+      generation2
     };
   } catch (error) {
     console.error('Error generating content:', error.message);

@@ -57,7 +57,8 @@ const FeedbackDetailModal = ({ feedbackItem, onClose }) => {
               {i + 1}. {fb.title}
             </h4>
             <p>{feedbackLabelMap[fb.feedback] || fb.feedback}</p>
-            <p>{fb.passage}</p>
+            {/* <p>{fb.passage}</p> */}
+            <p style={{ whiteSpace: 'pre-line', fontSize: '1.0rem' }}>{fb.passage}</p>
             {i < feedbackItem.feedbacks.length - 1 && <hr />}
           </div>
         ))}

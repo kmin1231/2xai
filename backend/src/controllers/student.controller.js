@@ -6,7 +6,7 @@ const User = require("../models/user");
 const Record = require("../models/record");
 
 
-// GET /api/text/class-info
+// GET /api/student/class
 exports.getClassInfoByStudentController = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -40,5 +40,24 @@ exports.getClassInfoByStudentController = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Failed to fetch class info", error: error.message });
+  }
+};
+
+
+// GET /api/student/me
+exports.getCurrentStudentInfoController = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const result = await studentService.getCurrentStudentInfo(userId);
+
+    if (!result) {
+      return res.status(403).json({ message: "Only students can access this." });
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in getCurrentStudentInfoController:", error);
+    return res.status(500).json({ message: "Failed to fetch student info", error: error.message });
   }
 };

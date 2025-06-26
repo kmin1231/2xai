@@ -30,8 +30,9 @@ const StudentRecords = () => {
           `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.GET_RECORDS}`,
         );
 
+        // NEWest first
         const sortedRecords = resRecords.data.data.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
 
         setRecords(sortedRecords);

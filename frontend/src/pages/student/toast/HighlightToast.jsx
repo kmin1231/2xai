@@ -2,34 +2,38 @@
 
 import React from 'react';
 
-export const HighlightToast = ({ onUndo }) => {
-  const toastStyle = {
-    color: 'black',
-    padding: '0px 10px',
-    borderRadius: '10px',
-    fontSize: '14px',
-    width: '320px',
-    maxWidth: '350px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    wordBreak: 'break-word',
-  };
+const toastStyle = {
+  color: 'white',
+  padding: '5px 5px',
+  borderRadius: '20px',
+  fontSize: '18px',
+  fontWeight: 'bold',
+  width: '450px',
+  height: '50px',
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  wordBreak: 'break-word',
+  backgroundColor: '#7aaee0',
+};
 
+export const HighlightToast = ({ onUndo }) => {
   return (
-    <div style={toastStyle}>
-      하이라이트가 저장되었습니다.
+    <div style={{ ...toastStyle, paddingRight: '25px' }}>
+      <span style={{ flexGrow: 1 }}>
+    ✔ 하이라이트가 저장되었습니다.
+  </span>
       <button
         style={{
           marginLeft: '0px',
-          background: '#f2f6f9',
-          border: 'none',
-          color: '#00f',
+          background: 'transparent',
+          border: '1.0px solid white',
+          color: '#f7db86',
           cursor: 'pointer',
-          textDecoration: 'underline',
-          padding: 0,
-          fontSize: 'inherit',
+          padding: '6px 10px',
+          fontSize: '16px',
+          fontWeight: 'bold',
         }}
         onClick={onUndo}
       >
@@ -43,9 +47,8 @@ export const HighlightUndoToast = () => {
   return (
     <div
       style={{
-        fontSize: '14px',
-        padding: '10px',
-        color: '#333',
+        ...toastStyle,
+        justifyContent: 'center',
       }}
     >
       하이라이트가 취소되었습니다.

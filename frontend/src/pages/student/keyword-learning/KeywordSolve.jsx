@@ -47,26 +47,35 @@ const KeywordSolve = () => {
     setIsModalOpen(false);
   };
 
-  const handleTextMouseUp = async () => {
+  const getIndexFromSelection = (containerElement) => {
     const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) return;
+    if (!selection || selection.rangeCount === 0) return null;
 
     const range = selection.getRangeAt(0);
-    const selectedText = selection.toString();
-    if (!selectedText) return;
+    const preRange = range.cloneRange();
 
-    // 하이라이트 저장 확인 메시지
-    // const isSaveConfirmed = window.confirm('하이라이트를 저장하시겠습니까?');
-    // if (!isSaveConfirmed) return;
+    preRange.selectNodeContents(containerElement);
+    preRange.setEnd(range.startContainer, range.startOffset);
 
-    const passageText = selectedGeneration.passage;
-    const start = passageText.indexOf(selectedText);
-    const end = start + selectedText.length;
+    const start = preRange.toString().length;
+    const end = start + range.toString().length;
 
-    if (start === -1) {
-      alert('선택한 텍스트를 찾을 수 없습니다.');
-      return;
-    }
+    return { start, end, selectedText: range.toString() };
+  };
+
+  const handleTextMouseUp = async () => {
+    const selectionInfo = getIndexFromSelection(passageRef.current);
+    if (!selectionInfo) return;
+
+    const { start, end, selectedText } = selectionInfo;
+
+    if (!selectedText || selectedText.trim() === '') return;
+
+    // 중복 하이라이트 방지
+    const isAlreadyHighlighted = highlightedRanges.some(
+      (r) => r.start === start && r.end === end,
+    );
+    if (isAlreadyHighlighted) return;
 
     const savedHighlight = await saveHighlightToServer({ text: selectedText });
     if (!savedHighlight) return;
@@ -88,7 +97,8 @@ const KeywordSolve = () => {
         }}
       />,
       {
-        icon: true,
+        className: 'highlight-toast',
+        icon: false,
         autoClose: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -167,6 +177,7 @@ const KeywordSolve = () => {
       );
 
       toast.info(<HighlightUndoToast />, {
+        className: 'highlight-toast',
         icon: false,
         position: 'bottom-right',
         autoClose: 3000,

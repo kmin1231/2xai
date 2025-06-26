@@ -98,3 +98,13 @@ body {
   pointer-events: none;
   opacity: 0.8;
 }
+
+.highlight-toast {
+  background-color: #7aaee0 !important;
+  color: white !important;
+  border-radius: 20px !important;
+  width: 450px !important;
+  height: 50px !important;
+  align-items: center;
+  justify-content: space-between;
+}

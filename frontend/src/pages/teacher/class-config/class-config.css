@@ -93,6 +93,7 @@
   margin-left: 15px;
   font-size: 1rem;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .set-class-level-btn:hover,
@@ -103,4 +104,15 @@
 .level-select-dropdown {
   font-size: 1rem;
   padding: 5px 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .class-list-panel, .class-detail-panel {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+
+  .set-class-level-btn, .set-class-keyword-btn {
+    background-color: var(--dark-mode-button-color);
+  }
 }

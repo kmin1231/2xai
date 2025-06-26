@@ -1,0 +1,23 @@
+/* src/pages/teacher/dropdown/class-dropdown.css */
+
+select.class-dropdown {
+  padding: 10px 8px;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  select.class-dropdown {
+    background-color: var(--dark-mode-button-color);
+    color: var(--text-color);
+    border: 1px solid var(--dark-mode-button-color);
+  }
+
+  select.class-dropdown option {
+    background-color: var(--dark-mode-button-color);
+    color: var(--text-color);
+  }
+}

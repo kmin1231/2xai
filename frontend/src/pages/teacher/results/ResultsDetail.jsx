@@ -21,7 +21,7 @@ const ResultsDetail = () => {
   const [records, setRecords] = useState([]);
   const [textsMap, setTextsMap] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedText, setSelectedText] = useState(null);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
   const levelMap = {
     low: '하',
@@ -37,7 +37,7 @@ const ResultsDetail = () => {
         );
 
         const sortedRecords = resRecords.data.data.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
         setRecords(sortedRecords);
 
@@ -102,7 +102,7 @@ const ResultsDetail = () => {
               return (
                 <tr
                   key={record._id}
-                  onClick={() => setSelectedText(text)}
+                  onClick={() => setSelectedRecord({ record, text })}
                   style={{ cursor: 'pointer' }}
                 >
                   <td>{idx + 1}</td>
@@ -135,11 +135,12 @@ const ResultsDetail = () => {
         </table>
       </div>
 
-      {selectedText && (
+      {selectedRecord && (
         <TextDetailModal
-          text={selectedText}
-          onClose={() => setSelectedText(null)}
-          onDownload={(type) => handleDownload(selectedText, type)}
+          text={selectedRecord.text}
+          record={selectedRecord.record}
+          onClose={() => setSelectedRecord(null)}
+          onDownload={(type) => handleDownload(selectedRecord.text, type)}
         />
       )}
     </div>

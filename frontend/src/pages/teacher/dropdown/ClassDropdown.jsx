@@ -1,10 +1,12 @@
 // src/pages/teacher/dropdown/ClassDropdown.jsx
 
 import React from 'react';
+import './class-dropdown.css';
 
 const ClassDropdown = ({ classes, selectedClassId, onSelectClass }) => {
   return (
     <select
+      className="class-dropdown"
       value={selectedClassId}
       onChange={(e) => onSelectClass(e.target.value)}
       style={{
@@ -12,8 +14,8 @@ const ClassDropdown = ({ classes, selectedClassId, onSelectClass }) => {
         minWidth: '200px',
         border: '1px solid #ccc',
         borderRadius: '6px',
-        backgroundColor: '#f9f9f9',
         fontSize: '1.0rem',
+        color: 'inherit',
       }}
     >
       <option value="all">전체</option>

@@ -50,3 +50,13 @@
 .teacher-header-buttons button:hover {
   background-color: var(--gray-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .teacher-header {
+    background-color: var(--dark-mode-main-color);
+  }
+
+  .teacher-header-buttons button {
+    background-color: var(--dark-mode-button-color);
+  }
+}

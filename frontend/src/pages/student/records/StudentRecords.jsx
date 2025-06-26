@@ -112,10 +112,8 @@ const StudentRecords = () => {
                     {record.correctness.map((isCorrect, i) => (
                       <span
                         key={i}
-                        style={{
-                          color: isCorrect ? 'green' : 'red',
-                          marginRight: 4,
-                        }}
+                        className={isCorrect ? 'answer-correct' : 'answer-incorrect'}
+                        style={{ marginRight: 4, }}
                       >
                         {isCorrect ? 'O' : 'X'}
                       </span>

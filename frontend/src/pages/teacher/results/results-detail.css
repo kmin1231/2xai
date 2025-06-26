@@ -89,3 +89,13 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+@media (prefers-color-scheme: dark) {
+  td {
+    background-color: var(--dark-mode-table-color);
+  }
+
+  .results-detail-container tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+}

@@ -282,32 +282,27 @@ const KeywordSolve = () => {
                       Q{index + 1}. {questionText}
                     </strong>
                   </p>
-                  <ul>
-                    {options.map((opt, optIdx) => {
-                      const optionId = `q${index}_opt${optIdx}`;
-                      return (
-                        <li key={optIdx} style={{ listStyleType: 'none' }}>
-                          <label htmlFor={optionId}>
-                            <input
-                              type="radio"
-                              name={`question-${index}`}
-                              id={optionId}
-                              value={optIdx}
-                              checked={userAnswers[index] === optIdx}
-                              onChange={() =>
-                                setUserAnswers((prev) => ({
-                                  ...prev,
-                                  [index]: optIdx,
-                                }))
-                              }
-                            />
-                            {String.fromCharCode(97 + optIdx)}. {opt}
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+                  <div className="option-button-group">
+        {options.map((opt, optIdx) => {
+          const isSelected = userAnswers[index] === optIdx;
+          return (
+            <button
+              key={optIdx}
+              type="button"
+              className={`option-button ${isSelected ? 'selected' : ''}`}
+              onClick={() =>
+                setUserAnswers((prev) => ({
+                  ...prev,
+                  [index]: optIdx,
+                }))
+              }
+            >
+              {String.fromCharCode(97 + optIdx)}. {opt}
+            </button>
+          );
+        })}
+      </div>
+    </div>
               );
             })}
             <div className="question-submit-wrapper">

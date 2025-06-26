@@ -50,3 +50,13 @@
 .admin-header-buttons button:hover {
   background-color: var(--gray-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .admin-header {
+    background-color: var(--dark-mode-main-color);
+  }
+
+  .admin-header-buttons button {
+    background-color: var(--dark-mode-button-color);
+  }
+}

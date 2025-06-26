@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
 import logoImage from '@/assets/logo-image-without-bg.png';
+import './loading-animation.css';
 
 const LoadingAnimation = () => {
   const controls = useAnimation();
@@ -33,23 +34,7 @@ const LoadingAnimation = () => {
   }, [controls]);
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        padding: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-        backgroundColor: 'transparent',
-        gap: 0,
-      }}
-    >
+    <div className="loading-animation-wrapper">
       <motion.div
         initial={{ width: 0, opacity: 0 }}
         animate={controls}
@@ -74,6 +59,7 @@ const LoadingAnimation = () => {
           fontSize: '1.5rem',
           textAlign: 'center',
           lineHeight: '2.0',
+          color: 'inherit',
         }}
       >
         맞춤형 학습 자료를 생성 중입니다. <br />

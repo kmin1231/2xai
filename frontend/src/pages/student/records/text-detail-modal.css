@@ -74,3 +74,10 @@
   background: none;
   width: 80%;
 }
+
+@media (prefers-color-scheme: dark) {
+  .text-detail-modal-content {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+}

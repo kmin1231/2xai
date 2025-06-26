@@ -94,3 +94,39 @@ th:nth-child(4), td:nth-child(4) { width: 5vw; }        /* 제목 */
 th:nth-child(5), td:nth-child(5) { width: 13vw; }       /* 지문 */
 th:nth-child(6), td:nth-child(6) { width: 2.2vw; }      /* 풀이 시간 */
 th:nth-child(7), td:nth-child(7) { width: 2.5vw; }      /* 풀이 결과 */
+
+.answer-correct {
+  color: green;
+}
+
+.answer-incorrect {
+  color: red;
+}
+
+@media (prefers-color-scheme: dark) {
+  .solution-view-btn {
+    background-color: var(--dark-mode-button-color);
+  }
+
+  th {
+    background-color: var(--blue-color-4);
+    color: var(--text-color);
+  }
+
+  td {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+
+  .answer-correct {
+    color: #007e33;
+  }
+
+  .answer-incorrect {
+    color: #c62828;
+  }
+}

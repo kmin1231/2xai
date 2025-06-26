@@ -50,3 +50,13 @@
 .student-header-buttons button:hover {
   background-color: var(--gray-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .student-header {
+    background-color: var(--dark-mode-main-color);
+  }
+
+  .student-header-buttons button {
+    background-color: var(--dark-mode-button-color);
+  }
+}

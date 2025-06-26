@@ -15,9 +15,37 @@
   --border-color: #dbdbdb;
   --placeholder-color: #7a7777;
   --highlight-color: #dae7f0;
+  --bg-color: #ffffff;
+  --text-color: #000000;
   --primary-font: 'IBM Plex Sans KR', sans-serif;
 }
 
 body {
   font-family: var(--primary-font);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #98c1ff;
+    --blue-color-1: #4a7ca5;
+    --blue-color-2: #6b9fc7;
+    --blue-color-3: #94b8d8;
+    --blue-color-4: #203a54;
+    --blue-color-5: #1a2a39;
+    --main-gray-color: #dddddd;
+    --keyword-button-hover-color: #59a2ab;
+    --khu-color: #ff6b68;
+    --gray-button-color: #cccccc;
+    --gray-button-hover-color: #eeeeee;
+    --border-color: #555555;
+    --placeholder-color: #aaaaaa;
+    --highlight-color: #2a4b66;
+    --bg-color: #222426;
+    --text-color: #eeeeee;
+    --dark-mode-main-color: #b7bcbd;
+    --dark-mode-button-color: #525454;
+  }
 }

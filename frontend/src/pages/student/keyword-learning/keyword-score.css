@@ -82,3 +82,24 @@
 .solution-close-btn:hover {
   background-color: var(--keyword-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .solution-view-btn {
+    background-color: var(--dark-mode-button-color);
+  }
+
+  .score-table th {
+    background-color: var(--blue-color-4);
+    color: var(--text-color);
+  }
+
+  .score-table td {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+
+  .solution-modal-content {
+    background-color: var(--dark-mode-main-color) !important;
+    color: var(--bg-color);
+  }
+}

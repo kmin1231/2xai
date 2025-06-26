@@ -68,3 +68,13 @@
   font-size: 1.6rem;
   color: var(--main-gray-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .mode-card {
+    background-color: var(--dark-mode-main-color);
+  }
+
+  .mode-title {
+    color: var(--bg-color) !important;
+  }
+}

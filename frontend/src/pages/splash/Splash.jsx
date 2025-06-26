@@ -9,15 +9,11 @@ import './splash.css';
 const SplashPage = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleStartClick = () => {
     navigate('/login');
   };
 
-  return (
-    <div onClick={handleClick}>
-      <Splash />
-    </div>
-  );
+  return <Splash onStartClick={handleStartClick} />;
 };
 
 export default SplashPage;

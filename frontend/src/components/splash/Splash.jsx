@@ -8,7 +8,7 @@ import logoImage from '@/assets/logo-image-without-bg.png';
 import '@fontsource/charm/400.css';
 import '@fontsource/charm/700.css';
 
-const Splash = () => {
+const Splash = ({ onStartClick }) => {
   const controls = useAnimation();
   const [showButton, setShowButton] = useState(false);
 
@@ -17,9 +17,9 @@ const Splash = () => {
 
     const sequence = async () => {
 
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-
       if (!isMounted) return;
+
+      await new Promise((resolve) => requestAnimationFrame(resolve));
 
       // slide in animation
       await controls.start({
@@ -64,7 +64,9 @@ const Splash = () => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
+        cursor: 'pointer',
       }}
+      onClick={onStartClick}
     >
       <motion.div
         initial={{ width: 0, opacity: 0 }}
@@ -89,6 +91,7 @@ const Splash = () => {
       {showButton && (
         <div
           style={{ position: 'absolute', bottom: '23%', textAlign: 'center' }}
+          onClick={onStartClick}
         >
           <button
             style={{

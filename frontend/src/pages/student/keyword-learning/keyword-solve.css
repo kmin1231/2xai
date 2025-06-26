@@ -108,3 +108,16 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+@media (prefers-color-scheme: dark) {
+  .result-left, .result-right {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+
+  .question-submit-btn {
+    background-color: var(--dark-mode-button-color);
+    color: var(--text-color);
+    font-weight: bold;
+  }
+}

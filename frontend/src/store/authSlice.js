@@ -88,7 +88,7 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(login.fulfilled, (state, action) => {
-        const { token, redirect, role, name, classInfo, studentLevels, school } = action.payload;
+        const { token, role, name, classInfo, studentLevels } = action.payload;
 
         state.token = token;
         state.isLoggedIn = true;
@@ -113,8 +113,8 @@ const authSlice = createSlice({
         state.userInfo = userInfo;
         state.status = 'succeeded';
 
-        localStorage.setItem('token', action.payload.token);
-
+        localStorage.setItem('token', token);
+        state.role = role;
       })
       .addCase(login.rejected, (state) => {
         state.status = 'failed';

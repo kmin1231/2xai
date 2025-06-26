@@ -70,3 +70,19 @@ body {
 .next-button:hover {
   background-color: var(--gray-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .input-field {
+    background-color: transparent;
+    color: var(--text-color);
+  }
+
+  .next-button {
+    background-color: var(--gray-button-color);
+    color: black;
+  }
+  
+  .input-static-text {
+    color: var(--text-color)
+  }
+}

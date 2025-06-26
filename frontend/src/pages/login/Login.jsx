@@ -11,16 +11,25 @@ import Header from '@/components/header/Header';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username, password, isLoggedIn, status, redirect } = useSelector((state) => state.auth);
+
+  const { username, password, isLoggedIn, status, role } = useSelector((state) => state.auth);
   
   // [Step1] username -> [Step2] password
   const [step, setStep] = useState(1);
 
   useEffect(() => {
-    if (isLoggedIn && redirect) {
-      navigate(redirect);
+    if (isLoggedIn) {
+      if (role === 'student') {
+        navigate('/student');
+      } else if (role === 'teacher') {
+        navigate('/teacher');
+      } else if (role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/login');
+      }
     }
-  }, [isLoggedIn, redirect, navigate]);
+  }, [isLoggedIn, role, navigate]);
 
   // next button
   const handleNext = () => {

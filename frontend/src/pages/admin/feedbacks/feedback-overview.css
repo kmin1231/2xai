@@ -114,3 +114,10 @@
 .feedback-overview-table th:nth-child(5), .feedback-overview-table td:nth-child(5) { width: 5.5vw; } /* 키워드 */
 .feedback-overview-table th:nth-child(6), .feedback-overview-table td:nth-child(6) { width: 1.2vw; } /* 난이도 */
 .feedback-overview-table th:nth-child(7), .feedback-overview-table td:nth-child(7) { width: 3.6vw; } /* 시간 */
+
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+  }
+}

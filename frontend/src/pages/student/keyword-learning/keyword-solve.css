@@ -60,12 +60,32 @@ body {
   font-size: 18px;
 }
 
-.result-right ul {
-  padding-left: 0.4rem;
-  font-size: 18px;
-  text-align: justify;
-  list-style-type: none;
-  margin-bottom: 1rem;
+.option-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.option-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: 0.5px solid #ccc;
+  border-radius: 15px;
+  background-color: var(--blue-color-5);
+  cursor: pointer;
+  text-align: left;
+}
+
+.option-button:hover {
+  background-color: var(--keyword-button-hover-color);
+}
+
+.option-button.selected {
+  background-color: var(--keyword-button-hover-color);
+  font-weight: bold;
+  border: none;
 }
 
 .highlighted-text  {
@@ -78,15 +98,16 @@ body {
 }
 
 .question-submit-btn {
-  width: 9vw;
-  height: 6vh;
+  width: 120px;
+  height: 45px;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: bold;
   cursor: pointer;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: var(--keyword-button-hover-color);
   padding: 0px;
+  white-space: nowrap;
 }
 
 .question-submit-btn:hover {
@@ -115,8 +136,22 @@ body {
     color: var(--bg-color);
   }
 
-  .question-submit-btn {
+  .option-button {
     background-color: var(--dark-mode-button-color);
+    color: var(--main-gray-color);
+    cursor: pointer;
+    text-align: left;
+    border: none;
+  }
+
+  .option-button.selected {
+    background-color: var(--keyword-button-hover-color);
+    font-weight: bold;
+    border: none;
+  }
+
+  .question-submit-btn {
+    background-color: var(--keyword-button-hover-color);
     color: var(--text-color);
     font-weight: bold;
   }

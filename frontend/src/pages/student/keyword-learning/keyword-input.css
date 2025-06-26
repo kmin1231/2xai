@@ -59,3 +59,21 @@
   color: var(--gray-button-color);
   border: none;
 }
+
+@media (prefers-color-scheme: dark) {
+  .level-button-label {
+    color: var(--dark-mode-main-color);
+  }
+
+  .level-button {
+    background-color: var(--dark-mode-main-color);
+    color: black;
+    border: none;
+  }
+
+  .level-button.selected {
+    color: black;
+    border: none;
+  }
+
+}

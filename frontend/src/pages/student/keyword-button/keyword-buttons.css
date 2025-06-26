@@ -45,3 +45,9 @@ body {
 .keyword-button:hover {
   background-color: var(--keyword-button-hover-color);
 }
+
+@media (prefers-color-scheme: dark) {
+  .keyword-button {
+    background-color: var(--dark-mode-main-color);
+  }
+}

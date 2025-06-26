@@ -60,7 +60,8 @@ const CONFIG = {
   STUDENT: {
     BASE_URL: `${BASE_URL}/student`,
     ENDPOINTS: {
-      GET_CLASS_INFO: '/class-info',
+      GET_CLASS_INFO: '/class',
+      GET_CURRENT_INFO: '/me',
     },
   },
 

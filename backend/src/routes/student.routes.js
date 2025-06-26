@@ -8,7 +8,7 @@ const { verifyToken } = require("../middleware/auth.middleware");
 
 /**
  * @swagger
- * /api/student/class-info:
+ * /api/student/class:
  *   get:
  *     summary: Get class info for the current student
  *     tags: [Student]
@@ -26,7 +26,28 @@ const { verifyToken } = require("../middleware/auth.middleware");
  *       500:
  *         description: Failed to fetch class info
  */
-router.get("/class-info", verifyToken, studentController.getClassInfoByStudentController);
+router.get("/class", verifyToken, studentController.getClassInfoByStudentController);
+
+
+/**
+ * @swagger
+ * /api/student/me:
+ *   get:
+ *     summary: Get current student info including level
+ *     tags: [Student]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User info fetched successfully
+ *       403:
+ *         description: Only students can access this
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/me", verifyToken, studentController.getCurrentStudentInfoController);
 
 
 module.exports = router;

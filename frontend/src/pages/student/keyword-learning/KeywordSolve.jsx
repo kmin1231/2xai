@@ -8,6 +8,9 @@ import { toast } from 'react-toastify';
 import { api } from '@/config';
 import CONFIG from '@/config';
 
+import { useDispatch } from 'react-redux';
+import { fetchStudentInfo } from '@/store/authSlice';
+
 import StudentHeader from '../header/StudentHeader';
 import { HighlightToast, HighlightUndoToast } from '../toast/HighlightToast';
 
@@ -176,6 +179,7 @@ const KeywordSolve = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitAnswers = async () => {
     const selectedGeneration = generations[finalChoiceIndex];
@@ -202,6 +206,8 @@ const KeywordSolve = () => {
         },
       );
       console.log('Requested successfully:', response.data);
+
+      await dispatch(fetchStudentInfo());
 
       navigate('/student/mode/${mode}/score', {
         state: {

@@ -161,6 +161,7 @@
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding-top: 50px;
 }
 
 .feedback-modal-final h3 {
@@ -202,4 +203,23 @@
   background-color: var(--blue-color-5);
   color: var(--placeholder-color);
   cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .feedback-modal {
+    background-color: var(--bg-color);
+  }
+
+  .feedback-btn, .final-select-button, .confirm-btn {
+    background-color: var(--dark-mode-main-color);
+    color: var(--bg-color);
+    font-weight: bold;
+  }
+
+  .move-btn {
+    background-color: var(--dark-mode-main-color) !important;
+    color: var(--bg-color) !important;
+    font-weight: bold !important;
+  }
 }

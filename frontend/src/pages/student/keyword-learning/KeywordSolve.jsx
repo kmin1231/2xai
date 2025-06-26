@@ -97,7 +97,8 @@ const KeywordSolve = () => {
         }}
       />,
       {
-        icon: true,
+        className: 'highlight-toast',
+        icon: false,
         autoClose: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -176,6 +177,7 @@ const KeywordSolve = () => {
       );
 
       toast.info(<HighlightUndoToast />, {
+        className: 'highlight-toast',
         icon: false,
         position: 'bottom-right',
         autoClose: 3000,

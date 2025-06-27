@@ -1,14 +1,13 @@
-<h1 align="center">📖 AI-based Learning System</h1>
+<!--<h1 align="center">📖 AI-based Learning System</h1>-->
 
 <div align="center">
+  <img src="https://drive.google.com/uc?id=17cF6W6qgLjNlBEVly65aOoydrraCu1j9" width=20%>
   <h3><b><i>eXplainable & eXchangeable AI</i></b></h3>
 </div>
 
 ## 📌 Summary
 
-<pre><code><b>A web-based platform for generating and managing AI-powered learning content</b></code></pre>
-
-<br>
+<pre><code><b>AI-powered Web Platform for Generating and Managing Learning Content</b></code></pre>
 
 ## 💡 Key Features
 
@@ -32,16 +31,22 @@
 
 <br>
 
-## 🧩 Project Architecture
-
-
-<br>
-
-## ⚙️ Tech Stacks
+## ⚙️ Tech Stack
 
 - **Frontend**: `React + Vite`, `Axios`
 - **Backend**: `Node.js`, `Express.js`
 - **Database**: `MongoDB`
+
+- **Deployment & Infra**:
+
+  - **AWS**: `EC2`, `S3` + `CloudFront`, `Route 53`, `ACM` (AWS Certificate Manager), `SSM` (Systems Manager), `AWS CLI`
+
+  - `PM2` (Node.js Process Manager), `Certbot`, `GitHub Actions`
+
+<br>
+
+## 🧩 Project Architecture
+
 
 <br>
 
@@ -84,7 +89,7 @@
 │   └── 🔧vite.config.js
 ├── 🗂️ test
 │   ├── __init__.py
-│   ├── main.py
+│   ├── ▶️main.py
 │   ├── data/
 │   └── requirements.txt
 ├── package.json

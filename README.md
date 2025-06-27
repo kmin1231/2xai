@@ -9,6 +9,8 @@
 
 <pre><code><b>AI-powered Web Platform for Generating and Managing Learning Content</b></code></pre>
 
+<br>
+
 ## 💡 Key Features
 
 > ✅ **AI-Generated Learning Content**  
@@ -39,7 +41,7 @@
 
 - **Deployment & Infra**:
 
-  - **AWS**: `EC2`, `S3` + `CloudFront`, `Route 53`, `ACM` (AWS Certificate Manager), `SSM` (Systems Manager), `AWS CLI`
+  - **AWS**: `EC2`, `S3` + `CloudFront`, `Route 53`,`ACM` (AWS Certificate Manager), `SSM` (Systems Manager)
 
   - `PM2` (Node.js Process Manager), `Certbot`, `GitHub Actions`
 

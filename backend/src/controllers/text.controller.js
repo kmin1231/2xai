@@ -156,7 +156,7 @@ exports.saveFeedbackController = async (req, res) => {
 exports.saveHighlightController = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { text } = req.body;
+    const { text, label } = req.body;
 
     if (!text) {
       return res.status(400).json({ message: 'Text is required for highlight.' });
@@ -165,6 +165,7 @@ exports.saveHighlightController = async (req, res) => {
     const highlightData = {
       userId,
       text,  // highlighted text
+      label,
     };
 
     const result = await textService.saveHighlight(highlightData);
@@ -197,6 +198,30 @@ exports.deleteHighlightController = async (req, res) => {
   } catch (error) {
     console.error('Error deleting highlight:', error.message);
     res.status(500).json({ message: 'Failed to delete highlight', error: error.message });
+  }
+};
+
+
+// POST /api/text/highlight/image
+exports.uploadHighlightImageController = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { imageBase64, highlightIds } = req.body;
+
+    if (!imageBase64 || !highlightIds?.length) {
+      return res.status(400).json({ message: 'Image and highlight IDs are required' });
+    }
+
+    const imageUrl = await textService.uploadHighlightImage({
+      userId,
+      base64Image: imageBase64,
+      highlightIds,
+    });
+
+    res.status(200).json({ message: 'Image uploaded and highlights updated', imageUrl });
+  } catch (err) {
+    console.error('uploadHighlightImageController error:', err.message);
+    res.status(500).json({ message: 'Upload failed', error: err.message });
   }
 };
 

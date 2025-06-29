@@ -10,6 +10,7 @@ const recordSchema = new Schema({
   userAnswer: { type: [String], required: true },
   correctAnswer: { type: [String], required: true },
   score: { type: Number, required: true },
+  elapsedSeconds: { type: Number },
 }, {
   timestamps: { createdAt: true, updatedAt: false },
   versionKey: false,

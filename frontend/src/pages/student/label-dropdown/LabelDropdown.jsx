@@ -5,10 +5,10 @@ import React from 'react';
 import './label-dropdown.css';
 
 const LABELS = {
-  important: { labelKR: '⭐ 중요해요', color: '#FFD6C9' },
-  confusing: { labelKR: '❓ 잘 모르겠어요', color: '#f0f2b6' },
-  mainidea: { labelKR: '📌 주제', color: '#D6E6FF' },
-  etc: { labelKR: '📝 기타', color: '#D6F5D6' },
+  important: { labelKR: '⭐ 중요해요', color: '#F5DCEA' },
+  confusing: { labelKR: '❓ 잘 모르겠어요', color: '#F0F2B6' },
+  mainidea: { labelKR: '📌 주제', color: '#D9E6FA' },
+  etc: { labelKR: '📝 기타', color: '#DFF7DF' },
 };
 
 const LabelDropdown = ({ position, onSelect, onClose }) => {

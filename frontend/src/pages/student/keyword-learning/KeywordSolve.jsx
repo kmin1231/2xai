@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import FeedbackModal from '../feedback/FeedbackModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import html2canvas from 'html2canvas';
 
 import { api } from '@/config';
 import CONFIG from '@/config';
@@ -64,6 +65,7 @@ const KeywordSolve = () => {
   };
 
   const handleTextMouseUp = async () => {
+    const selection = window.getSelection();
     const selectionInfo = getIndexFromSelection(passageRef.current);
     if (!selectionInfo) return;
 
@@ -189,10 +191,46 @@ const KeywordSolve = () => {
     }
   };
 
+  const uploadHighlightImage = async () => {
+    const passageElement = document.querySelector('.result-left');
+    if (!passageElement) return;
+
+    const highlightIds = highlightedRanges.map(h => h._id);
+
+    if (highlightIds.length === 0) {
+      console.warn('No highlights found.');
+      return null;
+    }
+
+    try {
+      const canvas = await html2canvas(passageElement);
+      const imageBase64 = canvas.toDataURL('image/png');
+
+      const res = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.UPLOAD_HIGHLIGHT_IMAGE}`,
+        {
+          imageBase64,
+          highlightIds,
+        }
+      );
+
+      console.log('Image uploaded and DB updated:', res.data);
+      return res.data.imageUrl;
+    } catch (err) {
+      console.error('Error uploading highlight image:', err);
+    }
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const submitAnswers = async () => {
+
+    const imageUrl = await uploadHighlightImage();
+    if (!imageUrl) {
+      console.warn('Highlight image upload was skipped or failed.');
+    }
+
     const selectedGeneration = generations[finalChoiceIndex];
 
     const answers = selectedGeneration.question.map(

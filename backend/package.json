@@ -12,14 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.839.0",
     "axios": "^1.8.4",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.10.1",
-    "xlsx": "^0.18.5"
+    "mongoose": "^8.10.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9",

@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import './label-dropdown.css';
+
 const LABELS = {
   important: { labelKR: '⭐ 중요해요', color: '#FFD6C9' },
   confusing: { labelKR: '❓ 잘 모르겠어요', color: '#f0f2b6' },
@@ -12,36 +14,19 @@ const LABELS = {
 const LabelDropdown = ({ position, onSelect, onClose }) => {
   return (
     <div
-      style={{
-        position: 'fixed',
-        top: position.y,
-        left: position.x,
-        backgroundColor: 'white',
-        border: '1px solid #ccc',
-        padding: '8px',
-        borderRadius: '6px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-        zIndex: 9999,
-      }}
+      className="label-dropdown"
+      style={{ top: position.y, left: position.x }}
     >
       {Object.entries(LABELS).map(([key, { labelKR }]) => (
         <div
           key={key}
-          style={{ padding: '6px 10px', cursor: 'pointer' }}
+          className="label-dropdown-item"
           onClick={() => onSelect(key)}
         >
           {labelKR}
         </div>
       ))}
-      <div
-        style={{
-          padding: '6px 10px',
-          cursor: 'pointer',
-          color: 'red',
-          marginTop: '6px',
-        }}
-        onClick={onClose}
-      >
+      <div className="label-dropdown-cancel" onClick={onClose}>
         취소
       </div>
     </div>

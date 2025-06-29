@@ -1,0 +1,23 @@
+/* src/pages/student/label-dropdown/label-dropdown.css */
+
+.label-dropdown {
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+}
+
+.label-dropdown-item {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.label-dropdown-cancel {
+  padding: 5px 10px;
+  cursor: pointer;
+  color: red;
+  margin-top: 8px;
+}

@@ -18,6 +18,22 @@
 .label-dropdown-cancel {
   padding: 5px 10px;
   cursor: pointer;
-  color: red;
+  color: #f2495c;
   margin-top: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .label-dropdown {
+    background-color: var(--bg-color);
+    border-color: var(--dark-mode-main-color);
+    color: var(--text-color);
+  }
+
+  .label-dropdown-item {
+    color: var(--text-color);
+  }
+
+  .label-dropdown-cancel {
+    color: #f2495c;
+  }
 }

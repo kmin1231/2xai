@@ -62,13 +62,24 @@ const HighlightTable = ({ highlights }) => {
       </table>
 
       {modalImageUrl && (
-        <div className="highlight-image-modal" onClick={() => setModalImageUrl(null)}>
+        <div
+          className="highlight-image-modal"
+          onClick={() => setModalImageUrl(null)}
+        >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <img src={modalImageUrl} alt="highlight screenshot" />
+            <div className="modal-download-wrapper">
+              <a href={modalImageUrl}>
+                <button className="download-button">다운로드</button>
+              </a>
+            </div>
+            <img
+              src={modalImageUrl}
+              alt="highlight screenshot"
+              className="modal-image"
+            />
           </div>
         </div>
       )}
-
     </div>
   );
 };

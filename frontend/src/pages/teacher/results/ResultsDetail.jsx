@@ -12,6 +12,16 @@ import CONFIG from '@/config';
 
 import './results-detail.css';
 
+
+const formatElapsedSeconds = (seconds) => {
+  if (seconds == null) return '-';
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+
+  if (m === 0) return `${s}초`;
+  return `${m}분 ${s}초`;
+};
+
 const ResultsDetail = () => {
   const { studentId } = useParams();
   const location = useLocation();
@@ -89,7 +99,8 @@ const ResultsDetail = () => {
               <th>난이도</th>
               <th>지문 제목</th>
               <th>지문</th>
-              <th>시간</th>
+              <th>제출 시간</th>
+              <th>소요 시간</th>
               <th>결과</th>
             </tr>
           </thead>
@@ -115,6 +126,7 @@ const ResultsDetail = () => {
                       .utcOffset(9 * 60)
                       .format('YYYY-MM-DD HH:mm:ss')}
                   </td>
+                  <td>{formatElapsedSeconds(record.elapsedSeconds)}</td>
                   <td>
                     {record.correctness.map((isCorrect, i) => (
                       <span

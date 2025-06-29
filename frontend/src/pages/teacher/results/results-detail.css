@@ -82,8 +82,9 @@
 .results-detail-container th:nth-child(3), .results-detail-container td:nth-child(3) { width: 1.5vw; }  /* 난이도 */
 .results-detail-container th:nth-child(4), .results-detail-container td:nth-child(4) { width: 5vw; }    /* 제목 */
 .results-detail-container th:nth-child(5), .results-detail-container td:nth-child(5) { width: 13vw; }   /* 지문 */
-.results-detail-container th:nth-child(6), .results-detail-container td:nth-child(6) { width: 2.5vw; }  /* 풀이 시간 */
-.results-detail-container th:nth-child(7), .results-detail-container td:nth-child(7) { width: 2.5vw; }  /* 풀이 결과 */
+.results-detail-container th:nth-child(6), .results-detail-container td:nth-child(6) { width: 2.8vw; }  /* 제출 시간 */
+.results-detail-container th:nth-child(7), .results-detail-container td:nth-child(7) { width: 2.5vw; }  /* 제출 시간 */
+.results-detail-container th:nth-child(8), .results-detail-container td:nth-child(8) { width: 2.5vw; }  /* 풀이 결과 */
 
 .results-detail-container td {
   white-space: pre-wrap;

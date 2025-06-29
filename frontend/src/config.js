@@ -51,6 +51,7 @@ const CONFIG = {
       SAVE_FEEDBACK: '/feedback',
       SAVE_HIGHLIGHT: '/highlight',
       DELETE_HIGHLIGHT: '/highlight',
+      UPLOAD_HIGHLIGHT_IMAGE: '/highlight/image',
       CHECK_ANSWER: '/answers/verify',
       GET_RECORDS: '/records',
       CONTENTS_BY_ID: (textId) => `/contents/${textId}`,

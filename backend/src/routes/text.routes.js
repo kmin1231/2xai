@@ -525,6 +525,56 @@ router.delete('/highlight', verifyToken,textController.deleteHighlightController
 
 /**
  * @swagger
+ * /api/text/highlight/image:
+ *   post:
+ *     summary: Upload highlight image and update highlight records with image URL
+ *     tags: [Text]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               imageBase64:
+ *                 type: string
+ *                 description: Base64 encoded PNG image of the highlighted text area
+ *                 example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...
+ *               highlightIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Array of highlight document IDs to update with the image URL
+ *                 example: ["60f6f9e8b8a4e523a8d7c1a9", "60f6f9e8b8a4e523a8d7c1aa"]
+ *     responses:
+ *       200:
+ *         description: Image uploaded and highlights updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Image uploaded and highlights updated
+ *                 imageUrl:
+ *                   type: string
+ *                   description: URL of the uploaded image on S3
+ *                   example: https://twoxai-highlights.s3.ap-northeast-2.amazonaws.com/20250630-013349-681086b22d28a6f12e544ca7.png
+ *       400:
+ *         description: Image and highlight IDs are required
+ *       401:
+ *         description: Unauthorized (missing or invalid token)
+ *       500:
+ *         description: Upload failed due to server error
+ */
+router.post('/highlight/image', verifyToken, textController.uploadHighlightImageController);
+
+
+/**
+ * @swagger
  * /api/text/answers/verify:
  *   post:
  *     summary: Check user answer and return score and correctness

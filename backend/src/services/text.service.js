@@ -11,7 +11,10 @@ const Text = require('../models/text');
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
 const Highlight = require('../models/highlight');
-const Class = require('../models/class');
+
+const { uploadImage } = require('./s3.service');
+const { Buffer } = require('buffer');
+const { getKstTimestamp } = require('../utils/timestamp');
 
 
 const loadForbiddenKeywordsFromJson = () => {
@@ -169,6 +172,31 @@ const deleteHighlight = async (userId, text) => {
   }
 };
 
+
+const uploadHighlightImage = async ({ userId, base64Image, highlightIds }) => {
+
+  // base64 -> buffer
+  const matches = base64Image.match(/^data:(.+);base64,(.+)$/);
+  if (!matches || matches.length !== 3) {
+    throw new Error('Invalid base64 image data');
+  }
+  const contentType = matches[1];
+  const buffer = Buffer.from(matches[2], 'base64');
+
+  // S3 bucket upload
+  const key = `${getKstTimestamp()}-${userId}.png`;
+  const imageUrl = await uploadImage(buffer, key, contentType);
+
+  // update database
+  await Highlight.updateMany(
+    { _id: { $in: highlightIds }, userId },
+    { $set: { imageUrl } }
+  );
+
+  return imageUrl;
+};
+
+
 const updateLevel = async (userId, score) => {
   const user = await User.findById(userId);
   if (!user) throw new Error('User not found');
@@ -248,6 +276,7 @@ module.exports = {
   generateFeedbackData,
   saveHighlight,
   deleteHighlight,
+  uploadHighlightImage,
   updateLevel,
   checkAnswer,
   getRecordsByUser,

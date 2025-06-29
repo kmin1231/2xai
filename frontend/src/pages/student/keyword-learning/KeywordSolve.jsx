@@ -43,6 +43,8 @@ const KeywordSolve = () => {
   const [showLabelDropdown, setShowLabelDropdown] = useState(false);
   const [labelPosition, setLabelPosition] = useState({ x: 0, y: 0 });
 
+  const [feedbackClosedAt, setFeedbackClosedAt] = useState(null);
+
   const passageRef = useRef(null);
 
   const [userAnswers, setUserAnswers] = useState({});
@@ -51,6 +53,7 @@ const KeywordSolve = () => {
     console.log('selected generation index:', selectedGeneration);
     setSelectedGeneration(selectedGeneration);
     setIsModalOpen(false);
+    setFeedbackClosedAt(Date.now());
   };
 
   const getIndexFromSelection = (containerElement) => {
@@ -264,6 +267,9 @@ const KeywordSolve = () => {
     console.log('selected generation: ', selectedGeneration);
     console.log('user answers: ', answers);
 
+    const submittedAt = Date.now();
+    const elapsedSeconds = feedbackClosedAt ? Math.floor((submittedAt - feedbackClosedAt) / 1000) : null;
+
     try {
       const response = await api.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.CHECK_ANSWER}`,
@@ -276,6 +282,7 @@ const KeywordSolve = () => {
           answer: selectedGeneration.answer,
           solution: selectedGeneration.solution,
           userAnswer: answers,
+          elapsedSeconds,
         },
       );
       console.log('Requested successfully:', response.data);

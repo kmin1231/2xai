@@ -14,6 +14,7 @@ import { fetchStudentInfo } from '@/store/authSlice';
 
 import StudentHeader from '../header/StudentHeader';
 import { HighlightToast, HighlightUndoToast } from '../toast/HighlightToast';
+import { LabelDropdown, LABELS } from '../label-dropdown/LabelDropdown';
 
 import './keyword-solve.css';
 
@@ -38,6 +39,10 @@ const KeywordSolve = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [highlightedRanges, setHighlightedRanges] = useState([]);
+  const [pendingHighlight, setPendingHighlight] = useState(null);
+  const [showLabelDropdown, setShowLabelDropdown] = useState(false);
+  const [labelPosition, setLabelPosition] = useState({ x: 0, y: 0 });
+
   const passageRef = useRef(null);
 
   const [userAnswers, setUserAnswers] = useState({});
@@ -65,7 +70,6 @@ const KeywordSolve = () => {
   };
 
   const handleTextMouseUp = async () => {
-    const selection = window.getSelection();
     const selectionInfo = getIndexFromSelection(passageRef.current);
     if (!selectionInfo) return;
 
@@ -79,17 +83,52 @@ const KeywordSolve = () => {
     );
     if (isAlreadyHighlighted) return;
 
-    const savedHighlight = await saveHighlightToServer({ text: selectedText });
+    setPendingHighlight({ start, end, text: selectedText });
+
+    // label dropdown position
+    const selection = window.getSelection();
+    if (selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    setLabelPosition({ x: rect.left + window.scrollX, y: rect.bottom + window.scrollY });
+
+    setShowLabelDropdown(true);
+  };
+
+  const saveHighlightToServer = async ({ text, label = 'etc' }) => {
+    try {
+      const response = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_HIGHLIGHT}`,
+        { text, label },
+      );
+      console.log('Highlights saved successfully:', response.data);
+
+      return response.data.data;
+    } catch (error) {
+      console.error('Failed to save highlights:', error);
+      alert('하이라이트 저장에 실패했습니다.');
+    }
+  };
+
+  const handleLabelSelect = async (label) => {
+    if (!pendingHighlight) return;
+
+    const savedHighlight = await saveHighlightToServer({
+      text: pendingHighlight.text,
+      label,
+    });
     if (!savedHighlight) return;
 
     const newHighlight = {
-      start,
-      end,
-      text: selectedText,
+      ...pendingHighlight,
       _id: savedHighlight._id,
+      label,
     };
 
     setHighlightedRanges((prev) => [...prev, newHighlight]);
+    setPendingHighlight(null);
+    setShowLabelDropdown(false);
+    window.getSelection()?.removeAllRanges();
 
     const toastId = toast.success(
       <HighlightToast
@@ -101,33 +140,13 @@ const KeywordSolve = () => {
       {
         className: 'highlight-toast',
         icon: false,
-        autoClose: false,
+        autoClose: 5000,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: false,
         position: 'bottom-right',
       },
     );
-
-    selection.removeAllRanges();
-  };
-
-  const saveHighlightToServer = async (highlight) => {
-    try {
-      const response = await api.post(
-        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_HIGHLIGHT}`,
-        {
-          text: highlight.text,
-        },
-      );
-      console.log('Highlights saved successfully:', response.data);
-      // alert('하이라이트가 저장되었습니다.');
-
-      return response.data.data;
-    } catch (error) {
-      console.error('Failed to save highlights:', error);
-      alert('하이라이트 저장에 실패했습니다.');
-    }
   };
 
   const renderHighlightedPassage = () => {
@@ -137,9 +156,8 @@ const KeywordSolve = () => {
     let lastIndex = 0;
     const elements = [];
 
-    const sortedRanges = [...highlightedRanges].sort(
-      (a, b) => a.start - b.start,
-    );
+    const sortedRanges = [...highlightedRanges].sort((a, b) => a.start - b.start);
+
     sortedRanges.forEach((range, idx) => {
       if (range.start > lastIndex) {
         elements.push(
@@ -148,8 +166,14 @@ const KeywordSolve = () => {
           </span>,
         );
       }
+      const color = LABELS[range.label]?.color || LABELS.etc.color;
       elements.push(
-        <span className="highlighted-text" key={`text-${idx}-highlight`}>
+        <span
+          key={`text-${idx}-highlight`}
+          className="highlighted-text"
+          style={{ backgroundColor: color }}
+          title={LABELS[range.label]?.labelKR}
+        >
           {text.slice(range.start, range.end)}
         </span>,
       );
@@ -292,6 +316,18 @@ const KeywordSolve = () => {
         keyword={keyword}
         level={level}
       />
+
+      {showLabelDropdown && (
+        <LabelDropdown
+          position={labelPosition}
+          onSelect={handleLabelSelect}
+          onClose={() => {
+            setShowLabelDropdown(false);
+            setPendingHighlight(null);
+          }}
+        />
+      )}
+
       {selectedGeneration && (
         <div className="result-container">
           <StudentHeader />

@@ -11,11 +11,18 @@ const s3 = new S3Client({
 });
 
 const uploadImage = async (buffer, key, contentType) => {
+
+  // download file name
+  const match = key.match(/^(\d{8}-\d{6})-/);
+  const timestamp = match ? match[1] : 'download';
+  const contentDisposition = `attachment; filename="highlight-${timestamp}.png"`;
+
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: key,
     Body: buffer,
     ContentType: contentType,
+    ContentDisposition: contentDisposition,
   };
   await s3.send(new PutObjectCommand(params));
   return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;

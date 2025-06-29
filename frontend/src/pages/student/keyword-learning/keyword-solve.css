@@ -89,8 +89,8 @@ body {
 }
 
 .highlighted-text  {
-  background-color: var(--highlight-color);
   font-weight: bold;
+  cursor: pointer;
 }
 
 .question-submit-wrapper {

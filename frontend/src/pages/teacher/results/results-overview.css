@@ -58,6 +58,10 @@
   overflow-x: hidden;
 }
 
+.table-body-wrapper .learning-results-table {
+  width: calc(100% + 15px);
+}
+
 .learning-results-table th,
 .learning-results-table td {
   padding: 8px 0 8px 0;
@@ -65,13 +69,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
+  max-width: 100%;
 }
 
-th:nth-child(1), td:nth-child(1) { width: 0.6vw; }  /* No. */
-th:nth-child(2), td:nth-child(2) { width: 2.5vw; }  /* 학교 */
-th:nth-child(3), td:nth-child(3) { width: 2.5vw; }  /* 학반 */
-th:nth-child(4), td:nth-child(4) { width: 3.0vw; }  /* 이름 */
-th:nth-child(5), td:nth-child(5) { width: 3.0vw; }  /* 점수 */
+.learning-results-table th:nth-child(1), .learning-results-table td:nth-child(1) { width: 0.6vw; }  /* No. */
+.learning-results-table th:nth-child(2), .learning-results-table td:nth-child(2) { width: 2.5vw; }  /* 학교 */
+.learning-results-table th:nth-child(3), .learning-results-table td:nth-child(3) { width: 2.5vw; }  /* 학반 */
+.learning-results-table th:nth-child(4), .learning-results-table td:nth-child(4) { width: 3.0vw; }  /* 이름 */
+.learning-results-table th:nth-child(5), .learning-results-table td:nth-child(5) { width: 3.0vw; }  /* 점수 */
 
 .learning-results-table td.name {
   cursor: pointer;

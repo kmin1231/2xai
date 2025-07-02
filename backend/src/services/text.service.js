@@ -110,8 +110,17 @@ const requestGeneration = async (keyword, level, type, token) => {
 };
 
 
+function normalizeKeyword(str) {
+  return str.toLowerCase().replace(/\s+/g, '');
+}
+
+
 async function findUnusedGenerationOrCreate(keyword, level, userId, type, token) {
-  const candidates = await Generation.find({ keyword, level });
+  const normalizedKeyword = normalizeKeyword(keyword);
+
+  console.log(`[Generation Search] keywordNormalized="${normalizedKeyword}" & level="${level}"`);
+
+  const candidates = await Generation.find({ keywordNormalized: normalizedKeyword, level });
 
   const shuffled = shuffleArray(candidates);
 
@@ -124,11 +133,14 @@ async function findUnusedGenerationOrCreate(keyword, level, userId, type, token)
     return unused;
   }
 
+  console.log(`[Generation Search] No unused generation found in DB.`);
+
   // 생성 요청
   const newGenerationData = await requestGeneration(keyword, level, type, token);
 
   const newGenDoc = new Generation({
     ...newGenerationData,
+    keywordNormalized: normalizedKeyword,
     usedBy: [userId],
   });
   await newGenDoc.save();

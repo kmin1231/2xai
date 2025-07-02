@@ -174,7 +174,7 @@ router.post('/keywords/validate', textController.validateKeyword);
  *       500:
  *         description: Internal Server Error
  */
-router.post('/contents/:level', verifyToken, textController.generateContents);
+router.post('/contents/:level', verifyToken, textController.generateContentsController);
 
 
 /**

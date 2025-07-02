@@ -28,7 +28,7 @@ exports.validateKeyword = (req, res) => {
 
 
 // POST /api/text/contents/:level?type=xxx
-exports.generateContents = async (req, res) => {
+exports.generateContentsController = async (req, res) => {
 
   try {
     // console.log('req.user:', req.user);
@@ -39,6 +39,7 @@ exports.generateContents = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];  // extract token
 
     const userId = req.user?.userId;
+    const userInfo = req.user || {};
 
     // level validation
     if (!['low', 'middle', 'high'].includes(level)) {

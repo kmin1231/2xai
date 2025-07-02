@@ -38,7 +38,7 @@ exports.generateContents = async (req, res) => {
 
     const token = req.headers.authorization?.split(' ')[1];  // extract token
 
-    // const token = req.token;
+    const userId = req.user?.userId;
 
     // level validation
     if (!['low', 'middle', 'high'].includes(level)) {
@@ -49,8 +49,6 @@ exports.generateContents = async (req, res) => {
     if (!['inferred', 'assigned', 'selected'].includes(type)) {
       return res.status(400).json({ message: 'ERROR: invalid type' });
     }
-
-    const userInfo = req.user || {};
 
     let userLevel;
     if (type === 'inferred') {
@@ -70,9 +68,15 @@ exports.generateContents = async (req, res) => {
       return res.status(403).json({ message: `Access denied: user level mismatch (${userLevel} !== ${level})` });
     }
 
-    const result = await textService.requestGeneration(keyword, level, type, token);  // token
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
+    }
+
+    const generation = await textService.findUnusedGenerationOrCreate(keyword, level, userId, type, token);
+
+    const { usedBy, ...responseData } = generation.toObject();
     
-    res.status(200).json(result);
+    res.status(200).json(responseData);
 
   } catch (error) {
     console.error('Error generating text:', error.message);

@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 
 const generationSchema = new mongoose.Schema({
   keyword: { type: String, required: true },
+  keywordNormalized: { type: String, required: true },
   level: {
     type: String,
     required: true,

@@ -51,11 +51,17 @@ exports.generateContentsController = async (req, res) => {
       return res.status(400).json({ message: 'ERROR: invalid type' });
     }
 
+    // 사용자 정보 갱신
+    const user = await User.findById(userId).select('student_info');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     let userLevel;
     if (type === 'inferred') {
-      userLevel = userInfo.inferredLevel;
+      userLevel = user.student_info?.inferred_level;
     } else if (type === 'assigned') {
-      userLevel = userInfo.assignedLevel;
+      userLevel = user.student_info?.assigned_level;
     } else if (type === 'selected') {
       userLevel = level;
     }

@@ -40,6 +40,7 @@ jobs:
       - name: Sync to S3
         run: |
           aws s3 sync dist/ s3://${{ secrets.AWS_S3_FRONTEND_BUCKET }} --delete \
+            --exclude "fonts/*" \
             --cache-control "no-cache, no-store, must-revalidate"
 
       - name: Invalidate CloudFront Cache

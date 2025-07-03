@@ -69,21 +69,39 @@ async function createPdfWithNanumGothic(content, filename) {
   doc.save(filename);
 }
 
-export const handleDownload = async (text, type) => {
+export const handleDownload = async (type, text, record) => {
   if (!text) return;
 
   const keyword = cleanFilename(text.keyword);
   const createdAt = formatDate(text.createdAt || new Date());
   const filename = `${keyword}_${createdAt}`;
 
-const questionsFormatted = text.question?.map((q, i) => {
-  const [question, ...options] = q.split('\n');
-  const labeledOptions = options.map((opt, idx) => `${String.fromCharCode(97 + idx)}. ${opt}`);
-  return [`Q${i + 1}: ${question}`, ...labeledOptions].join('\n');
-}) || [];
+  const optionLabels = ['a', 'b', 'c', 'd', 'e'];
+
+  function formatQuestionLines(text, record) {
+    return text.question?.map((q, i) => {
+      const [question, ...options] = q.split('\n');
+      const userAnswerIndex = record?.userAnswer?.[i];
+      const userAnswerLabel = typeof userAnswerIndex === 'number'
+        ? optionLabels[userAnswerIndex]
+        : userAnswerIndex || '-';
+      const correctAnswer = text.answer?.[i] || '-';
+
+      const questionLines = [
+        `Q${i + 1}: ${question}`,
+        `[학생 답안] ${userAnswerLabel} — [정답] ${correctAnswer}`,
+        ...options.map((opt, idx) => `${optionLabels[idx]}. ${opt}`),
+        ''
+      ];
+
+      return questionLines.join('\n');
+    }) || [];
+  }
 
   const answersFormatted = text.answer?.map((a, i) => `Q${i + 1}. ${a}`) || [];
   const solutionsFormatted = text.solution?.map((s, i) => `Q${i + 1}. ${s}`) || [];
+
+  const questionLines = formatQuestionLines(text, record);
 
   const lines = [
     `[keyword] ${text.keyword}`,
@@ -94,11 +112,11 @@ const questionsFormatted = text.question?.map((q, i) => {
     text.passage,
     '',
     `[Questions]`,
-    ...questionsFormatted.map(q => `${q}\n`),
+    ...questionLines,
     `[Answers]`,
     ...answersFormatted,
     '',
-    `[solutions]`,
+    `[Solutions]`,
     ...solutionsFormatted
   ];
 

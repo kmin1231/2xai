@@ -29,7 +29,47 @@ const cleanFilename = (str) => {
     || 'text';
 };
 
-export const handleDownload = (text, type) => {
+async function loadNanumGothicFont() {
+  const res = await fetch('/fonts/NanumGothicEncoded.txt');
+  const base64Font = await res.text();
+  return base64Font.replace(/\s/g, '');
+}
+
+async function createPdfWithNanumGothic(content, filename) {
+  const doc = new jsPDF({
+    unit: 'mm',
+    format: 'a4',
+    putOnlyUsedFonts: true,
+  });
+
+  const nanumBase64 = await loadNanumGothicFont();
+
+  doc.addFileToVFS('NanumGothic.ttf', nanumBase64);
+  doc.addFont('NanumGothic.ttf', 'NanumGothic', 'normal');
+  doc.setFont('NanumGothic');
+  doc.setFontSize(12);
+
+  const margin = 15;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
+  const lineHeight = 7;
+  let currentY = margin;
+
+  const lines = doc.splitTextToSize(content, maxLineWidth);
+
+  lines.forEach((line) => {
+    if (currentY + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      currentY = margin;
+    }
+    doc.text(line, margin, currentY);
+    currentY += lineHeight;
+  });
+
+  doc.save(filename);
+}
+
+export const handleDownload = async (text, type) => {
   if (!text) return;
 
   const keyword = cleanFilename(text.keyword);
@@ -73,32 +113,6 @@ const questionsFormatted = text.question?.map((q, i) => {
     link.click();
     URL.revokeObjectURL(url);
   } else if (type === 'pdf') {
-  const doc = new jsPDF({
-    unit: 'mm',
-    format: 'a4',
-    putOnlyUsedFonts: true,
-  });
-
-  const margin = 15;
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
-  const lineHeight = 7;
-  let currentY = margin;
-
-  doc.setFont('Helvetica');
-  doc.setFontSize(12);
-
-  const lines = doc.splitTextToSize(content, maxLineWidth);
-
-  lines.forEach((line) => {
-    if (currentY + lineHeight > pageHeight - margin) {
-      doc.addPage();
-      currentY = margin;
-    }
-
-    doc.text(line, margin, currentY);
-    currentY += lineHeight;
-  });
-
-  doc.save(`${filename}.pdf`);
-}}
+    await createPdfWithNanumGothic(content, `${filename}.pdf`);
+  }
+}

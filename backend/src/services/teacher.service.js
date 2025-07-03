@@ -96,22 +96,33 @@ exports.setClassAssignedLevel = async (teacherId, classId, assignedLevel) => {
     throw new Error('Invalid assigned_level value');
   }
 
+  const classObjectId = new mongoose.Types.ObjectId(classId);
+
   const teacher = await User.findOne({
     _id: teacherId,
     role: 'teacher',
-    'teacher_info.class_ids': classId
+    'teacher_info.class_ids': classObjectId
   });
 
   if (!teacher) {
     throw new Error('Unauthorized: Teacher does not manage this class');
   }
 
-  const result = await User.updateMany(
-    { class_id: classId, role: 'student' },
+  console.log('TeacherId:', teacherId);
+  console.log('ClassId:', classId);
+  console.log('AssignedClassLevel:', assignedLevel);
+
+  const classUpdateResult = await Class.updateOne(
+    { _id: classObjectId },
+    { $set: { class_level: assignedLevel } }
+  );
+
+  const studentUpdateResult = await User.updateMany(
+    { class_id: classObjectId, role: 'student' },
     { $set: { 'student_info.assigned_level': assignedLevel } }
   );
 
-  return result;
+  return { classUpdateResult, studentUpdateResult };
 };
 
 

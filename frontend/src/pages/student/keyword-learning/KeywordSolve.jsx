@@ -176,6 +176,7 @@ const KeywordSolve = () => {
           className="highlighted-text"
           style={{ backgroundColor: color }}
           title={LABELS[range.label]?.labelKR}
+          onClick={() => handleHighlightClick(range)}
         >
           {text.slice(range.start, range.end)}
         </span>,
@@ -216,6 +217,13 @@ const KeywordSolve = () => {
       console.error('하이라이트 삭제 실패:', error);
       toast.error('하이라이트를 삭제하는 데 실패했습니다.');
     }
+  };
+
+  const handleHighlightClick = async (highlight) => {
+    const confirmDelete = window.confirm('이 하이라이트를 삭제하시겠습니까?');
+    if (!confirmDelete) return;
+
+    await handleUndoHighlight(highlight);
   };
 
   const uploadHighlightImage = async () => {

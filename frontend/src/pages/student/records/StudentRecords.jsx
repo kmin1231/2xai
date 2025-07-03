@@ -131,7 +131,7 @@ const StudentRecords = () => {
           text={selectedRecord.text}
           record={selectedRecord.record}
           onClose={() => setSelectedRecord(null)}
-          onDownload={(type) => handleDownload(selectedRecord.text, type)}
+          onDownload={(type) => handleDownload(type, selectedRecord.text, selectedRecord.record)}
         />
       )}
     </div>

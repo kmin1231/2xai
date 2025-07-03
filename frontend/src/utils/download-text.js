@@ -29,21 +29,79 @@ const cleanFilename = (str) => {
     || 'text';
 };
 
-export const handleDownload = (text, type) => {
+async function loadNanumGothicFont() {
+  const res = await fetch('/fonts/NanumGothicEncoded.txt');
+  const base64Font = await res.text();
+  return base64Font.replace(/\s/g, '');
+}
+
+async function createPdfWithNanumGothic(content, filename) {
+  const doc = new jsPDF({
+    unit: 'mm',
+    format: 'a4',
+    putOnlyUsedFonts: true,
+  });
+
+  const nanumBase64 = await loadNanumGothicFont();
+
+  doc.addFileToVFS('NanumGothic.ttf', nanumBase64);
+  doc.addFont('NanumGothic.ttf', 'NanumGothic', 'normal');
+  doc.setFont('NanumGothic');
+  doc.setFontSize(12);
+
+  const margin = 15;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
+  const lineHeight = 7;
+  let currentY = margin;
+
+  const lines = doc.splitTextToSize(content, maxLineWidth);
+
+  lines.forEach((line) => {
+    if (currentY + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      currentY = margin;
+    }
+    doc.text(line, margin, currentY);
+    currentY += lineHeight;
+  });
+
+  doc.save(filename);
+}
+
+export const handleDownload = async (type, text, record) => {
   if (!text) return;
 
   const keyword = cleanFilename(text.keyword);
   const createdAt = formatDate(text.createdAt || new Date());
   const filename = `${keyword}_${createdAt}`;
 
-const questionsFormatted = text.question?.map((q, i) => {
-  const [question, ...options] = q.split('\n');
-  const labeledOptions = options.map((opt, idx) => `${String.fromCharCode(97 + idx)}. ${opt}`);
-  return [`Q${i + 1}: ${question}`, ...labeledOptions].join('\n');
-}) || [];
+  const optionLabels = ['a', 'b', 'c', 'd', 'e'];
+
+  function formatQuestionLines(text, record) {
+    return text.question?.map((q, i) => {
+      const [question, ...options] = q.split('\n');
+      const userAnswerIndex = record?.userAnswer?.[i];
+      const userAnswerLabel = typeof userAnswerIndex === 'number'
+        ? optionLabels[userAnswerIndex]
+        : userAnswerIndex || '-';
+      const correctAnswer = text.answer?.[i] || '-';
+
+      const questionLines = [
+        `Q${i + 1}: ${question}`,
+        `[학생 답안] ${userAnswerLabel} — [정답] ${correctAnswer}`,
+        ...options.map((opt, idx) => `${optionLabels[idx]}. ${opt}`),
+        ''
+      ];
+
+      return questionLines.join('\n');
+    }) || [];
+  }
 
   const answersFormatted = text.answer?.map((a, i) => `Q${i + 1}. ${a}`) || [];
   const solutionsFormatted = text.solution?.map((s, i) => `Q${i + 1}. ${s}`) || [];
+
+  const questionLines = formatQuestionLines(text, record);
 
   const lines = [
     `[keyword] ${text.keyword}`,
@@ -54,11 +112,11 @@ const questionsFormatted = text.question?.map((q, i) => {
     text.passage,
     '',
     `[Questions]`,
-    ...questionsFormatted.map(q => `${q}\n`),
+    ...questionLines,
     `[Answers]`,
     ...answersFormatted,
     '',
-    `[solutions]`,
+    `[Solutions]`,
     ...solutionsFormatted
   ];
 
@@ -73,32 +131,6 @@ const questionsFormatted = text.question?.map((q, i) => {
     link.click();
     URL.revokeObjectURL(url);
   } else if (type === 'pdf') {
-  const doc = new jsPDF({
-    unit: 'mm',
-    format: 'a4',
-    putOnlyUsedFonts: true,
-  });
-
-  const margin = 15;
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
-  const lineHeight = 7;
-  let currentY = margin;
-
-  doc.setFont('Helvetica');
-  doc.setFontSize(12);
-
-  const lines = doc.splitTextToSize(content, maxLineWidth);
-
-  lines.forEach((line) => {
-    if (currentY + lineHeight > pageHeight - margin) {
-      doc.addPage();
-      currentY = margin;
-    }
-
-    doc.text(line, margin, currentY);
-    currentY += lineHeight;
-  });
-
-  doc.save(`${filename}.pdf`);
-}}
+    await createPdfWithNanumGothic(content, `${filename}.pdf`);
+  }
+}

@@ -121,9 +121,11 @@ exports.setClassAssignedLevelController = async (req, res) => {
     }
 
     const result = await teacherService.setClassAssignedLevel(teacherId, classId, assigned_level);
+
     res.status(200).json({
       message: `All students in class ${classId} updated to '${assigned_level}'`,
-      modifiedCount: result.modifiedCount
+      // classUpdateResult: result.classUpdateResult,
+      // studentUpdateResult: result.studentUpdateResult,
     });
 
   } catch (error) {

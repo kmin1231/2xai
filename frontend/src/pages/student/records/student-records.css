@@ -30,7 +30,7 @@ html, body {
   max-height: calc(100vh - 18vh);
 }
 
-table {
+.records-container table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
@@ -87,13 +87,13 @@ td {
 }
 
 /* table column width */
-th:nth-child(1), td:nth-child(1) { width: 0.5vw; }      /* No. */
-th:nth-child(2), td:nth-child(2) { width: 4vw; }        /* 키워드 */
-th:nth-child(3), td:nth-child(3) { width: 1vw; }        /* 난이도 */
-th:nth-child(4), td:nth-child(4) { width: 5vw; }        /* 제목 */
-th:nth-child(5), td:nth-child(5) { width: 13vw; }       /* 지문 */
-th:nth-child(6), td:nth-child(6) { width: 2.2vw; }      /* 풀이 시간 */
-th:nth-child(7), td:nth-child(7) { width: 2.5vw; }      /* 풀이 결과 */
+.records-container th:nth-child(1), .records-container td:nth-child(1) { width: 0.5vw; }  /* No. */
+.records-container th:nth-child(2), .records-container td:nth-child(2) { width: 4.0vw; }  /* 키워드 */
+.records-container th:nth-child(3), .records-container td:nth-child(3) { width: 1.3vw; }  /* 난이도 */
+.records-container th:nth-child(4), .records-container td:nth-child(4) { width: 5.0vw; }  /* 제목 */
+.records-container th:nth-child(5), .records-container td:nth-child(5) { width: 10.0vw; } /* 지문 */
+.records-container th:nth-child(6), .records-container td:nth-child(6) { width: 2.5vw; }  /* 풀이 시간 */
+.records-container th:nth-child(7), .records-container td:nth-child(7) { width: 2.5vw; }  /* 풀이 결과 */
 
 .answer-correct {
   color: green;

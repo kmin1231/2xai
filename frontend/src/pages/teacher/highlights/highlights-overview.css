@@ -7,12 +7,14 @@
 }
 
 .highlights-overview-container {
-  height: 80vh;
+  position: relative;
   width: 100%;
+  height: 100vh;
+  max-height: 80vh;
   max-width: 100vw;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow: hidden;
   padding: 0 10px;
 }
 
@@ -32,4 +34,41 @@
   justify-content: flex-end;
   position: sticky;
   top: 3.5rem;
+}
+
+.highlight-panel-container {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.student-list-panel {
+  width: 18vw;
+  padding: 1.0rem;
+  background-color: #f8f8f8;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.student-list {
+  list-style: none;
+  padding: 0;
+}
+
+.student-list li {
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.student-list li.selected {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+.highlight-table-panel {
+  flex: 1;
+  overflow-y: auto;
 }

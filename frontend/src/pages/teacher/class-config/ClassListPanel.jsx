@@ -15,17 +15,22 @@ const ClassListPanel = ({
     <div>
       <h3 className="class-list-title">학반 목록</h3>
       <ul className="class-list-ul">
-        {classes.map(({ _id, class_name, school_name, class_level }) => (
-          <li
-            key={_id}
-            onClick={() => onSelectClass(_id)}
-            className={`class-list-item ${
-              selectedClassId === _id ? 'selected' : ''
-            }`}
-          >
-            [{school_name}] {class_name}
-          </li>
-        ))}
+        {classes
+          .slice()
+          .sort((a, b) => {
+            const schoolCompare = a.school_name.localeCompare(b.school_name, 'ko');
+            if (schoolCompare !== 0) return schoolCompare;
+            return a.class_name.localeCompare(b.class_name, 'ko');
+          })
+          .map(({ _id, class_name, school_name, class_level }) => (
+            <li
+              key={_id}
+              onClick={() => onSelectClass(_id)}
+              className={`class-list-item ${selectedClassId === _id ? 'selected' : ''}`}
+            >
+              [{school_name}] {class_name}
+            </li>
+          ))}
       </ul>
     </div>
   );

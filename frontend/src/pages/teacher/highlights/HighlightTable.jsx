@@ -19,9 +19,6 @@ const HighlightTable = ({ highlights }) => {
         <thead>
           <tr>
             <th>No.</th>
-            <th>학교</th>
-            <th>학반</th>
-            <th>이름</th>
             <th>하이라이트</th>
             <th>태그</th>
             <th>이미지</th>
@@ -38,9 +35,6 @@ const HighlightTable = ({ highlights }) => {
             highlights.map((item, idx) => (
               <tr key={item._id}>
                 <td>{idx + 1}</td>
-                <td>{item.schoolName}</td>
-                <td>{item.className}</td>
-                <td>{item.userName}</td>
                 <td>{item.text}</td>
                 <td>{labelMap[item.label] || '기타'}</td>
                 <td>

@@ -17,8 +17,16 @@ exports.getTeacherClassList = async (teacherId) => {
 
 
 exports.getStudentListByClass = async (classId) => {
+  // 전체 학생 목록이 필요한 경우 활용
+  if (classId === 'all') {
+    return await User.find({ role: 'student' })
+      .select('_id username name student_info.inferred_level student_info.assigned_level')
+      .lean();
+  }
+
+  const objectId = new mongoose.Types.ObjectId(classId);
   return await User.find({
-    class_id: classId,
+    class_id: objectId,
     role: 'student'
   })
     .select('_id username name student_info.inferred_level student_info.assigned_level')
@@ -138,7 +146,7 @@ exports.setClassKeyword = async (classId, keyword) => {
 
 exports.getHighlightsByUserRole = async (user) => {
   if (user.role === 'admin') {
-    return await Highlight.find().populate('userId', 'name class_id').lean();
+    return await Highlight.find().populate('userId', 'name username class_id').lean();
   }
 
   if (user.role === 'teacher') {
@@ -151,7 +159,7 @@ exports.getHighlightsByUserRole = async (user) => {
     }).select('_id').lean();
 
     const studentIds = students.map(s => s._id);
-    return await Highlight.find({ userId: { $in: studentIds } }).populate('userId', 'name class_id').lean();
+    return await Highlight.find({ userId: { $in: studentIds } }).populate('userId', 'name username class_id').lean();
   }
 
   throw new Error('Unauthorized role');

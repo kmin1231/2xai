@@ -59,8 +59,18 @@ const ClassConfig = () => {
         <ClassDetailPanel
           classData={selectedClass}
           levelMap={levelMap}
-          onEditLevel={(updatedClass) => setSelectedClass(updatedClass)}
-          onEditKeyword={(updatedClass) => setSelectedClass(updatedClass)}
+          onEditLevel={(updatedClass) => {
+            setSelectedClass(updatedClass);
+            setClasses((prev) =>
+              prev.map((c) => (c._id === updatedClass._id ? updatedClass : c))
+            );
+          }}
+          onEditKeyword={(updatedClass) => {
+            setSelectedClass(updatedClass);
+            setClasses((prev) =>
+              prev.map((c) => (c._id === updatedClass._id ? updatedClass : c))
+            );
+          }}
         />
       </div>
     </div>

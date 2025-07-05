@@ -130,6 +130,20 @@ body {
   justify-content: space-between;
 }
 
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (prefers-color-scheme: dark) {
   .result-left, .result-right {
     background-color: var(--dark-mode-main-color);

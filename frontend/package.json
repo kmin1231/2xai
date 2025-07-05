@@ -11,6 +11,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fontsource-variable/noto-sans": "^5.2.7",
     "@fontsource/charm": "^5.2.5",
     "@fontsource/dm-serif-text": "^5.2.5",
@@ -19,6 +21,7 @@
     "@fontsource/itim": "^5.2.5",
     "@fontsource/merriweather": "^5.2.6",
     "@fontsource/tinos": "^5.2.5",
+    "@mui/material": "^7.2.0",
     "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.10.0",
     "framer-motion": "^12.7.4",

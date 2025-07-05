@@ -5,6 +5,7 @@ import FeedbackModal from '../feedback/FeedbackModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import html2canvas from 'html2canvas';
+import { CircularProgress } from '@mui/material'
 
 import { api } from '@/config';
 import CONFIG from '@/config';
@@ -44,6 +45,7 @@ const KeywordSolve = () => {
   const [labelPosition, setLabelPosition] = useState({ x: 0, y: 0 });
 
   const [feedbackClosedAt, setFeedbackClosedAt] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passageRef = useRef(null);
 
@@ -260,6 +262,7 @@ const KeywordSolve = () => {
   const dispatch = useDispatch();
 
   const submitAnswers = async () => {
+    setIsSubmitting(true);
 
     const imageUrl = await uploadHighlightImage();
     if (!imageUrl) {
@@ -312,11 +315,20 @@ const KeywordSolve = () => {
       });
     } catch (error) {
       console.error('Error checking answers:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div>
+      {isSubmitting && (
+        <div className="loading-overlay">
+          <CircularProgress />
+          <p>제출 중...</p>
+        </div>
+      )}
+
       <FeedbackModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

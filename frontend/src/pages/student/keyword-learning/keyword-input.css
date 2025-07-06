@@ -22,6 +22,7 @@
 
 .keyword-buttons-wrapper {
   margin-top: 0vh;
+  max-width: 55vw;
 }
 
 .level-button-label {

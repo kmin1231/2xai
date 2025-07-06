@@ -10,6 +10,7 @@ import StudentHeader from '../header/StudentHeader';
 import InputField from '@/components/inputs/InputField';
 import KeywordButtons from '../keyword-button/KeywordButtons';
 import LoadingAnimation from '@/components/loading/LoadingAnimation';
+import recommendedKeywords from './recommendedKeywords';
 import './keyword-input.css';
 
 import CONFIG from '@/config';
@@ -32,6 +33,11 @@ const modeToApiConfig = {
   },
 };
 
+function getRandomItems(arr, n) {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, n);
+}
+
 const KeywordInput = () => {
   const { mode } = useParams(); // 'personal', 'manual', 'assigned'
 
@@ -49,17 +55,14 @@ const KeywordInput = () => {
   const [classKeyword, setClassKeyword] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleKeywords, setVisibleKeywords] = useState([]);
 
   const navigate = useNavigate();
 
-  const recommendedKeywords = [
-    'sports',
-    'Harry Potter',
-    'Do You Have Text Neck?',
-    'Around the World in 80 Days',
-    'The Perfect Job for You',
-    'A Whole New World',
-  ];
+  useEffect(() => {
+    const randomKeywords = getRandomItems(recommendedKeywords, 7);
+    setVisibleKeywords(randomKeywords);
+  }, [recommendedKeywords]);
 
   const handleKeywordClick = (selectedKeyword) => {
     setKeyword(selectedKeyword); // selected keyword into InputField
@@ -190,7 +193,7 @@ const KeywordInput = () => {
 
           <div className="keyword-buttons-wrapper">
             <KeywordButtons
-              keywords={recommendedKeywords}
+              keywords={visibleKeywords}
               onKeywordClick={handleKeywordClick}
             />
           </div>

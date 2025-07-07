@@ -182,9 +182,7 @@ const KeywordInput = () => {
               label="키워드를 입력해 보세요."
               placeholder="keyword"
               value={keyword}
-              onChange={(e) => {
-                if (mode !== 'assigned') setKeyword(e.target.value);
-              }}
+              onChange={(e) => setKeyword(e.target.value)}
               onButtonClick={handleGenerateContents}
               buttonText="시작"
               disabled={mode === 'assigned'}

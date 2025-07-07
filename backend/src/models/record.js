@@ -11,6 +11,7 @@ const recordSchema = new Schema({
   correctAnswer: { type: [String], required: true },
   score: { type: Number, required: true },
   elapsedSeconds: { type: Number },
+  mode: { type: String, enum: ['inferred', 'selected', 'assigned'], required: true },
 }, {
   timestamps: { createdAt: true, updatedAt: false },
   versionKey: false,

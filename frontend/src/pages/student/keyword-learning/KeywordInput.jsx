@@ -138,7 +138,7 @@ const KeywordInput = () => {
       setIsLoading(false);
 
       navigate(`/student/mode/${mode}/solve`, {
-        state: { data: response.data },
+        state: { data: response.data, mode },
       });
     } catch (error) {
       console.error('Error generating text:', error);

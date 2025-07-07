@@ -22,6 +22,15 @@ import './keyword-solve.css';
 const KeywordSolve = () => {
   const location = useLocation();
   const apiResponseData = location.state?.data;
+  const mode = location.state?.mode;
+
+  const modeToRecordMode = {
+    personal: 'inferred',
+    manual: 'selected',
+    assigned: 'assigned',
+  };
+
+  const recordMode = modeToRecordMode[mode];
 
   const generations = [
     apiResponseData.generation0,
@@ -294,6 +303,7 @@ const KeywordSolve = () => {
           solution: selectedGeneration.solution,
           userAnswer: answers,
           elapsedSeconds,
+          mode: recordMode,
         },
       );
       console.log('Requested successfully:', response.data);

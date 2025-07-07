@@ -78,13 +78,14 @@
 
 /* column width */
 .results-detail-container th:nth-child(1), .results-detail-container td:nth-child(1) { width: 0.5vw; }  /* No. */
-.results-detail-container th:nth-child(2), .results-detail-container td:nth-child(2) { width: 4vw; }    /* 키워드 */
-.results-detail-container th:nth-child(3), .results-detail-container td:nth-child(3) { width: 1.5vw; }  /* 난이도 */
-.results-detail-container th:nth-child(4), .results-detail-container td:nth-child(4) { width: 5vw; }    /* 제목 */
-.results-detail-container th:nth-child(5), .results-detail-container td:nth-child(5) { width: 13vw; }   /* 지문 */
-.results-detail-container th:nth-child(6), .results-detail-container td:nth-child(6) { width: 2.8vw; }  /* 제출 시간 */
-.results-detail-container th:nth-child(7), .results-detail-container td:nth-child(7) { width: 2.5vw; }  /* 제출 시간 */
-.results-detail-container th:nth-child(8), .results-detail-container td:nth-child(8) { width: 2.5vw; }  /* 풀이 결과 */
+.results-detail-container th:nth-child(2), .results-detail-container td:nth-child(2) { width: 3.5vw; }  /* 키워드 */
+.results-detail-container th:nth-child(3), .results-detail-container td:nth-child(3) { width: 1.6vw; }  /* 난이도 */
+.results-detail-container th:nth-child(4), .results-detail-container td:nth-child(4) { width: 1.7vw; }  /* 학습 모드 */
+.results-detail-container th:nth-child(5), .results-detail-container td:nth-child(5) { width: 5.0vw; }  /* 제목 */
+.results-detail-container th:nth-child(6), .results-detail-container td:nth-child(6) { width: 10.0vw; } /* 지문 */
+.results-detail-container th:nth-child(7), .results-detail-container td:nth-child(7) { width: 2.8vw; }  /* 제출 시간 */
+.results-detail-container th:nth-child(8), .results-detail-container td:nth-child(8) { width: 2.2vw; }  /* 소요 시간 */
+.results-detail-container th:nth-child(9), .results-detail-container td:nth-child(9) { width: 2.5vw; }  /* 풀이 결과 */
 
 .results-detail-container td {
   white-space: pre-wrap;

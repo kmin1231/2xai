@@ -88,12 +88,13 @@ td {
 
 /* table column width */
 .records-container th:nth-child(1), .records-container td:nth-child(1) { width: 0.5vw; }  /* No. */
-.records-container th:nth-child(2), .records-container td:nth-child(2) { width: 4.0vw; }  /* 키워드 */
+.records-container th:nth-child(2), .records-container td:nth-child(2) { width: 3.5vw; }  /* 키워드 */
 .records-container th:nth-child(3), .records-container td:nth-child(3) { width: 1.3vw; }  /* 난이도 */
-.records-container th:nth-child(4), .records-container td:nth-child(4) { width: 5.0vw; }  /* 제목 */
-.records-container th:nth-child(5), .records-container td:nth-child(5) { width: 10.0vw; } /* 지문 */
-.records-container th:nth-child(6), .records-container td:nth-child(6) { width: 2.5vw; }  /* 풀이 시간 */
-.records-container th:nth-child(7), .records-container td:nth-child(7) { width: 2.5vw; }  /* 풀이 결과 */
+.records-container th:nth-child(4), .records-container td:nth-child(4) { width: 1.5vw; }  /* 학습 모드 */
+.records-container th:nth-child(5), .records-container td:nth-child(5) { width: 5.0vw; }  /* 제목 */
+.records-container th:nth-child(6), .records-container td:nth-child(6) { width: 10.0vw; } /* 지문 */
+.records-container th:nth-child(7), .records-container td:nth-child(7) { width: 2.5vw; }  /* 풀이 시간 */
+.records-container th:nth-child(8), .records-container td:nth-child(8) { width: 2.5vw; }  /* 풀이 결과 */
 
 .answer-correct {
   color: green;

@@ -39,6 +39,18 @@ const ResultsDetail = () => {
     high: '상',
   };
 
+  const modeMap = {
+    inferred: (
+      <>맞춤형<br />난이도</>
+    ),
+    selected: (
+      <>직접<br />선택</>
+    ),
+    assigned: (
+      <>교사<br />추천</>
+    ),
+  };
+
   useEffect(() => {
     const fetchRecords = async () => {
       try {
@@ -97,6 +109,7 @@ const ResultsDetail = () => {
               <th>No.</th>
               <th>키워드</th>
               <th>난이도</th>
+              <th>유형</th>
               <th>지문 제목</th>
               <th>지문</th>
               <th>제출 시간</th>
@@ -108,7 +121,7 @@ const ResultsDetail = () => {
             {records.map((record, idx) => {
               const text = textsMap[record.textId];
               const shortPassage =
-                (text?.passage || '').replace(/\n/g, ' ').slice(0, 200) || '-';
+                (text?.passage || '').replace(/\n/g, ' ').slice(0, 170) || '-';
 
               return (
                 <tr
@@ -119,6 +132,7 @@ const ResultsDetail = () => {
                   <td>{idx + 1}</td>
                   <td>{text?.keyword || '-'}</td>
                   <td>{levelMap[text?.level] || '-'}</td>
+                  <td>{modeMap[record.mode] || '-'}</td>
                   <td>{text?.title || '-'}</td>
                   <td>{shortPassage}</td>
                   <td>

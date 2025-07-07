@@ -241,7 +241,7 @@ exports.uploadHighlightImageController = async (req, res) => {
 exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
-  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, } = req.body;
+  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, } = req.body;
   
   
   try {
@@ -270,6 +270,7 @@ exports.checkAnswerController = async (req, res) => {
       correctAnswer: answer,
       score,
       elapsedSeconds,
+      mode,
     });
     await newRecord.save();
 

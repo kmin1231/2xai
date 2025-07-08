@@ -11,7 +11,6 @@ const Text = require('../models/text');
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
 const Highlight = require('../models/highlight');
-const Generation = require('../models/generation');
 
 const { uploadImage } = require('./s3.service');
 const { Buffer } = require('buffer');
@@ -41,17 +40,7 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-function shuffleArray(array) {
-  const arr = array.slice();
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-
-const requestGeneration = async (keyword, level, type, token) => {
+const requestGeneration = async (keyword, level, userId, type, token) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
@@ -108,45 +97,6 @@ const requestGeneration = async (keyword, level, type, token) => {
     throw new Error('Failed to generate content.');
   }
 };
-
-
-function normalizeKeyword(str) {
-  return str.toLowerCase().replace(/\s+/g, '');
-}
-
-
-async function findUnusedGenerationOrCreate(keyword, level, userId, type, token) {
-  const normalizedKeyword = normalizeKeyword(keyword);
-
-  console.log(`[Generation Search] keywordNormalized="${normalizedKeyword}" & level="${level}"`);
-
-  const candidates = await Generation.find({ keywordNormalized: normalizedKeyword, level });
-
-  const shuffled = shuffleArray(candidates);
-
-  const unused = shuffled.find(gen => !gen.usedBy.includes(userId));
-
-  if (unused) {
-    unused.usedBy.push(userId);
-    await unused.save();
-
-    return unused;
-  }
-
-  console.log(`[Generation Search] No unused generation found in DB.`);
-
-  // 생성 요청
-  const newGenerationData = await requestGeneration(keyword, level, type, token);
-
-  const newGenDoc = new Generation({
-    ...newGenerationData,
-    keywordNormalized: normalizedKeyword,
-    usedBy: [userId],
-  });
-  await newGenDoc.save();
-
-  return newGenDoc;
-}
 
 
 const testConnection = async () => {
@@ -324,7 +274,6 @@ module.exports = {
   loadForbiddenKeywordsFromJson,
   containsForbiddenKeyword,
   requestGeneration,
-  findUnusedGenerationOrCreate,
   testConnection,
   saveFeedback,
   generateFeedbackData,

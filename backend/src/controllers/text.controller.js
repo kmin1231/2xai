@@ -39,7 +39,6 @@ exports.generateContentsController = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];  // extract token
 
     const userId = req.user?.userId;
-    const userInfo = req.user || {};
 
     // level validation
     if (!['low', 'middle', 'high'].includes(level)) {
@@ -79,11 +78,9 @@ exports.generateContentsController = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
     }
 
-    const generation = await textService.findUnusedGenerationOrCreate(keyword, level, userId, type, token);
+    const result = await textService.requestGeneration(keyword, level, userId, type, token);
 
-    const { usedBy, ...responseData } = generation.toObject();
-    
-    res.status(200).json(responseData);
+    res.status(200).json(result);
 
   } catch (error) {
     console.error('Error generating text:', error.message);

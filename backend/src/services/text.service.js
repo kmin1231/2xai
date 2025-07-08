@@ -40,7 +40,7 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-const requestGeneration = async (keyword, level, type, token) => {
+const requestGeneration = async (keyword, level, userId, type, token) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
@@ -97,11 +97,6 @@ const requestGeneration = async (keyword, level, type, token) => {
     throw new Error('Failed to generate content.');
   }
 };
-
-
-function normalizeKeyword(str) {
-  return str.toLowerCase().replace(/\s+/g, '');
-}
 
 
 const testConnection = async () => {

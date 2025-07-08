@@ -286,7 +286,10 @@ const checkAnswer = (userAnswerIndexArray, correctAnswerArray) => {
   const optionLabels = ['a', 'b', 'c', 'd', 'e'];
 
   const userAnswerStrArray = userAnswerIndexArray.map(index => optionLabels[index] || '-');
-  const correctnessArray = userAnswerStrArray.map((ans, idx) => ans === correctAnswerArray[idx]);
+  const correctnessArray = userAnswerStrArray.map((ans, idx) => {
+    const correctAns = correctAnswerArray[idx];
+    return ans.toLowerCase() === (correctAns || '').toLowerCase();
+  });
 
   return {
     userAnswer: userAnswerStrArray,

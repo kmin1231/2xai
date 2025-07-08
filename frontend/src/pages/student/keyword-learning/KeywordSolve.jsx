@@ -60,6 +60,29 @@ const KeywordSolve = () => {
 
   const [userAnswers, setUserAnswers] = useState({});
 
+  const isTouchDevice = () => {
+    return (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  };
+
+  useEffect(() => {
+    if (!passageRef.current) return;
+
+    if (isTouchDevice()) {
+      const handleSelectionChange = () => {
+        handleTextSelection();
+      };
+      document.addEventListener('selectionchange', handleSelectionChange);
+
+      return () => {
+        document.removeEventListener('selectionchange', handleSelectionChange);
+      };
+    }
+  }, []);
+
   const handleConfirmSelection = (selectedGeneration) => {
     console.log('selected generation index:', selectedGeneration);
     setSelectedGeneration(selectedGeneration);
@@ -81,6 +104,29 @@ const KeywordSolve = () => {
     const end = start + range.toString().length;
 
     return { start, end, selectedText: range.toString() };
+  };
+
+  const handleTextSelection = () => {
+    const selectionInfo = getIndexFromSelection(passageRef.current);
+    if (!selectionInfo) return;
+
+    const { start, end, selectedText } = selectionInfo;
+    if (!selectedText || selectedText.trim() === '') return;
+
+    const isAlreadyHighlighted = highlightedRanges.some(
+      (r) => r.start === start && r.end === end
+    );
+    if (isAlreadyHighlighted) return;
+
+    setPendingHighlight({ start, end, text: selectedText });
+
+    const selection = window.getSelection();
+    if (selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    setLabelPosition({ x: rect.left + window.scrollX, y: rect.bottom + window.scrollY });
+
+    setShowLabelDropdown(true);
   };
 
   const handleTextMouseUp = async () => {
@@ -372,7 +418,8 @@ const KeywordSolve = () => {
             <h2>{selectedGeneration.title}</h2>
             <p
               ref={passageRef}
-              onMouseUp={handleTextMouseUp}
+              onMouseUp={!isTouchDevice() ? handleTextMouseUp : undefined}
+              onTouchEnd={isTouchDevice() ? handleTextSelection : undefined}
               style={{ whiteSpace: 'pre-wrap', cursor: 'text' }}
             >
               {renderHighlightedPassage()}

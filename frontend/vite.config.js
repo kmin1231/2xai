@@ -6,10 +6,12 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: '::',
     port: 6173,
     watch: {
       usePolling: true,
     },
+    cors: true
   },
   resolve: {
     alias: {

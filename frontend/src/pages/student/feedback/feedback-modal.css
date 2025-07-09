@@ -166,8 +166,8 @@
 
 .feedback-modal-final h3 {
   font-size: 22px;
-  margin-top: 5vh;
-  margin-bottom: 3vh;
+  margin-top: 4.0vh;
+  margin-bottom: 0.8vh;
 }
 
 .final-selection-list {
@@ -203,6 +203,14 @@
   background-color: var(--blue-color-5);
   color: var(--placeholder-color);
   cursor: not-allowed;
+}
+
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -11,6 +11,14 @@ import './feedback-modal.css';
 
 Modal.setAppElement('#root');
 
+const trimTextToWordBoundary = (text, maxLen) => {
+  if (text.length <= maxLen) return text;
+
+  const trimmed = text.slice(0, maxLen);
+  const lastSpace = trimmed.lastIndexOf(' ');
+  return trimmed.slice(0, lastSpace > 0 ? lastSpace : maxLen) + '...';
+};
+
 const FeedbackModal = ({
   isOpen,
   onClose,
@@ -142,7 +150,9 @@ const FeedbackModal = ({
                   key={index}
                   className={`final-option ${finalChoiceIndex === index ? 'selected' : ''}`}
                 >
-                  <p>{gen.passage.slice(0, 200)}...</p>
+                  <p className="multiline-truncate">
+                    {trimTextToWordBoundary(gen.passage, 190)}
+                  </p>
 
                   <div className="button-feedback-container">
                     <button

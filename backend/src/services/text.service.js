@@ -30,12 +30,32 @@ const loadForbiddenKeywordsFromJson = () => {
   }
 };
 
+const loadAllowedKeywordsFromJson = () => {
+  try {
+    const filePath = path.resolve(__dirname, '../../data/allowedwords.json');
+    const data = fs.readFileSync(filePath, 'utf-8');
+    const allowedKeywords = JSON.parse(data);
+
+    return allowedKeywords;
+  } catch (error) {
+    console.error('Error loading allowed keywords:', error);
+    return [];
+  }
+};
+
 
 const containsForbiddenKeyword = (text) => {
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
+  const allowedKeywords = loadAllowedKeywordsFromJson();
+  const lowerText = text.toLowerCase();
+
+  const cleanedText = allowedKeywords.reduce((acc, word) => {
+    const regex = new RegExp(word, 'gi');
+    return acc.replace(regex, '');
+  }, lowerText);
   
   return forbiddenKeywords.some(keyword =>
-    text.toLowerCase().includes(keyword.toLowerCase())
+    cleanedText.includes(keyword.toLowerCase())
   );
 };
 

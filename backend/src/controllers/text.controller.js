@@ -5,6 +5,7 @@ const User = require('../models/user')
 const Class = require('../models/class')
 const Text = require('../models/text');
 const Record = require('../models/record');
+const ErrorLog = require('../models/errorLog');
 
 // POST /api/text/keywords/validate
 exports.validateKeyword = (req, res) => {
@@ -51,7 +52,10 @@ exports.generateContentsController = async (req, res) => {
     }
 
     // 사용자 정보 갱신
-    const user = await User.findById(userId).select('student_info');
+    const user = await User.findById(userId)
+      .select('username name student_info class_id')
+      .populate('class_id', 'school_name class_name');
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -79,6 +83,32 @@ exports.generateContentsController = async (req, res) => {
     }
 
     const result = await textService.requestGeneration(keyword, level, userId, type, token);
+
+    const hasValidationError =
+      result.generation0?.title === 'ValidationError' ||
+      result.generation1?.title === 'ValidationError' ||
+      result.generation2?.title === 'ValidationError';
+
+    if (hasValidationError) {
+      await ErrorLog.create({
+        keyword,
+        level,
+        type,
+        errorType: 'ValidationError',
+        errorMessage: 'Validation error in generation result',
+        stackTrace: JSON.stringify(result).slice(0, 100),
+        username: user.username || '',
+        name: user.name || '',
+        schoolName: user.class_id?.school_name || '',
+        className: user.class_id?.class_name || '',
+        userId: user._id,
+      });
+
+      return res.status(422).json({
+        message: 'Validation error: 다시 시도해 주세요.',
+        detail: result,
+      });
+    }
 
     res.status(200).json(result);
 

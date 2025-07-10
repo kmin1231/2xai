@@ -5,6 +5,7 @@ const User = require('../models/user')
 const Class = require('../models/class')
 const Text = require('../models/text');
 const Record = require('../models/record');
+const Keyword = require('../models/keyword');
 const ErrorLog = require('../models/errorLog');
 
 // POST /api/text/keywords/validate
@@ -82,7 +83,34 @@ exports.generateContentsController = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
     }
 
-    const result = await textService.requestGeneration(keyword, level, userId, type, token);
+    // keyword tracking
+    try {
+      await Keyword.create({
+        keyword,
+        level,
+        type,
+        username: user.username || '',
+        name: user.name || '',
+        schoolName: user.class_id?.school_name || '',
+        className: user.class_id?.class_name || '',
+        userId: user._id,
+      });
+    } catch(error) {
+      console.error('Failed to save keyword log:', err);
+    }
+
+    // const result = await textService.requestGeneration(keyword, level, userId, type, token);
+    const result = await textService.requestGeneration(
+      keyword,
+      level,
+      userId,
+      type,
+      token,
+      {
+        username: user.username || '',
+        name: user.name || '',
+      }
+    );
 
     const hasValidationError =
       result.generation0?.title === 'ValidationError' ||

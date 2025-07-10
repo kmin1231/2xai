@@ -60,19 +60,25 @@ const containsForbiddenKeyword = (text) => {
 };
 
 
-const requestGeneration = async (keyword, level, userId, type, token) => {
+const requestGeneration = async (keyword, level, userId, type, token, userInfo = {}) => {
+  const { username = 'unknown', name = 'unknown' } = userInfo;
+
+  const timestamp = new Date(Date.now() + 9 * 60 * 60 * 1000)
+    .toISOString()
+    .replace('T', ' ')
+    .slice(0, 19);
   const forbiddenKeywords = loadForbiddenKeywordsFromJson();
 
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
+    console.warn(`[금지어 입력] ${username} ${name} - keyword "${keyword}" - ${timestamp} KST`);
+
     const error = new Error('금지어가 포함되어 있습니다.');
     error.status = 400;
     throw error;
   }
 
   try {
-    console.log('Requesting generation for keyword:', keyword);
-    console.log('Requesting generation for level:', level);
-    console.log('Requesting generation for type:', type);
+    console.log(`[request] ${username} ${name} - keyword: ${keyword} (${level} / ${type}) - ${timestamp} KST`);
 
     const response = await axios.post(
       `${process.env.CONTENTS_API}/generate/${level}?type=${type}`,

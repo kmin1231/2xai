@@ -82,7 +82,18 @@ exports.generateContentsController = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
     }
 
-    const result = await textService.requestGeneration(keyword, level, userId, type, token);
+    // const result = await textService.requestGeneration(keyword, level, userId, type, token);
+    const result = await textService.requestGeneration(
+      keyword,
+      level,
+      userId,
+      type,
+      token,
+      {
+        username: user.username || '',
+        name: user.name || '',
+      }
+    );
 
     const hasValidationError =
       result.generation0?.title === 'ValidationError' ||

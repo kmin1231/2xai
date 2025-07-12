@@ -103,6 +103,8 @@ FILE_PATHS = {
         "global warming": os.path.join(base_dir, "data", "serverResponseHigh_GW.json"),
         "intellectual property": os.path.join(base_dir, "data", "serverResponseHigh_IP.json"),
         "Pride and Prejudice": os.path.join(base_dir, "data", "serverResponseHigh_PP.json"),
+        "polar bear": os.path.join(base_dir, "data", "serverResponseHigh_PB.json"),
+        "penguin": os.path.join(base_dir, "data", "serverResponseHigh_PG.json"),
     }
 }
 

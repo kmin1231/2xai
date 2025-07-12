@@ -1,0 +1,79 @@
+{
+    "keyword": "polar bear",
+    "level": "high",
+    "generation0": {
+      "title": "Life and Survival of Polar Bears",
+      "passage": "Polar bears (Ursus maritimus) are among the largest land carnivores, living primarily in Arctic sea‑ice regions. Adult males can weigh between 300 and 800 kg, while females are noticeably smaller. Beneath their thick white or yellow‑tinged fur lies black skin, which absorbs solar heat—an essential adaptation for survival in frigid environments. Below the skin is a dense layer of fat, offering both insulation and an energy reserve. Their enormous paws, nearly the size of dinner plates, distribute their weight over fragile ice and act as effective paddles in water. Polar bears are extraordinary swimmers, capable of covering over 100 kilometers in one session. They prey primarily on seals—especially ringed seals—by waiting patiently near breathing holes or stealthily stalking the edges of ice sheets. Occasionally they scavenge whale carcasses or hunt other marine mammals when seals are scarce. Female polar bears give birth in snow dens during winter and nurse their cubs until spring. Cubs remain with their mothers for up to two and a half years, during which they learn vital survival skills such as walking on ice and hunting seals. Most polar bears live solitary lives except during mating season or mother–cub periods. However, climate change poses a dire threat: as sea ice melts earlier and refreezes later, polar bears must spend more time on land where food is limited. Current estimates place wild polar bear populations between 22,000 and 31,000, and they are classified as vulnerable. As ice diminishes, encounters with humans increase, raising risks of conflict and starvation.",
+      "question": [
+        "How much can an adult male polar bear weigh?\n150–300 kg\n300–800 kg\n800–1 200 kg\n900–1 600 kg\n250–500 kg",
+        "What color is a polar bear’s skin under its fur?\nWhite\nYellowish\nBlack\nBrown\nPink",
+        "How do polar bears typically hunt seals?\nChasing in water\nStalking near breathing holes\nAttacking from trees\nDigging burrows\nHunting in groups",
+        "Where do polar bear cubs stay during winter?\nIn trees\nIn water\nIn snow dens\nIn caves\nUnder rocks",
+        "Why is the polar bear population considered vulnerable?\nBecause they eat too much\nBecause sea ice is melting due to climate change\nBecause they swim too much\nBecause they are hunted by wolves\nBecause they hibernate too long"
+      ],
+      "answer": [
+        "b",
+        "c",
+        "b",
+        "c",
+        "b"
+      ],
+      "solution": [
+        "Adult male polar bears typically weigh between 300 and 800 kg.",
+        "Polar bears have black skin beneath their thick fur, which helps absorb heat.",
+        "Polar bears hunt seals by waiting near breathing holes or along sea‑ice edges.",
+        "Polar bear mothers give birth in snow dens during winter.",
+        "The population is vulnerable because sea ice is melting due to climate change."
+      ]
+    },
+    "generation1": {
+      "title": "Adaptations and the Arctic Environment",
+      "passage": "Polar bears exhibit remarkable adaptations that allow them to thrive in one of Earth's harshest climates: the Arctic. Their fur is translucent and hollow‑fibered, trapping air and providing both warmth and buoyancy. The skin beneath is black to maximize heat absorption. A thick layer of blubber, up to 11 cm thick, provides insulation and energy during long swims or fasting periods. Their large forepaws, about 30 cm across, act like snowshoes and paddles, helping distribute their weight and enabling powerful strokes in water. Their nasal structure helps conserve heat and moisture, an advantage in subzero winds. The bear’s sense of smell is astonishing—it can detect prey nearly a mile away. To hunt ringed seals, polar bears wait patiently at ice holes or break into dens. They may also stalk seals resting near edge ice. With climate warming thinning the ice, hunts become longer and more exhausting. Polar bears can go extended periods—sometimes months—without food when ice retreats, relying on fat reserves. Females fast through denning, nursing cubs without eating for up to four months. Their reproductive cycle is also tightly synchronized with seasonal ice: most cubs are born in December–January and emerge when conditions permit. Life expectancy is around 20–30 years in the wild. As Arctic ice continues shrinking, polar bears face greater hunger pressure and risky journeys, leading scientists to monitor shifts in population and health closely.",
+      "question": [
+        "What type of fur helps polar bears with buoyancy?\nOpaque and dense\nTranslucent hollow‑fiber fur\nShort and stiff fur\nWet fur\nFeatherlike fur",
+        "How thick can a polar bear’s blubber layer be?\n2 cm\n5 cm\n11 cm\n20 cm\n15 cm",
+        "How far can a polar bear detect prey by smell?\nOne mile\nHalf a mile\nTen miles\n100 meters\n5 miles",
+        "How long can a female fast while nursing cubs in her den?\nOne month\nTwo months\nFour months\nOne week\nSix months",
+        "Why is hunting becoming more exhausting for polar bears?\nBecause seals hide better\nBecause fewer seals exist\nBecause ice is thinner and melts sooner\nBecause they swim slower\nBecause their sense of smell weakens"
+      ],
+      "answer": [
+        "b",
+        "c",
+        "a",
+        "c",
+        "c"
+      ],
+      "solution": [
+        "Their translucent hollow‑fiber fur traps air to aid buoyancy.",
+        "A polar bear’s blubber layer can be up to 11 cm thick.",
+        "Polar bears can detect prey nearly a mile away by smell.",
+        "Females may fast for up to four months while nursing cubs in the den.",
+        "Hunting is more exhausting because ice is thinner and melts sooner."
+      ]
+    },
+    "generation2": {
+      "title": "Conservation Challenges and Human Interaction",
+      "passage": "Polar bears today face pressing conservation challenges, largely due to climate change and human activity. As Arctic sea ice declines, polar bears lose critical hunting grounds and must travel farther to find food. Some bears, especially those near coastal communities, venture onto land more often where food is scarce and human encounters increase. These interactions can lead to dangerous conflict or bears scavenging human waste. Researchers track polar bear health through satellite collars, aerial surveys, and physical measurements including body condition and blood samples. Scientists also examine cub survival and reproductive rates. Conservationists work to protect marine habitats, reduce greenhouse gas emissions, and develop protected areas where bears can hunt. International agreements, such as the Agreement on the Conservation of Polar Bears, stipulate coordinated protection across countries like Canada, Russia, Greenland, Norway, and the U.S. Wildlife agencies enforce regulations minimizing industrial development in critical habitats. Some communities implement 'bear-safe' food storage and deterrent measures to reduce human–bear conflicts. Public education campaigns raise awareness about climate impacts and how lifestyle choices—reducing carbon footprints or supporting sustainable policies—matter. While polar bears remain vulnerable, consistent scientific monitoring and more responsible policies offer hope if global warming slows. Their future depends on both natural resilience and human action.",
+      "question": [
+        "Why are polar bears losing their hunting grounds?\nBecause they migrate to cities\nBecause sea ice declines\nBecause they hibernate longer\nBecause more seals are born\nBecause forests expand",
+        "What increases when bears move onto land near humans?\nTheir weight\nEncounters and conflict risks\nTheir swimming ability\nTheir speed\nTheir lifespan",
+        "What tools do researchers use to track polar bear health?\nUnderwater cameras\nSatellite collars and aerial surveys\nTelescope observations\nForest camera traps\nRoad sensors",
+        "What type of policies do conservationists promote?\nIndustrial expansion\nReducing greenhouse gas emissions\nOil drilling in Arctic\nMore tourism\nMining in habitats",
+        "What helps reduce human–bear conflicts?\nFeeding bears\nBear-safe food storage and deterrents\nBuilding more buildings\nLighting campfires\nPlanting forests"
+      ],
+      "answer": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ],
+      "solution": [
+        "Polar bears are losing hunting grounds because sea ice declines due to warming.",
+        "Encounters and conflict risks increase when bears move onto land near humans.",
+        "Researchers track health using satellite collars and aerial surveys.",
+        "Conservationists promote policies aimed at reducing greenhouse gas emissions.",
+        "Bear-safe food storage and deterrent measures help reduce human–bear conflicts."
+      ]
+    }
+}

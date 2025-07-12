@@ -11,6 +11,8 @@ const Text = require('../models/text');
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
 const Highlight = require('../models/highlight');
+const Keyword = require('../models/keyword');
+const Generation = require('../models/generation');
 
 const { uploadImage } = require('./s3.service');
 const { Buffer } = require('buffer');
@@ -123,6 +125,48 @@ const requestGeneration = async (keyword, level, userId, type, token, userInfo =
     throw new Error('Failed to generate content.');
   }
 };
+
+
+async function saveKeywordData({ keyword, level, type, user }) {
+  try {
+    return await Keyword.create({
+      keyword,
+      level,
+      type,
+      username: user.username || '',
+      name: user.name || '',
+      schoolName: user.class_id?.school_name || '',
+      className: user.class_id?.class_name || '',
+      userId: user._id,
+    });
+  } catch (error) {
+    console.error('Failed to save keyword log:', error);
+    return null;
+  }
+}
+
+
+async function saveGenerationData({ keyword, level, type, user, result, keywordId }) {
+  try {
+    return await Generation.create({
+      keyword,
+      level,
+      type,
+      username: user.username || '',
+      name: user.name || '',
+      schoolName: user.class_id?.school_name || '',
+      className: user.class_id?.class_name || '',
+      userId: user._id,
+      keywordId,
+      generation0: result?.generation0,
+      generation1: result?.generation1,
+      generation2: result?.generation2,
+    });
+  } catch (error) {
+    console.error('Failed to save generation data:', error);
+    return null;
+  }
+}
 
 
 const testConnection = async () => {
@@ -300,6 +344,8 @@ module.exports = {
   loadForbiddenKeywordsFromJson,
   containsForbiddenKeyword,
   requestGeneration,
+  saveKeywordData,
+  saveGenerationData,
   testConnection,
   saveFeedback,
   generateFeedbackData,

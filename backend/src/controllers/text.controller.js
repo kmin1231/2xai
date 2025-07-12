@@ -84,22 +84,8 @@ exports.generateContentsController = async (req, res) => {
     }
 
     // keyword tracking
-    try {
-      await Keyword.create({
-        keyword,
-        level,
-        type,
-        username: user.username || '',
-        name: user.name || '',
-        schoolName: user.class_id?.school_name || '',
-        className: user.class_id?.class_name || '',
-        userId: user._id,
-      });
-    } catch(error) {
-      console.error('Failed to save keyword log:', err);
-    }
+    const keywordDoc = await textService.saveKeywordData({ keyword, level, type, user });
 
-    // const result = await textService.requestGeneration(keyword, level, userId, type, token);
     const result = await textService.requestGeneration(
       keyword,
       level,
@@ -137,6 +123,15 @@ exports.generateContentsController = async (req, res) => {
         detail: result,
       });
     }
+
+    await textService.saveGenerationData({
+      keyword,
+      level,
+      type,
+      user,
+      result,
+      keywordId: keywordDoc?._id,
+    });
 
     res.status(200).json(result);
 

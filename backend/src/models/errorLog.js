@@ -16,9 +16,8 @@ const errorLogSchema = new mongoose.Schema({
   className: { type: String },
   name: { type: String },
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
-
-  timestamp: { type: Date, default: Date.now },
 }, {
+  timestamps: { createdAt: true, updatedAt: false },
   versionKey: false
 });
 

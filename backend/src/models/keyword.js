@@ -13,9 +13,8 @@ const keywordSchema = new mongoose.Schema({
   schoolName: { type: String },
   className: { type: String },
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
-
-  createdAt: { type: Date, default: Date.now },
 }, {
+  timestamps: { createdAt: true, updatedAt: false },
   versionKey: false,
 });
 

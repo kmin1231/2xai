@@ -42,6 +42,10 @@ exports.generateContentsController = async (req, res) => {
 
     const userId = req.user?.userId;
 
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
+    }
+
     // level validation
     if (!['low', 'middle', 'high'].includes(level)) {
       return res.status(400).json({ message: 'ERROR: invalid level' });
@@ -79,27 +83,9 @@ exports.generateContentsController = async (req, res) => {
       return res.status(403).json({ message: `Access denied: user level mismatch (${userLevel} !== ${level})` });
     }
 
-    if (!userId) {
-      return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
-    }
-
     // keyword tracking
-    try {
-      await Keyword.create({
-        keyword,
-        level,
-        type,
-        username: user.username || '',
-        name: user.name || '',
-        schoolName: user.class_id?.school_name || '',
-        className: user.class_id?.class_name || '',
-        userId: user._id,
-      });
-    } catch(error) {
-      console.error('Failed to save keyword log:', err);
-    }
+    const keywordDoc = await textService.saveKeywordData({ keyword, level, type, user });
 
-    // const result = await textService.requestGeneration(keyword, level, userId, type, token);
     const result = await textService.requestGeneration(
       keyword,
       level,
@@ -112,31 +98,53 @@ exports.generateContentsController = async (req, res) => {
       }
     );
 
-    const hasValidationError =
-      result.generation0?.title === 'ValidationError' ||
-      result.generation1?.title === 'ValidationError' ||
-      result.generation2?.title === 'ValidationError';
+    // generation0, generation1, generation2에 대한 기본 검증
+    const requiredGenerations = ['generation0', 'generation1', 'generation2'];
+    const missing = requiredGenerations.some(key => !result?.[key]);
 
-    if (hasValidationError) {
-      await ErrorLog.create({
+    if (missing) {
+      return res.status(500).json({ message: 'Invalid generation result format!' });
+    }
+
+    // 세부 오류 처리
+    const generationErrorType = textService.detectGenerationError(result);
+
+    if (generationErrorType) {
+      console.log('Saving error log:', {
         keyword,
         level,
         type,
-        errorType: 'ValidationError',
-        errorMessage: 'Validation error in generation result',
+        errorType: generationErrorType,
         stackTrace: JSON.stringify(result).slice(0, 100),
-        username: user.username || '',
-        name: user.name || '',
-        schoolName: user.class_id?.school_name || '',
-        className: user.class_id?.class_name || '',
-        userId: user._id,
+        user,
       });
 
-      return res.status(422).json({
-        message: 'Validation error: 다시 시도해 주세요.',
+      await textService.saveErrorLog({
+        keyword,
+        level,
+        type,
+        errorType: generationErrorType,
+        stackTrace: JSON.stringify(result).slice(0, 100),
+        user,
+      });
+
+      const statusCode = textService.GenerationErrorStatusCodes[generationErrorType] || 500;
+      const clientMessage = '일시적인 오류가 발생했습니다. 다시 시도해 주세요.';
+
+      return res.status(statusCode).json({
+        message: clientMessage,
         detail: result,
       });
     }
+
+    await textService.saveGenerationData({
+      keyword,
+      level,
+      type,
+      user,
+      result,
+      keywordId: keywordDoc?._id,
+    });
 
     res.status(200).json(result);
 
@@ -374,31 +382,5 @@ exports.getTextByIdController = async (req, res) => {
   } catch (error) {
     console.error('Error in getTextByIdController:', error.message);
     return res.status(500).json({ message: 'Failed to fetch text', error: error.message });
-  }
-};
-
-
-// GET /api/text/filter
-exports.filterText = async (req, res) => {
-  const { keyword, level, userId } = req.query;
-
-  try {
-    let text = await textService.filterText(keyword, level);
-
-    if (!text) {
-      text = await textService.requestGeneration(keyword, level);
-    }
-
-    const userRecord = await textService.checkRecord(userId, text._id);
-
-    if (userRecord) {
-      const externalText = await textService.requestGeneration(keyword, level);
-      return res.status(200).json(externalText);
-    }
-
-    return res.status(200).json(text);
-
-  } catch (error) {
-    return res.status(500).json({ message: 'Failed to filter text.', error });
   }
 };

@@ -384,29 +384,3 @@ exports.getTextByIdController = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch text', error: error.message });
   }
 };
-
-
-// GET /api/text/filter
-exports.filterText = async (req, res) => {
-  const { keyword, level, userId } = req.query;
-
-  try {
-    let text = await textService.filterText(keyword, level);
-
-    if (!text) {
-      text = await textService.requestGeneration(keyword, level);
-    }
-
-    const userRecord = await textService.checkRecord(userId, text._id);
-
-    if (userRecord) {
-      const externalText = await textService.requestGeneration(keyword, level);
-      return res.status(200).json(externalText);
-    }
-
-    return res.status(200).json(text);
-
-  } catch (error) {
-    return res.status(500).json({ message: 'Failed to filter text.', error });
-  }
-};

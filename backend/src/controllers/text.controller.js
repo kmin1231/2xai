@@ -42,6 +42,10 @@ exports.generateContentsController = async (req, res) => {
 
     const userId = req.user?.userId;
 
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
+    }
+
     // level validation
     if (!['low', 'middle', 'high'].includes(level)) {
       return res.status(400).json({ message: 'ERROR: invalid level' });
@@ -79,10 +83,6 @@ exports.generateContentsController = async (req, res) => {
       return res.status(403).json({ message: `Access denied: user level mismatch (${userLevel} !== ${level})` });
     }
 
-    if (!userId) {
-      return res.status(401).json({ message: 'Unauthorized: user ID missing in token' });
-    }
-
     // keyword tracking
     const keywordDoc = await textService.saveKeywordData({ keyword, level, type, user });
 
@@ -98,28 +98,41 @@ exports.generateContentsController = async (req, res) => {
       }
     );
 
-    const hasValidationError =
-      result.generation0?.title === 'ValidationError' ||
-      result.generation1?.title === 'ValidationError' ||
-      result.generation2?.title === 'ValidationError';
+    // generation0, generation1, generation2에 대한 기본 검증
+    const requiredGenerations = ['generation0', 'generation1', 'generation2'];
+    const missing = requiredGenerations.some(key => !result?.[key]);
 
-    if (hasValidationError) {
-      await ErrorLog.create({
+    if (missing) {
+      return res.status(500).json({ message: 'Invalid generation result format!' });
+    }
+
+    // 세부 오류 처리
+    const generationErrorType = textService.detectGenerationError(result);
+
+    if (generationErrorType) {
+      console.log('Saving error log:', {
         keyword,
         level,
         type,
-        errorType: 'ValidationError',
-        errorMessage: 'Validation error in generation result',
+        errorType: generationErrorType,
         stackTrace: JSON.stringify(result).slice(0, 100),
-        username: user.username || '',
-        name: user.name || '',
-        schoolName: user.class_id?.school_name || '',
-        className: user.class_id?.class_name || '',
-        userId: user._id,
+        user,
       });
 
-      return res.status(422).json({
-        message: 'Validation error: 다시 시도해 주세요.',
+      await textService.saveErrorLog({
+        keyword,
+        level,
+        type,
+        errorType: generationErrorType,
+        stackTrace: JSON.stringify(result).slice(0, 100),
+        user,
+      });
+
+      const statusCode = textService.GenerationErrorStatusCodes[generationErrorType] || 500;
+      const clientMessage = '일시적인 오류가 발생했습니다. 다시 시도해 주세요.';
+
+      return res.status(statusCode).json({
+        message: clientMessage,
         detail: result,
       });
     }

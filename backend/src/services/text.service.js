@@ -13,6 +13,7 @@ const Feedback = require('../models/feedback');
 const Highlight = require('../models/highlight');
 const Keyword = require('../models/keyword');
 const Generation = require('../models/generation');
+const ErrorLog = require('../models/errorLog');
 
 const { uploadImage } = require('./s3.service');
 const { Buffer } = require('buffer');
@@ -170,6 +171,119 @@ async function saveGenerationData({ keyword, level, type, user, result, keywordI
     console.error('Failed to save generation data:', error);
     return null;
   }
+}
+
+
+const GenerationErrorTypes = {
+  VALIDATION: 'ValidationError',
+  TIMEOUT: 'TimeoutError',
+  QUESTION_GENERATION: 'Error: Quiz generation',
+  SOLUTION_GENERATION: 'Could not generate this quiz item',
+  ANSWER_NA: 'N/A',
+  UNEXPECTED: 'Unexpected error',
+};
+
+
+const GenerationErrorMessages = {
+  [GenerationErrorTypes.VALIDATION]: 'ValidationError',
+  [GenerationErrorTypes.TIMEOUT]: 'TimeoutError',
+  [GenerationErrorTypes.QUESTION_GENERATION]: 'Question 생성 오류',
+  [GenerationErrorTypes.SOLUTION_GENERATION]: 'Solution 생성 오류',
+  [GenerationErrorTypes.ANSWER_NA]: 'Answer 생성 오류',
+  [GenerationErrorTypes.UNEXPECTED]: 'UnexpectedError',
+};
+
+
+const GenerationErrorStatusCodes = {
+  [GenerationErrorTypes.VALIDATION]: 422,
+  [GenerationErrorTypes.TIMEOUT]: 504,
+  [GenerationErrorTypes.QUESTION_GENERATION]: 500,
+  [GenerationErrorTypes.SOLUTION_GENERATION]: 500,
+  [GenerationErrorTypes.ANSWER_NA]: 500,
+  [GenerationErrorTypes.UNEXPECTED]: 500,
+};
+
+
+async function saveErrorLog({ keyword, level, type, errorType, stackTrace, user }) {
+  try {
+
+    const errorMessage = GenerationErrorMessages[errorType] || '알 수 없는 오류가 발생했습니다.';
+
+    console.log('[ERROR LOG]', { keyword, level, type, errorType, errorMessage, stackTrace, user });
+
+    await ErrorLog.create({
+      keyword,
+      level,
+      type,
+      errorType,
+      errorMessage,
+      stackTrace,
+      username: user.username || '',
+      name: user.name || '',
+      schoolName: user.class_id?.school_name || '',
+      className: user.class_id?.class_name || '',
+      userId: user._id,
+    });
+  } catch (error) {
+    console.error('Failed to save error log:', error);
+  }
+}
+
+
+function detectGenerationError(response) {
+  const errorValues = Object.values(GenerationErrorTypes);
+
+  function detectErrorInGeneration(gen) {
+    function includesError(str) {
+      return typeof str === 'string' && errorValues.some(err => str.includes(err));
+    }
+    function includesErrorExceptAnswerNA(str) {
+      return typeof str === 'string' &&
+        errorValues.filter(e => e !== GenerationErrorTypes.ANSWER_NA)
+        .some(err => str.includes(err));
+    }
+    function findErrorExceptAnswerNA(str) {
+      return typeof str === 'string' &&
+        errorValues.filter(e => e !== GenerationErrorTypes.ANSWER_NA)
+        .find(err => str.includes(err));
+    }
+
+    // title, passage, question, solution 필드에 대한 오류 검사 -- 'ANSWER_NA' type 제외
+    if (includesErrorExceptAnswerNA(gen.title)) return findErrorExceptAnswerNA(gen.title);
+    if (includesErrorExceptAnswerNA(gen.passage)) return findErrorExceptAnswerNA(gen.passage);
+
+    if (Array.isArray(gen.question)) {
+      for (const q of gen.question) {
+        const err = findErrorExceptAnswerNA(q);
+        if (err) return err;
+      }
+    }
+    if (Array.isArray(gen.solution)) {
+      for (const s of gen.solution) {
+        const err = findErrorExceptAnswerNA(s);
+        if (err) return err;
+      }
+    }
+
+    // answer 필드에서는 'ANSWER_NA' type 포함하여 오류 검사
+    if (Array.isArray(gen.answer)) {
+      for (const a of gen.answer) {
+        const err = errorValues.find(err => typeof a === 'string' && a.includes(err));
+        if (err) return err;
+      }
+    }
+
+    return null;
+  }
+
+  for (const key of ['generation0', 'generation1', 'generation2']) {
+    if (response[key]) {
+      const err = detectErrorInGeneration(response[key]);
+      if (err) return err;
+    }
+  }
+
+  return null;
 }
 
 
@@ -350,6 +464,11 @@ module.exports = {
   requestGeneration,
   saveKeywordData,
   saveGenerationData,
+  GenerationErrorTypes,
+  GenerationErrorMessages,
+  GenerationErrorStatusCodes,
+  saveErrorLog,
+  detectGenerationError,
   testConnection,
   saveFeedback,
   generateFeedbackData,

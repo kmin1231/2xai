@@ -95,6 +95,8 @@ const requestGeneration = async (keyword, level, userId, type, token, userInfo =
 
     const { generation0, generation1, generation2 } = response.data;
 
+    console.log(`[GENERATION-START] keyword: ${keyword} (${level} / ${type}) - ${timestamp} KST`);
+
     // validation check
     const generations = [generation0, generation1, generation2];
     generations.forEach((gen, i) => {
@@ -112,6 +114,8 @@ const requestGeneration = async (keyword, level, userId, type, token, userInfo =
 
       console.log(`=== Generation ${i} parsed ===`, { title, passage, question, answer, solution });
     });
+
+    console.log(`[GENERATION-END] keyword: ${keyword} (${level} / ${type}) - ${timestamp} KST`);
 
     return {
       keyword,

@@ -256,13 +256,13 @@ exports.saveHighlightController = async (req, res) => {
 exports.deleteHighlightController = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { text } = req.body;
+    const { id } = req.body;
 
-    if (!text) {
-      return res.status(400).json({ message: 'Text is required to delete highlight.' });
+    if (!id) {
+      return res.status(400).json({ message: 'Highlight ID is required to delete.' });
     }
 
-    const result = await textService.deleteHighlight(userId, text);
+    const result = await textService.deleteHighlight(userId, id);
 
     if (!result) {
       return res.status(404).json({ message: 'Highlight not found.' });

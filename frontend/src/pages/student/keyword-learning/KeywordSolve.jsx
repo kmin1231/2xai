@@ -187,6 +187,7 @@ const KeywordSolve = () => {
     };
 
     setHighlightedRanges((prev) => [...prev, newHighlight]);
+
     setPendingHighlight(null);
     setShowLabelDropdown(false);
     window.getSelection()?.removeAllRanges();
@@ -273,7 +274,7 @@ const KeywordSolve = () => {
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.DELETE_HIGHLIGHT}`,
         {
           data: {
-            text: highlight.text,
+            id: highlight._id,
           },
         },
       );
@@ -295,7 +296,13 @@ const KeywordSolve = () => {
     }
   };
 
-  const handleHighlightClick = async (highlight) => {
+  const handleHighlightClick = async (segment) => {
+    const highlight = highlightedRanges.find(h => h._id === segment._id);
+    if (!highlight) {
+      toast.error('하이라이트 정보가 존재하지 않습니다.');
+      return;
+    }
+
     const confirmDelete = window.confirm('이 하이라이트를 삭제하시겠습니까?');
     if (!confirmDelete) return;
 

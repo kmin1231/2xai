@@ -57,6 +57,7 @@ const KeywordSolve = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passageRef = useRef(null);
+  const captureRef = useRef(null);
 
   const [userAnswers, setUserAnswers] = useState({});
 
@@ -310,18 +311,42 @@ const KeywordSolve = () => {
   };
 
   const uploadHighlightImage = async () => {
-    const passageElement = document.querySelector('.result-left');
+    const passageElement = captureRef.current;
     if (!passageElement) return;
 
     const highlightIds = highlightedRanges.map(h => h._id);
-
     if (highlightIds.length === 0) {
       console.warn('No highlights found.');
       return null;
     }
 
+    const originalStyle = {
+      overflow: passageElement.style.overflow,
+      height: passageElement.style.height,
+      maxHeight: passageElement.style.maxHeight,
+      width: passageElement.style.width,
+    };
+
+    passageElement.style.overflow = 'visible';
+    passageElement.style.height = `${passageElement.scrollHeight}px`;
+    passageElement.style.maxHeight = 'none';
+    passageElement.style.width = `${passageElement.scrollWidth}px`;
+
+    await new Promise(resolve => setTimeout(resolve, 150));
+
     try {
-      const canvas = await html2canvas(passageElement);
+      const canvas = await html2canvas(passageElement, {
+        width: passageElement.scrollWidth,
+        height: passageElement.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: document.documentElement.scrollWidth,
+        windowHeight: document.documentElement.scrollHeight,
+        backgroundColor: null,
+        scale: window.devicePixelRatio || 1,
+        useCORS: true,
+      });
+
       const imageBase64 = canvas.toDataURL('image/png');
 
       const res = await api.post(
@@ -336,6 +361,11 @@ const KeywordSolve = () => {
       return res.data.imageUrl;
     } catch (err) {
       console.error('Error uploading highlight image:', err);
+    } finally {
+      passageElement.style.overflow = originalStyle.overflow;
+      passageElement.style.height = originalStyle.height;
+      passageElement.style.maxHeight = originalStyle.maxHeight;
+      passageElement.style.width = originalStyle.width;
     }
   };
 
@@ -440,7 +470,7 @@ const KeywordSolve = () => {
       {selectedGeneration && (
         <div className="result-container">
           <StudentHeader />
-          <div className="result-left">
+          <div className="result-left" ref={captureRef}>
             <h2>{selectedGeneration.title}</h2>
             <p
               ref={passageRef}

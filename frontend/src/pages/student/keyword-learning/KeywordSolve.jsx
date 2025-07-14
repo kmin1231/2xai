@@ -183,6 +183,7 @@ const KeywordSolve = () => {
       ...pendingHighlight,
       _id: savedHighlight._id,
       label,
+      timestamp: Date.now(),
     };
 
     setHighlightedRanges((prev) => [...prev, newHighlight]);
@@ -213,36 +214,54 @@ const KeywordSolve = () => {
     const text = selectedGeneration.passage;
     if (highlightedRanges.length === 0) return text;
 
-    let lastIndex = 0;
-    const elements = [];
+    const sortedRanges = [...highlightedRanges]
+    .sort((a, b) => a.start - b.start || b.timestamp - a.timestamp);
 
-    const sortedRanges = [...highlightedRanges].sort((a, b) => a.start - b.start);
+    const highlightMap = Array(text.length).fill(null);
 
-    sortedRanges.forEach((range, idx) => {
-      if (range.start > lastIndex) {
-        elements.push(
-          <span key={`text-${idx}-normal`}>
-            {text.slice(lastIndex, range.start)}
-          </span>,
-        );
+    sortedRanges.forEach((range) => {
+      for (let i = range.start; i < range.end; i++) {
+        if (highlightMap[i] === null) {
+          highlightMap[i] = range;
+        }
       }
-      const color = LABELS[range.label]?.color || LABELS.etc.color;
-      elements.push(
-        <span
-          key={`text-${idx}-highlight`}
-          className="highlighted-text"
-          style={{ backgroundColor: color }}
-          title={LABELS[range.label]?.labelKR}
-          onClick={() => handleHighlightClick(range)}
-        >
-          {text.slice(range.start, range.end)}
-        </span>,
-      );
-      lastIndex = range.end;
     });
 
-    if (lastIndex < text.length) {
-      elements.push(<span key="text-last">{text.slice(lastIndex)}</span>);
+    const elements = [];
+    let lastIndex = 0;
+
+    while (lastIndex < text.length) {
+      const currentHighlight = highlightMap[lastIndex];
+      let endIndex = lastIndex + 1;
+
+      while (
+        endIndex < text.length &&
+        highlightMap[endIndex] === currentHighlight
+      ) {
+        endIndex++;
+      }
+
+      const spanText = text.slice(lastIndex, endIndex);
+
+      if (currentHighlight) {
+        const color = LABELS[currentHighlight.label]?.color || LABELS.etc.color;
+        elements.push(
+          <span
+            key={`highlight-${lastIndex}`}
+            className="highlighted-text"
+            style={{ backgroundColor: color }}
+            title={LABELS[currentHighlight.label]?.labelKR}
+            onClick={() => handleHighlightClick(currentHighlight)}
+          >
+            {spanText}
+          </span>
+        );
+      } else {
+        elements.push(
+          <span key={`normal-${lastIndex}`}>{spanText}</span>
+        );
+      }
+      lastIndex = endIndex;
     }
 
     return elements;

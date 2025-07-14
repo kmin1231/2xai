@@ -57,6 +57,7 @@ const KeywordSolve = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passageRef = useRef(null);
+  const captureRef = useRef(null);
 
   const [userAnswers, setUserAnswers] = useState({});
 
@@ -183,9 +184,11 @@ const KeywordSolve = () => {
       ...pendingHighlight,
       _id: savedHighlight._id,
       label,
+      timestamp: Date.now(),
     };
 
     setHighlightedRanges((prev) => [...prev, newHighlight]);
+
     setPendingHighlight(null);
     setShowLabelDropdown(false);
     window.getSelection()?.removeAllRanges();
@@ -213,36 +216,54 @@ const KeywordSolve = () => {
     const text = selectedGeneration.passage;
     if (highlightedRanges.length === 0) return text;
 
-    let lastIndex = 0;
-    const elements = [];
+    const sortedRanges = [...highlightedRanges]
+    .sort((a, b) => a.start - b.start || b.timestamp - a.timestamp);
 
-    const sortedRanges = [...highlightedRanges].sort((a, b) => a.start - b.start);
+    const highlightMap = Array(text.length).fill(null);
 
-    sortedRanges.forEach((range, idx) => {
-      if (range.start > lastIndex) {
-        elements.push(
-          <span key={`text-${idx}-normal`}>
-            {text.slice(lastIndex, range.start)}
-          </span>,
-        );
+    sortedRanges.forEach((range) => {
+      for (let i = range.start; i < range.end; i++) {
+        if (highlightMap[i] === null) {
+          highlightMap[i] = range;
+        }
       }
-      const color = LABELS[range.label]?.color || LABELS.etc.color;
-      elements.push(
-        <span
-          key={`text-${idx}-highlight`}
-          className="highlighted-text"
-          style={{ backgroundColor: color }}
-          title={LABELS[range.label]?.labelKR}
-          onClick={() => handleHighlightClick(range)}
-        >
-          {text.slice(range.start, range.end)}
-        </span>,
-      );
-      lastIndex = range.end;
     });
 
-    if (lastIndex < text.length) {
-      elements.push(<span key="text-last">{text.slice(lastIndex)}</span>);
+    const elements = [];
+    let lastIndex = 0;
+
+    while (lastIndex < text.length) {
+      const currentHighlight = highlightMap[lastIndex];
+      let endIndex = lastIndex + 1;
+
+      while (
+        endIndex < text.length &&
+        highlightMap[endIndex] === currentHighlight
+      ) {
+        endIndex++;
+      }
+
+      const spanText = text.slice(lastIndex, endIndex);
+
+      if (currentHighlight) {
+        const color = LABELS[currentHighlight.label]?.color || LABELS.etc.color;
+        elements.push(
+          <span
+            key={`highlight-${lastIndex}`}
+            className="highlighted-text"
+            style={{ backgroundColor: color }}
+            title={LABELS[currentHighlight.label]?.labelKR}
+            onClick={() => handleHighlightClick(currentHighlight)}
+          >
+            {spanText}
+          </span>
+        );
+      } else {
+        elements.push(
+          <span key={`normal-${lastIndex}`}>{spanText}</span>
+        );
+      }
+      lastIndex = endIndex;
     }
 
     return elements;
@@ -254,7 +275,7 @@ const KeywordSolve = () => {
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.DELETE_HIGHLIGHT}`,
         {
           data: {
-            text: highlight.text,
+            id: highlight._id,
           },
         },
       );
@@ -276,7 +297,13 @@ const KeywordSolve = () => {
     }
   };
 
-  const handleHighlightClick = async (highlight) => {
+  const handleHighlightClick = async (segment) => {
+    const highlight = highlightedRanges.find(h => h._id === segment._id);
+    if (!highlight) {
+      toast.error('하이라이트 정보가 존재하지 않습니다.');
+      return;
+    }
+
     const confirmDelete = window.confirm('이 하이라이트를 삭제하시겠습니까?');
     if (!confirmDelete) return;
 
@@ -284,18 +311,42 @@ const KeywordSolve = () => {
   };
 
   const uploadHighlightImage = async () => {
-    const passageElement = document.querySelector('.result-left');
+    const passageElement = captureRef.current;
     if (!passageElement) return;
 
     const highlightIds = highlightedRanges.map(h => h._id);
-
     if (highlightIds.length === 0) {
       console.warn('No highlights found.');
       return null;
     }
 
+    const originalStyle = {
+      overflow: passageElement.style.overflow,
+      height: passageElement.style.height,
+      maxHeight: passageElement.style.maxHeight,
+      width: passageElement.style.width,
+    };
+
+    passageElement.style.overflow = 'visible';
+    passageElement.style.height = `${passageElement.scrollHeight}px`;
+    passageElement.style.maxHeight = 'none';
+    passageElement.style.width = `${passageElement.scrollWidth}px`;
+
+    await new Promise(resolve => setTimeout(resolve, 150));
+
     try {
-      const canvas = await html2canvas(passageElement);
+      const canvas = await html2canvas(passageElement, {
+        width: passageElement.scrollWidth,
+        height: passageElement.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: document.documentElement.scrollWidth,
+        windowHeight: document.documentElement.scrollHeight,
+        backgroundColor: null,
+        scale: window.devicePixelRatio || 1,
+        useCORS: true,
+      });
+
       const imageBase64 = canvas.toDataURL('image/png');
 
       const res = await api.post(
@@ -310,6 +361,11 @@ const KeywordSolve = () => {
       return res.data.imageUrl;
     } catch (err) {
       console.error('Error uploading highlight image:', err);
+    } finally {
+      passageElement.style.overflow = originalStyle.overflow;
+      passageElement.style.height = originalStyle.height;
+      passageElement.style.maxHeight = originalStyle.maxHeight;
+      passageElement.style.width = originalStyle.width;
     }
   };
 
@@ -414,7 +470,7 @@ const KeywordSolve = () => {
       {selectedGeneration && (
         <div className="result-container">
           <StudentHeader />
-          <div className="result-left">
+          <div className="result-left" ref={captureRef}>
             <h2>{selectedGeneration.title}</h2>
             <p
               ref={passageRef}

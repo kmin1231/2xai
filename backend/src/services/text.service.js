@@ -351,9 +351,9 @@ const saveHighlight = async (highlightData) => {
   }
 };
 
-const deleteHighlight = async (userId, text) => {
+const deleteHighlight = async (userId, id) => {
   try {
-    const result = await Highlight.findOneAndDelete({ userId, text });
+    const result = await Highlight.findOneAndDelete({ _id: id, userId });
     return result;
   } catch (error) {
     throw new Error('Error while deleting highlight: ' + error.message);

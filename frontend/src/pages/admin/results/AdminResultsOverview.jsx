@@ -1,7 +1,7 @@
 // src/pages/admin/results/AdminResultsOverview.jsx
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { api } from '@/config';
 import CONFIG from '@/config';
@@ -10,8 +10,11 @@ import ClassDropdown from '@/pages/teacher/dropdown/ClassDropdown';
 import '@/pages/teacher/results/results-overview.css';
 
 const AdminResultsOverview = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const classIdFromUrl = searchParams.get('classId') || 'all';
+
   const [classes, setClasses] = useState([]);
-  const [selectedClassId, setSelectedClassId] = useState('all');
+  const [selectedClassId, setSelectedClassId] = useState(classIdFromUrl);
   const [students, setStudents] = useState([]);
   const [scoreMap, setScoreMap] = useState({});
   const [loading, setLoading] = useState(false);
@@ -111,8 +114,17 @@ const AdminResultsOverview = () => {
     fetchStudents();
   }, [selectedClassId, classes]);
 
+  useEffect(() => {
+    if (selectedClassId === 'all') {
+      searchParams.delete('classId');
+    } else {
+      searchParams.set('classId', selectedClassId);
+    }
+    setSearchParams(searchParams);
+  }, [selectedClassId, searchParams, setSearchParams]);
+
   const handleStudentClick = (student) => {
-    navigate(`/admin/dashboard/results/student/${student._id}`, {
+    navigate(`/admin/dashboard/results/student/${student._id}?classId=${selectedClassId}`, {
       state: { studentName: student.name },
     });
   };

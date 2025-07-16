@@ -1,7 +1,7 @@
 // src/pages/teacher/results/ResultsOverview.jsx
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams  } from 'react-router-dom';
 
 import { api } from '@/config';
 import CONFIG from '@/config';
@@ -10,8 +10,11 @@ import ClassDropdown from '../dropdown/ClassDropdown';
 import './results-overview.css';
 
 const ResultsOverview = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const classIdFromUrl = searchParams.get('classId') || 'all';
+
   const [classes, setClasses] = useState([]);
-  const [selectedClassId, setSelectedClassId] = useState('all');
+  const [selectedClassId, setSelectedClassId] = useState(classIdFromUrl);
   const [students, setStudents] = useState([]);
   const [scoreMap, setScoreMap] = useState({});
   const [loading, setLoading] = useState(false);
@@ -109,8 +112,18 @@ const ResultsOverview = () => {
     fetchStudents();
   }, [selectedClassId, classes]);
 
+  // 선택한 학반에 대해 URL query parameter
+  useEffect(() => {
+    if (selectedClassId === 'all') {
+      searchParams.delete('classId');
+    } else {
+      searchParams.set('classId', selectedClassId);
+    }
+    setSearchParams(searchParams);
+  }, [selectedClassId]);
+
   const handleStudentClick = (student) => {
-    navigate(`/teacher/dashboard/results/student/${student._id}`, {
+    navigate(`/teacher/dashboard/results/student/${student._id}?classId=${selectedClassId}`, {
       state: { studentName: student.name },
     });
   };

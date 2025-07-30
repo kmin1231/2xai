@@ -133,7 +133,7 @@
   white-space: nowrap;
   cursor: pointer;
   border: none;
-  font-size: 1rem;
+  font-size: 16px;
   align-items: center;
   width: 90%;
   background-color: var(--blue-color-4);
@@ -174,9 +174,14 @@
   margin-top: 0px;
 }
 
+.user-feedback {
+  font-size: 15px;
+}
+
 .confirm-btn {
   margin-top: 0px;
-  width: 15vw;
+  width: 200px;
+  height: 60px;
   border: none;
 }
 
@@ -211,6 +216,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 15px;
 }
 
 @media (prefers-color-scheme: dark) {

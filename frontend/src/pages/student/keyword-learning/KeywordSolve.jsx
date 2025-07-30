@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import FeedbackModal from '../feedback/FeedbackModal';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import html2canvas from 'html2canvas';
 import { CircularProgress } from '@mui/material'
@@ -21,8 +21,12 @@ import './keyword-solve.css';
 
 const KeywordSolve = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const params = useParams();
+
   const apiResponseData = location.state?.data;
-  const mode = location.state?.mode;
+  const mode = location.state?.mode || params.mode || 'personal';
 
   const modeToRecordMode = {
     personal: 'inferred',
@@ -68,6 +72,13 @@ const KeywordSolve = () => {
       navigator.msMaxTouchPoints > 0
     );
   };
+
+  useEffect(() => {
+    if (!location.state || !location.state.data) {
+      alert('페이지를 새로고침하여 정보가 초기화되었습니다. 키워드 입력 화면으로 이동합니다.');
+      navigate(`/student/mode/${mode}`, { replace: true });
+    }
+  }, [location.state, navigate, mode]);
 
   useEffect(() => {
     if (!passageRef.current) return;
@@ -369,9 +380,6 @@ const KeywordSolve = () => {
     }
   };
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const submitAnswers = async () => {
     setIsSubmitting(true);
 
@@ -454,6 +462,7 @@ const KeywordSolve = () => {
         generations={generations} // actual data (API response)
         keyword={keyword}
         level={level}
+        mode={mode}
       />
 
       {showLabelDropdown && (

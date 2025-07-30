@@ -1,6 +1,7 @@
 // src/pages/student/feedback/FeedbackModal.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 
 import { api } from '@/config';
@@ -30,9 +31,11 @@ const FeedbackModal = ({
   setFinalChoiceIndex,
   onConfirmSelection,
   generations,
-  keyword = { keyword },
-  level = { level },
+  keyword,
+  level,
+  mode,
 }) => {
+  const navigate = useNavigate();
   const totalPages = generations.length + 1;
 
   const currentGeneration =
@@ -114,6 +117,17 @@ const FeedbackModal = ({
             </div>
 
             <div className="feedback-modal-right">
+              <button
+                className="retry-btn"
+                onClick={() => {
+                  onClose();
+                  const targetMode = mode || 'personal';
+                  navigate(`/student/mode/${targetMode}`, { replace: true });
+                }}
+              >
+                ↩️ 다시 시도
+              </button>
+
               <h4>읽기 자료가 마음에 드나요?</h4>
               <button
                 className={`feedback-btn ${feedbacks[currentPage]?.choice === 'good' ? 'selected' : ''}`}

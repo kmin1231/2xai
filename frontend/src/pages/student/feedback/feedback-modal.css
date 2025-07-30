@@ -74,6 +74,7 @@
 .feedback-modal-right h4 {
   font-size: 24px;
   text-align: center;
+  margin-top: 0.5vh;
   margin-bottom: 1.5vh;
 }
 
@@ -87,7 +88,7 @@
   font-size: 20px;
   cursor: pointer;
   border: none;
-  width: 22vw;
+  width: 300px;
   background-color: var(--blue-color-5);
   height: 60px;
 }
@@ -133,7 +134,7 @@
   white-space: nowrap;
   cursor: pointer;
   border: none;
-  font-size: 1rem;
+  font-size: 16px;
   align-items: center;
   width: 90%;
   background-color: var(--blue-color-4);
@@ -174,9 +175,14 @@
   margin-top: 0px;
 }
 
+.user-feedback {
+  font-size: 15px;
+}
+
 .confirm-btn {
   margin-top: 0px;
-  width: 15vw;
+  width: 200px;
+  height: 60px;
   border: none;
 }
 
@@ -211,6 +217,21 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 15px;
+}
+
+.retry-btn {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: 40px;
+  background-color: var(--blue-color-4);
+  width: 150px;
+  height: 45px;
+  font-size: 17px;
+  align-items: right;
+  border: none;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -219,7 +240,7 @@
     background-color: var(--bg-color);
   }
 
-  .feedback-btn, .final-select-button, .confirm-btn {
+  .feedback-btn, .final-select-button, .confirm-btn, .retry-btn {
     background-color: var(--dark-mode-main-color);
     color: var(--bg-color);
     font-weight: bold;

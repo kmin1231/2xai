@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
     next();
   } catch (error) {
     // token is INVALID or EXPIRED
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: '세션이 만료되었습니다. 로그아웃 후 다시 로그인해 주세요.' });
   }
 };
 

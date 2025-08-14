@@ -385,11 +385,15 @@ const uploadHighlightImage = async ({ userId, base64Image, highlightIds }) => {
 };
 
 
-const updateLevel = async (userId, score) => {
+const updateLevel = async (userId, score, mode) => {
   const user = await User.findById(userId);
   if (!user) throw new Error('User not found');
 
   const currentLevel = user.student_info?.inferred_level || 'low';
+
+  if (mode !== 'inferred') {
+    return currentLevel;
+  }
 
   let newLevel = currentLevel;
 

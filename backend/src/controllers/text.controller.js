@@ -305,8 +305,7 @@ exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
   const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, } = req.body;
-  
-  
+
   try {
     const { userAnswer: userAnswerStrArray, correctness } = textService.checkAnswer(userAnswer, answer);
 
@@ -337,7 +336,7 @@ exports.checkAnswerController = async (req, res) => {
     });
     await newRecord.save();
 
-    const newLevel = await textService.updateLevel(userId, score);
+    const newLevel = await textService.updateLevel(userId, score, mode);
 
     return res.status(200).json({
       score,

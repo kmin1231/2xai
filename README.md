@@ -1,14 +1,14 @@
 <!--<h1 align="center">📖 AI-based Learning System</h1>-->
 
 <div align="center">
-  <img src="https://drive.google.com/uc?id=17cF6W6qgLjNlBEVly65aOoydrraCu1j9" width=35%>
+  <img src="https://drive.google.com/uc?id=1TUhCCU4DN61Bu4cDXiWBKWxAxs4CuMuP" width=20%>
   <h3><b><i>eXplainable & eXchangeable AI</i></b></h3>
   <h4>🌐 This is the <code>Korean</code> version of the README. | <a href="README.en.md">English version</a></h4>
 </div>
 
 ## 📌 Summary
 
-<pre><code><b>AI-powered Web Platform for Generating and Managing Learning Content</b></code></pre>
+<pre><code><b>생성형 AI를 활용한 영어 학습 플랫폼</b> — <b>학생·교사·관리자 모드</b> 지원</code></pre>
 
 <br>
 

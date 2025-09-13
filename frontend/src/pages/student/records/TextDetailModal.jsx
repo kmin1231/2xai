@@ -48,7 +48,14 @@ const formatQuestions = (questions, userAnswers = [], correctAnswers = []) => {
   });
 };
 
-const TextDetailModal = ({ text, record, onClose, onDownload }) => {
+const feedbackLabelMap = {
+  good: '😎 적당해요',
+  too_easy: '😌 너무 쉬워요',
+  too_hard: '😩 너무 어려워요',
+  not_interesting: '😐 흥미롭지 않아요',
+};
+
+const TextDetailModal = ({ text, record, onClose, onDownload, feedbacks = [], isAdmin = false }) => {
   if (!text) return null;
 
   return (
@@ -110,6 +117,22 @@ const TextDetailModal = ({ text, record, onClose, onDownload }) => {
               </p>
             ))}
           </section>
+
+          {isAdmin && feedbacks.length > 0 && (
+            <>
+              <hr />
+              <section>
+                <h2>💬 학생 피드백</h2>
+                {feedbacks.map((fb, i) => (
+                  <div key={fb._id} style={{ marginBottom: '1em' }}>
+                    <h4>{i + 1}. {fb.title}</h4>
+                    <p>{feedbackLabelMap[fb.feedback] || fb.feedback}</p>
+                    <p style={{ whiteSpace: 'pre-line', fontSize: '1rem' }}>{fb.passage}</p>
+                  </div>
+                ))}
+              </section>
+            </>
+          )}
         </div>
       </div>
     </div>

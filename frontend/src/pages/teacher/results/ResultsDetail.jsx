@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 import TextDetailModal from '@/pages/student/records/TextDetailModal';
@@ -32,6 +33,7 @@ const ResultsDetail = () => {
   const [textsMap, setTextsMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [feedbacksMap, setFeedbacksMap] = useState({});
 
   const levelMap = {
     low: '하',
@@ -50,6 +52,9 @@ const ResultsDetail = () => {
       <>교사<br />추천</>
     ),
   };
+
+  const { role } = useSelector((state) => state.auth);
+  const isAdmin = role === 'admin';
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -97,6 +102,27 @@ const ResultsDetail = () => {
 
   if (records.length === 0) return <p>해당 학생의 학습 기록이 없습니다.</p>;
 
+  const fetchFeedbackForRecord = async (recordId) => {
+    if (!isAdmin) return;
+
+    try {
+      const res = await api.get(
+        `${CONFIG.ADMIN.BASE_URL}${CONFIG.ADMIN.ENDPOINTS.GET_FEEDBACK_BY_RECORD(recordId)}`
+      );
+
+      const feedbackList = res.data.data?.feedbacks || [];
+
+      setFeedbacksMap((prev) => ({
+        ...prev,
+        [recordId]: feedbackList,
+      }));
+
+      return feedbackList;
+    } catch (err) {
+      console.error('Failed to fetch feedback by recordId:', error);
+    }
+  };
+
   return (
     <div className="results-detail-container">
       <h3 className="results-detail-header">
@@ -126,7 +152,10 @@ const ResultsDetail = () => {
               return (
                 <tr
                   key={record._id}
-                  onClick={() => setSelectedRecord({ record, text })}
+                  onClick={async () => {
+                    const feedbacks = await fetchFeedbackForRecord(record._id);
+                    setSelectedRecord({ record, text: textsMap[record.textId], feedbacks });
+                  }}
                   style={{ cursor: 'pointer' }}
                 >
                   <td>{idx + 1}</td>
@@ -167,6 +196,8 @@ const ResultsDetail = () => {
           record={selectedRecord.record}
           onClose={() => setSelectedRecord(null)}
           onDownload={(type) => handleDownload(selectedRecord.text, type)}
+          feedbacks={selectedRecord.feedbacks || []}
+          isAdmin={true}
         />
       )}
     </div>

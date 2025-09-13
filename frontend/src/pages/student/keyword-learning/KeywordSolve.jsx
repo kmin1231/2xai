@@ -47,6 +47,7 @@ const KeywordSolve = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbacks, setFeedbacks] = useState([]);
+  const [feedbackId, setFeedbackId] = useState([]);
   const [finalChoiceIndex, setFinalChoiceIndex] = useState(null);
 
   const [selectedGeneration, setSelectedGeneration] = useState(null);
@@ -95,9 +96,10 @@ const KeywordSolve = () => {
     }
   }, []);
 
-  const handleConfirmSelection = (selectedGeneration) => {
+  const handleConfirmSelection = (selectedGeneration, savedFeedbackId) => {
     console.log('selected generation index:', selectedGeneration);
     setSelectedGeneration(selectedGeneration);
+    setFeedbackId(savedFeedbackId);
     setIsModalOpen(false);
     setFeedbackClosedAt(Date.now());
   };
@@ -414,6 +416,7 @@ const KeywordSolve = () => {
           userAnswer: answers,
           elapsedSeconds,
           mode: recordMode,
+          feedbackId,
         },
       );
       console.log('Requested successfully:', response.data);

@@ -84,7 +84,11 @@ const FeedbackModal = ({
         },
       );
       console.log('Feedback saved successfully:', response.data);
-      onConfirmSelection(selectedGeneration);
+
+      const savedFeedbackId = response.data.data._id;
+
+      onConfirmSelection(selectedGeneration, savedFeedbackId);
+
     } catch (error) {
       console.error('Error saving feedback:', error);
     }

@@ -1,5 +1,8 @@
 // controllers/admin.controller.js
 
+const Record = require('../models/record');
+const Feedback = require('../models/feedback');
+
 const adminService = require("../services/admin.service");
 
 // POST /api/admin/users/teachers
@@ -158,5 +161,46 @@ exports.getFeedbacksController = async (req, res) => {
   } catch (error) {
     console.error('Error fetching feedbacks:', error);
     res.status(500).json({ message: 'Failed to fetch feedbacks', error: error.message });
+  }
+};
+
+
+// GET /api/admin/records/:recordId/feedback
+exports.getFeedbackByRecordController = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin' && req.user.role !== 'teacher') {
+      return res.status(403).json({ message: 'Access denied: Only admins allowed.' });
+    }
+
+    const { recordId } = req.params;
+
+    const record = await Record.findById(recordId).lean();
+    if (!record) {
+      return res.status(404).json({ message: 'Record not found' });
+    }
+
+    const feedback = await Feedback.findById(record.feedbackId)
+      .populate({
+        path: 'userId',
+        select: 'name class_id',
+        populate: {
+          path: 'class_id',
+          model: 'Class',
+          select: 'school_name class_name',
+        },
+      })
+      .lean();
+
+    if (!feedback) {
+      return res.status(404).json({ message: 'Feedback not found for this record' });
+    }
+
+    res.status(200).json({
+      message: 'Feedback fetched successfully',
+      data: feedback,
+    });
+  } catch (error) {
+    console.error('Error fetching feedback by record:', error);
+    res.status(500).json({ message: 'Failed to fetch feedback', error: error.message });
   }
 };

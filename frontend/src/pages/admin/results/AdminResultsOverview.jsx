@@ -156,38 +156,34 @@ const AdminResultsOverview = () => {
                   <th className="score">점수</th>
                 </tr>
               </thead>
-            </table>
 
-            <div className="table-body-wrapper">
-              <table className="learning-results-table">
-                <tbody>
-                  {students.length === 0 ? (
-                    <tr>
-                      <td colSpan="5" style={{ textAlign: 'center', padding: '10px' }}>
-                        선택한 학반에 학생이 없습니다.
+              <tbody>
+                {students.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: 'center', padding: '10px' }}>
+                      선택한 학반에 학생이 없습니다.
+                    </td>
+                  </tr>
+                ) : (
+                  students.map((student, idx) => (
+                    <tr key={student._id}>
+                      <td className="no">{idx + 1}</td>
+                      <td className="school">{student.schoolName}</td>
+                      <td className="class">{student.className}</td>
+                      <td
+                        className="name"
+                        onClick={() => handleStudentClick(student)}
+                      >
+                        🔗 {student.name}
+                      </td>
+                      <td className="score">
+                        {scoreMap[student._id] !== null ? scoreMap[student._id] : 'N/A'}
                       </td>
                     </tr>
-                  ) : (
-                    students.map((student, idx) => (
-                      <tr key={student._id}>
-                        <td className="no">{idx + 1}</td>
-                        <td className="school">{student.schoolName}</td>
-                        <td className="class">{student.className}</td>
-                        <td
-                          className="name"
-                          onClick={() => handleStudentClick(student)}
-                        >
-                          🔗 {student.name}
-                        </td>
-                        <td className="score">
-                          {scoreMap[student._id] !== null ? scoreMap[student._id] : 'N/A'}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                )}
+              </tbody>
+            </table>
           </>
         )}
       </div>

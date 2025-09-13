@@ -328,19 +328,6 @@ const saveFeedback = async (feedbackData) => {
 };
 
 
-const generateFeedbackData = (keyword, level, feedbacks) => {
-
-  console.log('Feedbacks:', feedbacks);
-
-  const feedbackData = {
-    keyword: keyword,
-    level: level,
-    feedbacks,
-  };
-  return feedbackData;
-};
-
-
 const saveHighlight = async (highlightData) => {
   try {
     const highlight = new Highlight(highlightData);
@@ -475,7 +462,6 @@ module.exports = {
   detectGenerationError,
   testConnection,
   saveFeedback,
-  generateFeedbackData,
   saveHighlight,
   deleteHighlight,
   uploadHighlightImage,

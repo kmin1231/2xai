@@ -207,14 +207,15 @@ exports.testTextConnection = async (req, res) => {
 // POST /api/text/feedback
 exports.saveFeedbackController = async (req, res) => {
   try {
-
     const { userId } = req.user;
     const { keyword, level, feedbacks } = req.body;
 
-    // generate feedback data
-    const feedbackData = textService.generateFeedbackData(keyword, level, feedbacks);
-
-    feedbackData.userId = userId;
+    const feedbackData = {
+      userId,
+      keyword,
+      level,
+      feedbacks,
+    };
 
     const result = await textService.saveFeedback(feedbackData);
 
@@ -304,7 +305,8 @@ exports.uploadHighlightImageController = async (req, res) => {
 exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
-  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, } = req.body;
+  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, feedbackId } = req.body;
+
 
   try {
     const { userAnswer: userAnswerStrArray, correctness } = textService.checkAnswer(userAnswer, answer);
@@ -333,6 +335,7 @@ exports.checkAnswerController = async (req, res) => {
       score,
       elapsedSeconds,
       mode,
+      feedbackId,
     });
     await newRecord.save();
 

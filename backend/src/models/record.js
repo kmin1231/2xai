@@ -6,6 +6,8 @@ const { Schema } = mongoose;
 const recordSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   textId: { type: Schema.Types.ObjectId, ref: 'Text', required: true },
+  feedbackId: { type: Schema.Types.ObjectId, ref: 'Feedback' },
+
   correctness: { type: [Boolean], required: true },
   userAnswer: { type: [String], required: true },
   correctAnswer: { type: [String], required: true },

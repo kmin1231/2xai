@@ -85,6 +85,7 @@ const CONFIG = {
     ENDPOINTS: {
       GET_CLASSES: '/classes',
       GET_FEEDBACKS: '/feedbacks',
+      GET_FEEDBACK_BY_RECORD: (recordId) => `/records/${recordId}/feedback`,
     },
   },
 };

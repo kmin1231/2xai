@@ -360,4 +360,77 @@ router.get('/classes', verifyToken, adminController.getAllClassesController);
 router.get('/feedbacks', verifyToken, adminController.getFeedbacksController);
 
 
+/**
+ * @swagger
+ * /api/admin/records/{recordId}/feedback:
+ *   get:
+ *     summary: Get feedbacks for a specific record (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: recordId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the student record
+ *     responses:
+ *       200:
+ *         description: Feedbacks associated with the specified record
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     keyword:
+ *                       type: string
+ *                     level:
+ *                       type: string
+ *                     feedbacks:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           title:
+ *                             type: string
+ *                           passage:
+ *                             type: string
+ *                           feedback:
+ *                             type: string
+ *                           _id:
+ *                             type: string
+ *                     userId:
+ *                       type: object
+ *                       properties:
+ *                         _id:
+ *                           type: string
+ *                         name:
+ *                           type: string
+ *                         class_id:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                             class_name:
+ *                               type: string
+ *                             school_name:
+ *                               type: string
+ *       403:
+ *         description: Access denied (not admin)
+ *       404:
+ *         description: Record not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/records/:recordId/feedback', verifyToken, adminController.getFeedbackByRecordController);
+
+
 module.exports = router;

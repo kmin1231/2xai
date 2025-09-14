@@ -1,6 +1,6 @@
 // src/pages/student/records/TextDetailModal.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import './text-detail-modal.css';
 
 const optionLabels = ['a', 'b', 'c', 'd', 'e'];
@@ -55,16 +55,42 @@ const feedbackLabelMap = {
   not_interesting: '😐 흥미롭지 않아요',
 };
 
-const TextDetailModal = ({ text, record, onClose, onDownload, feedbacks = [], isAdmin = false }) => {
+const TextDetailModal = ({ text, record, highlights = [], onClose, onDownload, feedbacks = [], isAdmin = false, }) => {
+  const [modalImageUrl, setModalImageUrl] = useState(null);
+
   if (!text) return null;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div
-        className="text-detail-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="text-detail-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-buttons">
+          {highlights && highlights.length > 0 && (
+            <>
+              <button
+                className="highlight-image-btn"
+                onClick={() =>
+                  highlights[0].imageUrl && setModalImageUrl(highlights[0].imageUrl)
+                }
+                disabled={!highlights[0].imageUrl}
+              >
+                📝 하이라이트
+              </button>
+
+              {modalImageUrl && (
+                <div className="highlight-image-modal" onClick={() => setModalImageUrl(null)}>
+                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal-download-wrapper">
+                      <a href={modalImageUrl} target="_blank" rel="noopener noreferrer">
+                        <button className="download-button">다운로드</button>
+                      </a>
+                    </div>
+                    <img src={modalImageUrl} alt="highlight" />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
           <button className="download-btn" onClick={() => onDownload('txt')}>
             ⬇️ TXT 다운로드
           </button>
@@ -118,7 +144,7 @@ const TextDetailModal = ({ text, record, onClose, onDownload, feedbacks = [], is
             ))}
           </section>
 
-          {isAdmin && feedbacks.length > 0 && (
+          {isAdmin && (
             <>
               <hr />
               <section>

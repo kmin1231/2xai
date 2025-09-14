@@ -51,6 +51,10 @@ body {
   font-size: 25px;
 }
 
+.result-left p {
+  white-space: pre-wrap;
+}
+
 .result-right h3 {
   font-size: 24px;
   margin-top: 0px;
@@ -91,6 +95,7 @@ body {
 .highlighted-text  {
   font-weight: bold;
   cursor: pointer;
+  white-space: pre-wrap;
 }
 
 .question-submit-wrapper {

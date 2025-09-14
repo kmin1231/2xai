@@ -87,7 +87,23 @@ const FeedbackModal = ({
 
       const savedFeedbackId = response.data.data._id;
 
-      onConfirmSelection(selectedGeneration, savedFeedbackId);
+      const generationResponse = await api.post(
+        `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_GENERATION}`,
+        {
+          keyword,
+          level,
+          title: selectedGeneration.title,
+          passage: selectedGeneration.passage,
+          question: selectedGeneration.question,
+          answer: selectedGeneration.answer,
+          solution: selectedGeneration.solution,
+        }
+      );
+      console.log('Selected generation saved successfully:', generationResponse.data);
+
+      const savedTextId = generationResponse.data.data._id;
+
+      onConfirmSelection(selectedGeneration, savedFeedbackId, savedTextId);
 
     } catch (error) {
       console.error('Error saving feedback:', error);

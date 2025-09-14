@@ -328,6 +328,17 @@ const saveFeedback = async (feedbackData) => {
 };
 
 
+const saveGeneration = async (textData) => {
+  try {
+    const newText = new Text(textData);
+    const result = await newText.save();
+    return result;
+  } catch (error) {
+    throw new Error('Error saving generation: ' + error.message);
+  }
+};
+
+
 const saveHighlight = async (highlightData) => {
   try {
     const highlight = new Highlight(highlightData);
@@ -348,7 +359,7 @@ const deleteHighlight = async (userId, id) => {
 };
 
 
-const uploadHighlightImage = async ({ userId, base64Image, highlightIds }) => {
+const uploadHighlightImage = async ({ userId, base64Image, highlightIds, textId }) => {
 
   // base64 -> buffer
   const matches = base64Image.match(/^data:(.+);base64,(.+)$/);
@@ -366,6 +377,11 @@ const uploadHighlightImage = async ({ userId, base64Image, highlightIds }) => {
   await Highlight.updateMany(
     { _id: { $in: highlightIds }, userId },
     { $set: { imageUrl } }
+  );
+
+  await Text.findByIdAndUpdate(
+    textId,
+    { $addToSet: { highlightIds: { $each: highlightIds } } }
   );
 
   return imageUrl;
@@ -462,6 +478,7 @@ module.exports = {
   detectGenerationError,
   testConnection,
   saveFeedback,
+  saveGeneration,
   saveHighlight,
   deleteHighlight,
   uploadHighlightImage,

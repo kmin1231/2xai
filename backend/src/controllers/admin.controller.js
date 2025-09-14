@@ -2,6 +2,7 @@
 
 const Record = require('../models/record');
 const Feedback = require('../models/feedback');
+const Highlight = require('../models/highlight');
 
 const adminService = require("../services/admin.service");
 
@@ -196,11 +197,42 @@ exports.getFeedbackByRecordController = async (req, res) => {
     }
 
     res.status(200).json({
-      message: 'Feedback fetched successfully',
+      message: 'Feedback fetched successfully.',
       data: feedback,
     });
   } catch (error) {
-    console.error('Error fetching feedback by record:', error);
+    console.error('Error fetching feedback by recordId:', error);
     res.status(500).json({ message: 'Failed to fetch feedback', error: error.message });
+  }
+};
+
+
+// GET /api/admin/records/:recordId/highlights
+exports.getHighlightsByRecordController = async (req, res) => {
+  try {
+    const { recordId } = req.params;
+
+    const record = await Record.findById(recordId);
+    if (!record) {
+      return res.status(404).json({ message: 'Record not found' });
+    }
+
+    const highlights = await Highlight.find({
+      userId: record.userId,
+      textId: record.textId,
+    }).lean();
+
+    const highlightsWithImage = highlights.map(h => ({
+      ...h,
+      imageUrl: h.imageUrl || null
+    }));
+
+    res.status(200).json({
+      message: 'Highlights fetched successfully.',
+      data: highlightsWithImage,
+    });
+  } catch (error) {
+    console.error('Error fetching highlights by recordId:', error);
+    res.status(500).json({ message: 'Failed to fetch highlights', error: error.message });
   }
 };

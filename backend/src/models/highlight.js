@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 
 const highlightSchema = new mongoose.Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    textId: { type: mongoose.Schema.Types.ObjectId, ref: 'Text', required: true },
     text: { type: String, required: true },
 
     label: {

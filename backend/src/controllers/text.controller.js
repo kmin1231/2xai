@@ -227,20 +227,56 @@ exports.saveFeedbackController = async (req, res) => {
 };
 
 
+// POST /api/text/generation
+exports.saveGenerationController = async (req, res) => {
+  try {
+    const { keyword, level, title, passage, question, answer, solution } = req.body;
+
+    if (!keyword || !level || !title || !passage || !question || !answer || !solution) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    const newText = new Text({
+      keyword,
+      level,
+      title,
+      passage,
+      question,
+      answer,
+      solution,
+    });
+
+    const savedText = await newText.save();
+
+    return res.status(200).json({
+      message: 'Selected generation saved successfully!',
+      data: savedText,
+    });
+  } catch (error) {
+    console.error('Error saving generation:', error.message);
+    return res.status(500).json({
+      message: 'Failed to save generation',
+      error: error.message,
+    });
+  }
+};
+
+
 // POST /api/text/highlight
 exports.saveHighlightController = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { text, label } = req.body;
+    const { text, label, textId } = req.body;
 
-    if (!text) {
-      return res.status(400).json({ message: 'Text is required for highlight.' });
+    if (!text || !textId) {
+      return res.status(400).json({ message: 'Text and textId are required for highlight.' });
     }
 
     const highlightData = {
       userId,
       text,  // highlighted text
       label,
+      textId,
     };
 
     const result = await textService.saveHighlight(highlightData);
@@ -281,16 +317,17 @@ exports.deleteHighlightController = async (req, res) => {
 exports.uploadHighlightImageController = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { imageBase64, highlightIds } = req.body;
+    const { imageBase64, highlightIds, textId } = req.body;
 
-    if (!imageBase64 || !highlightIds?.length) {
-      return res.status(400).json({ message: 'Image and highlight IDs are required' });
+    if (!imageBase64 || !highlightIds?.length || !textId) {
+      return res.status(400).json({ message: 'Image, highlight IDs, and textId are required' });
     }
 
     const imageUrl = await textService.uploadHighlightImage({
       userId,
       base64Image: imageBase64,
       highlightIds,
+      textId,
     });
 
     res.status(200).json({ message: 'Image uploaded and highlights updated', imageUrl });
@@ -305,30 +342,17 @@ exports.uploadHighlightImageController = async (req, res) => {
 exports.checkAnswerController = async (req, res) => {
 
   const { userId } = req.user;
-  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, feedbackId } = req.body;
-
+  const { keyword, level, title, passage, question, answer, solution, userAnswer, elapsedSeconds, mode, feedbackId, textId } = req.body;
 
   try {
     const { userAnswer: userAnswerStrArray, correctness } = textService.checkAnswer(userAnswer, answer);
 
     const score = correctness.filter(isCorrect => isCorrect).length;
 
-    // save data in 'Text' collection
-    const newText = new Text({
-      keyword,
-      level,
-      title,
-      passage,
-      question,
-      answer,
-      solution,
-    });
-    await newText.save();
-
     // save data in 'Record' collection
     const newRecord = new Record({
       userId,
-      textId: newText._id,
+      textId,
       correctness,
       userAnswer: userAnswerStrArray,
       correctAnswer: answer,

@@ -34,6 +34,7 @@ const ResultsDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [feedbacksMap, setFeedbacksMap] = useState({});
+  const [highlightsMap, setHighlightsMap] = useState({});
 
   const levelMap = {
     low: '하',
@@ -123,6 +124,28 @@ const ResultsDetail = () => {
     }
   };
 
+  const fetchHighlightsForRecord = async (recordId) => {
+    if (!isAdmin) return;
+
+    try {
+      const res = await api.get(
+        `${CONFIG.ADMIN.BASE_URL}${CONFIG.ADMIN.ENDPOINTS.GET_HIGHLIGHTS_BY_RECORD(recordId)}`
+      );
+
+      console.log('fetchHighlightsForRecord res.data:', res.data);
+      const highlights = res.data.data || [];
+
+      setHighlightsMap((prev) => ({
+        ...prev,
+        [recordId]: highlights,
+      }));
+
+      return highlights;
+    } catch (error) {
+      console.error('Failed to fetch highlights by recordId:', error);
+    }
+  };
+
   return (
     <div className="results-detail-container">
       <h3 className="results-detail-header">
@@ -153,8 +176,25 @@ const ResultsDetail = () => {
                 <tr
                   key={record._id}
                   onClick={async () => {
-                    const feedbacks = await fetchFeedbackForRecord(record._id);
-                    setSelectedRecord({ record, text: textsMap[record.textId], feedbacks });
+
+                    // 데이터 연결 전 학생 피드백 데이터를 가져오지 못하는 경우에도 modal이 열리도록 처리
+                    let feedbacks = [];
+                    try {
+                      feedbacks = await fetchFeedbackForRecord(record._id);
+                      if (!feedbacks) feedbacks = [];
+                    } catch (err) {
+                      console.error('Feedback fetch failed, ignoring', err);
+                      feedbacks = [];
+                    }
+
+                    const highlights = await fetchHighlightsForRecord(record._id) || [];
+
+                    setSelectedRecord({
+                      record,
+                      text: textsMap[record.textId],
+                      feedbacks,
+                      highlights
+                    });
                   }}
                   style={{ cursor: 'pointer' }}
                 >
@@ -194,6 +234,7 @@ const ResultsDetail = () => {
         <TextDetailModal
           text={selectedRecord.text}
           record={selectedRecord.record}
+          highlights={selectedRecord.highlights || []}
           onClose={() => setSelectedRecord(null)}
           onDownload={(type) => handleDownload(selectedRecord.text, type)}
           feedbacks={selectedRecord.feedbacks || []}

@@ -467,6 +467,101 @@ router.post('/feedback', verifyToken, textController.saveFeedbackController);
 
 /**
  * @swagger
+ * /api/text/generation:
+ *   post:
+ *     summary: Save selected generation as Text
+ *     tags: [Text]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 description: Keyword associated with the text
+ *               level:
+ *                 type: string
+ *                 enum: [low, middle, high]
+ *                 description: Difficulty level of the text
+ *               title:
+ *                 type: string
+ *                 description: Title of the passage
+ *               passage:
+ *                 type: string
+ *                 description: Full text passage
+ *               question:
+ *                 type: array
+ *                 description: List of 5 questions
+ *                 items:
+ *                   type: string
+ *               answer:
+ *                 type: array
+ *                 description: List of 5 answers corresponding to questions
+ *                 items:
+ *                   type: string
+ *               solution:
+ *                 type: array
+ *                 description: List of 5 solutions/explanations
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Generation saved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Generation saved successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: 64f1a2b3c4d5e6f7a8b9c0d1
+ *                     keyword:
+ *                       type: string
+ *                       example: harrypotter
+ *                     level:
+ *                       type: string
+ *                       example: low
+ *                     title:
+ *                       type: string
+ *                       example: Life at Hogwarts
+ *                     passage:
+ *                       type: string
+ *                       example: At Hogwarts, students are sorted into four houses...
+ *                     question:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["How many houses?", "Which house is Harry in?", "..."]
+ *                     answer:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["c", "d", "..."]
+ *                     solution:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["There are four houses...", "Harry belongs to Gryffindor...", "..."]
+ *       400:
+ *         description: Missing required fields
+ *       500:
+ *         description: Failed to save generation
+ */
+router.post('/generation', verifyToken, textController.saveGenerationController);
+
+
+/**
+ * @swagger
  * /api/text/highlight:
  *   post:
  *     summary: Save highlighted text

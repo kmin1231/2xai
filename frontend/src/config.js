@@ -49,6 +49,7 @@ const CONFIG = {
       GENERATE_TEXT_LOW: '/generate-text-low',
       GENERATE_TEXT_CONTENTS: '/contents',
       SAVE_FEEDBACK: '/feedback',
+      SAVE_GENERATION: '/generation',
       SAVE_HIGHLIGHT: '/highlight',
       DELETE_HIGHLIGHT: '/highlight',
       UPLOAD_HIGHLIGHT_IMAGE: '/highlight/image',
@@ -86,6 +87,7 @@ const CONFIG = {
       GET_CLASSES: '/classes',
       GET_FEEDBACKS: '/feedbacks',
       GET_FEEDBACK_BY_RECORD: (recordId) => `/records/${recordId}/feedback`,
+      GET_HIGHLIGHTS_BY_RECORD: (recordId) => `/records/${recordId}/highlights`,
     },
   },
 };

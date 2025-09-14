@@ -176,10 +176,19 @@ const ResultsDetail = () => {
                 <tr
                   key={record._id}
                   onClick={async () => {
-                    const [feedbacks, highlights] = await Promise.all([
-                      fetchFeedbackForRecord(record._id),
-                      fetchHighlightsForRecord(record._id)
-                    ]);
+
+                    // 데이터 연결 전 학생 피드백 데이터를 가져오지 못하는 경우에도 modal이 열리도록 처리
+                    let feedbacks = [];
+                    try {
+                      feedbacks = await fetchFeedbackForRecord(record._id);
+                      if (!feedbacks) feedbacks = [];
+                    } catch (err) {
+                      console.error('Feedback fetch failed, ignoring', err);
+                      feedbacks = [];
+                    }
+
+                    const highlights = await fetchHighlightsForRecord(record._id) || [];
+
                     setSelectedRecord({
                       record,
                       text: textsMap[record.textId],

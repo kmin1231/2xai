@@ -433,4 +433,72 @@ router.get('/feedbacks', verifyToken, adminController.getFeedbacksController);
 router.get('/records/:recordId/feedback', verifyToken, adminController.getFeedbackByRecordController);
 
 
+/**
+ * @swagger
+ * /api/admin/records/{recordId}/highlights:
+ *   get:
+ *     summary: Get highlights for a specific record (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: recordId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the student record
+ *     responses:
+ *       200:
+ *         description: Highlights associated with the specified record
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       text:
+ *                         type: string
+ *                       label:
+ *                         type: string
+ *                         enum: [important, confusing, mainidea, etc]
+ *                       imageUrl:
+ *                         type: string
+ *                       userId:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                           name:
+ *                             type: string
+ *                           class_id:
+ *                             type: object
+ *                             properties:
+ *                               _id:
+ *                                 type: string
+ *                               class_name:
+ *                                 type: string
+ *                               school_name:
+ *                                 type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *       403:
+ *         description: Access denied (not admin)
+ *       404:
+ *         description: Record not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/records/:recordId/highlights', verifyToken, adminController.getHighlightsByRecordController);
+
+
 module.exports = router;

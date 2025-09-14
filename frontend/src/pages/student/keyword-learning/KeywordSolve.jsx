@@ -48,10 +48,13 @@ const KeywordSolve = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbacks, setFeedbacks] = useState([]);
   const [feedbackId, setFeedbackId] = useState([]);
+  const [textId, setTextId] = useState(null);
   const [finalChoiceIndex, setFinalChoiceIndex] = useState(null);
 
   const [selectedGeneration, setSelectedGeneration] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const [recordId, setRecordId] = useState(null);
 
   const [highlightedRanges, setHighlightedRanges] = useState([]);
   const [pendingHighlight, setPendingHighlight] = useState(null);
@@ -96,10 +99,11 @@ const KeywordSolve = () => {
     }
   }, []);
 
-  const handleConfirmSelection = (selectedGeneration, savedFeedbackId) => {
+  const handleConfirmSelection = (selectedGeneration, savedFeedbackId, savedTextId) => {
     console.log('selected generation index:', selectedGeneration);
     setSelectedGeneration(selectedGeneration);
     setFeedbackId(savedFeedbackId);
+    setTextId(savedTextId);
     setIsModalOpen(false);
     setFeedbackClosedAt(Date.now());
   };
@@ -173,7 +177,10 @@ const KeywordSolve = () => {
     try {
       const response = await api.post(
         `${CONFIG.TEXT.BASE_URL}${CONFIG.TEXT.ENDPOINTS.SAVE_HIGHLIGHT}`,
-        { text, label },
+        { text,
+          label,
+          textId,
+        },
       );
       console.log('Highlights saved successfully:', response.data);
 
@@ -190,6 +197,7 @@ const KeywordSolve = () => {
     const savedHighlight = await saveHighlightToServer({
       text: pendingHighlight.text,
       label,
+      textId,
     });
     if (!savedHighlight) return;
 
@@ -367,6 +375,7 @@ const KeywordSolve = () => {
         {
           imageBase64,
           highlightIds,
+          textId,
         }
       );
 
@@ -417,6 +426,7 @@ const KeywordSolve = () => {
           elapsedSeconds,
           mode: recordMode,
           feedbackId,
+          textId,
         },
       );
       console.log('Requested successfully:', response.data);

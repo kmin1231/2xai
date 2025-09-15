@@ -238,12 +238,7 @@ const KeywordSolve = () => {
     if (!text) return null;
 
     if (highlightedRanges.length === 0) {
-      return text.split('\n').map((line, idx) => (
-        <React.Fragment key={idx}>
-          {line}
-          {idx < text.split('\n').length - 1 && <br />}
-        </React.Fragment>
-      ));
+      return text;
     }
 
     const sortedRanges = [...highlightedRanges].sort((a, b) =>
@@ -257,12 +252,11 @@ const KeywordSolve = () => {
       }
     });
 
-    const elements = [];
-    text.split('').forEach((char, idx) => {
+    return text.split('').map((char, idx) => {
       const range = highlightMap[idx];
       const color = range ? LABELS[range.label]?.color || LABELS.etc.color : undefined;
 
-      elements.push(
+      return (
         <span
           key={idx}
           className={range ? 'highlighted-text' : undefined}
@@ -270,12 +264,10 @@ const KeywordSolve = () => {
           title={range ? LABELS[range.label]?.labelKR : undefined}
           onClick={range ? () => handleHighlightClick(range) : undefined}
         >
-          {char === '\n' ? <br /> : char}
+          {char}
         </span>
       );
     });
-
-    return elements;
   };
 
   const handleUndoHighlight = async (highlight) => {

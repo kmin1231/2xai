@@ -106,7 +106,7 @@ const TextDetailModal = ({ text, record, highlights = [], onClose, onDownload, f
             <p>
               <strong>Passage:</strong>
             </p>
-            <p>{text.passage}</p>
+            <p style={{ whiteSpace: 'pre-line' }}>{text.passage}</p>
           </section>
 
           <hr />

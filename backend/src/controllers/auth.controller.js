@@ -12,12 +12,13 @@ const login = async (req, res) => {
   const result = await loginUser(username, password);
 
   if (!result.success) {
-    return res.status(401).json({ message: result.message });
+    return res.status(401).json({
+      message: result.message,
+      reason: result.reason,
+    });
   }
 
-  console.log(`Redirecting to /${result.role}`);
-
-  return res.json({
+  return res.status(200).json({
     message: 'Login successful',
     redirect: `/${result.role}`,
     token: result.token,  // return the token to the client

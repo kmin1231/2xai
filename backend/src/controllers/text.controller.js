@@ -157,30 +157,6 @@ exports.generateContentsController = async (req, res) => {
 };
 
 
-// POST /api/text/generate-text-low
-exports.generateTextLow = async (req, res) => {
-  try {
-    const { keyword } = req.body;
-    
-    const level = 'low';  // fixed level
-
-    const result = await textService.requestGeneration(keyword, level);
-
-    res.status(200).json(result);
-  } catch (error) {
-    console.error('Error generating low-level text:', error.message);
-
-    const status = error.status || 500;
-    const message =
-      error.message === '금지어가 포함되어 있습니다.'
-        ? '입력한 키워드에 금지어가 포함되어 있습니다.'
-        : '텍스트 생성 중 오류가 발생했습니다.';
-
-    res.status(status).json({ message });
-  }
-};
-
-
 // GET /api/text/test
 exports.testTextConnection = async (req, res) => {
   const result = await textService.testConnection();

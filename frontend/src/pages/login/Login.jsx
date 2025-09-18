@@ -31,6 +31,15 @@ const Login = () => {
     }
   }, [isLoggedIn, role, navigate]);
 
+  useEffect(() => {
+    if (status === 'failed') {
+      alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+      setStep(1);
+      dispatch(setUsername(''));
+      dispatch(setPassword(''));
+    }
+  }, [status, dispatch]);
+
   // next button
   const handleNext = () => {
     if (step === 1) {
@@ -74,7 +83,7 @@ const Login = () => {
       )}
 
       {status === 'loading' && <p>로그인 중...</p>}
-      {status === 'failed' && <p style={{ color: 'red' }}>로그인 실패. 아이디 또는 비밀번호를 확인해주세요.</p>}
+      {status === 'failed' && <p style={{ color: 'red' }}>아이디 또는 비밀번호를 다시 확인해주세요.</p>}
     </div>
   );
 };

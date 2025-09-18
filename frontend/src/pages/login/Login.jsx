@@ -12,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { username, password, isLoggedIn, status, role } = useSelector((state) => state.auth);
+  const { username, password, isLoggedIn, status, role, loginReason } = useSelector((state) => state.auth);
   
   // [Step1] username -> [Step2] password
   const [step, setStep] = useState(1);
@@ -30,6 +30,25 @@ const Login = () => {
       }
     }
   }, [isLoggedIn, role, navigate]);
+
+  useEffect(() => {
+    if (status === 'failed') {
+      switch (loginReason) {
+        case 'wrong_password':
+          alert('비밀번호가 틀렸습니다. 대소문자를 확인해주세요.');
+          break;
+        case 'no_user':
+          alert('존재하지 않는 사용자입니다.');
+          break;
+        default:
+          alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+      }
+
+      setStep(1);
+      dispatch(setUsername(''));
+      dispatch(setPassword(''));
+    }
+  }, [status, loginReason, dispatch]);
 
   // next button
   const handleNext = () => {
@@ -74,7 +93,7 @@ const Login = () => {
       )}
 
       {status === 'loading' && <p>로그인 중...</p>}
-      {status === 'failed' && <p style={{ color: 'red' }}>로그인 실패. 아이디 또는 비밀번호를 확인해주세요.</p>}
+      {status === 'failed' && <p style={{ color: 'red' }}>아이디 또는 비밀번호를 다시 확인해주세요.</p>}
     </div>
   );
 };

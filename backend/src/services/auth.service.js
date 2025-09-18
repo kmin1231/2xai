@@ -16,19 +16,19 @@ const loginUser = async (username, password) => {
     // console.log('User class_id:', user.class_id);
 
     if (!user) {
-      console.log('Login failed: User not found');
-      return { success: false, message: 'Invalid username or password' };
+      console.log(`[Login FAILED] User not found - username: ${username}`);
+      return { success: false, reason: 'no_user', message: 'User not found' };
     }
 
     if (user.password !== password) {
-      console.log('Login failed: Incorrect password');
-      return { success: false, message: 'Invalid username or password' };
+      console.log(`[Login FAILED] Incorrect password - username: ${username} / password: ${password}`);
+      return { success: false, reason: 'wrong_password', message: 'Incorrect password' };
     }
     
-    console.log(`Login Success: [${user.role}] ${username}`);
+    console.log(`[Login Success] ${username} (${user.role})`);
 
     // information to be included in the token
-    let payload = {
+    const payload = {
       userId: user._id,
       role: user.role,
       classId: user.class_id?._id || null,
@@ -94,10 +94,9 @@ const loginUser = async (username, password) => {
     }
 
     return response;
-
   } catch (error) {
     console.error('Login error:', error);
-    return { success: false, message: 'Internal server error' };
+    return { success: false, reason: 'server_error', message: 'Internal server error' };
   }
 };
 

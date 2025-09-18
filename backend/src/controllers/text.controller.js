@@ -149,15 +149,10 @@ exports.generateContentsController = async (req, res) => {
     res.status(200).json(result);
 
   } catch (error) {
-    console.error('Error generating text:', error.message);
-
-    const status = error.status || 500;
-    const message =
-      error.message === '금지어가 포함되어 있습니다.'
-        ? '입력한 키워드에 금지어가 포함되어 있습니다.'
-        : '텍스트 생성 중 오류가 발생했습니다.';
-
-    res.status(status).json({ message });
+    res.status(500).json({
+      message: error.message,
+      forbiddenWords: error.forbiddenWords || [],
+    });
   }
 };
 

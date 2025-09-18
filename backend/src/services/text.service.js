@@ -75,8 +75,10 @@ const requestGeneration = async (keyword, level, userId, type, token, userInfo =
   if (containsForbiddenKeyword(keyword, forbiddenKeywords)) {
     console.warn(`[금지어 입력] ${username} ${name} - keyword "${keyword}" - ${timestamp} KST`);
 
-    const error = new Error('금지어가 포함되어 있습니다.');
+    const matchedWords = forbiddenKeywords.filter(word => keyword.includes(word));
+    const error = new Error('금지어가 포함되어 있습니다');
     error.status = 400;
+    error.forbiddenWords = matchedWords;
     throw error;
   }
 
@@ -127,7 +129,7 @@ const requestGeneration = async (keyword, level, userId, type, token, userInfo =
     };
   } catch (error) {
     console.error('Error generating content:', error.message);
-    throw new Error('Failed to generate content.');
+    throw new Error('학습 자료 생성에 실패했습니다. 다시 시도해 주세요.');
   }
 };
 

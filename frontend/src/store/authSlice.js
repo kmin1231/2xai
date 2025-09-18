@@ -8,19 +8,25 @@ import { api } from '@/config';
 export const login = createAsyncThunk(
   'auth/login',
 
-  async ({ username, password }) => {
-    const res = await fetch(
-      `${CONFIG.AUTH.BASE_URL}${CONFIG.AUTH.ENDPOINTS.LOGIN}`,
-      {
+  async ({ username, password }, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${CONFIG.AUTH.BASE_URL}${CONFIG.AUTH.ENDPOINTS.LOGIN}`, {
         method: 'POST',
-        body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
-      },
-    );
+        body: JSON.stringify({ username, password }),
+      });
 
-    const data = await res.json();
-    return data;
-  },
+      const data = await res.json();
+
+      if (!res.ok) {
+        return rejectWithValue(data);
+      }
+
+      return data;
+    } catch (err) {
+      return rejectWithValue({ message: err.message });
+    }
+  }
 );
 
 
@@ -48,6 +54,7 @@ const initialState = {
   userInfo: null,
   redirect: null,
   status: 'idle',
+  loginReason: null,
 };
 
 
@@ -78,7 +85,7 @@ const authSlice = createSlice({
     setPassword(state, action) {
       state.password = action.payload;
     },
-    logout(state) {
+    logout() {
       return initialState;
     },
   },
@@ -92,6 +99,7 @@ const authSlice = createSlice({
 
         state.token = token;
         state.isLoggedIn = true;
+        state.role = role;
 
         let userInfo = {
           name: name || '',
@@ -113,11 +121,14 @@ const authSlice = createSlice({
         state.userInfo = userInfo;
         state.status = 'succeeded';
 
+        state.loginReason = null;
+
         localStorage.setItem('token', token);
-        state.role = role;
       })
-      .addCase(login.rejected, (state) => {
+      .addCase(login.rejected, (state, action) => {
+        console.error('Login rejected payload:', action.payload);
         state.status = 'failed';
+        state.loginReason = action.payload?.reason || 'unknown';
       })
       .addCase(logoutAsync.fulfilled, (state) => {
         return initialState;  // initialize every state

@@ -141,13 +141,19 @@ const KeywordInput = () => {
         state: { data: response.data, mode },
       });
     } catch (error) {
-      console.error('Error generating text:', error);
+      console.error('Error generating content:', error);
 
       setIsLoading(false);
 
-      const message =
-        error.response?.data?.message || '텍스트 생성 중 오류가 발생했습니다.';
-      alert(message);
+      const responseData = error.response?.data || {};
+      const message = responseData.message || '텍스트 생성 중 오류가 발생했습니다.';
+      const forbiddenWords = responseData.forbiddenWords || [];
+
+      if (forbiddenWords.length > 0) {
+        alert(`${message}: ${forbiddenWords.join(', ')}`);
+      } else {
+        alert(message);
+      }
     }
   };
 

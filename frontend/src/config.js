@@ -46,7 +46,6 @@ const CONFIG = {
     ENDPOINTS: {
       VALIDATE_KEYWORD: '/keywords/validate',
       GENERATE_TEXT: '/generate-text',
-      GENERATE_TEXT_LOW: '/generate-text-low',
       GENERATE_TEXT_CONTENTS: '/contents',
       SAVE_FEEDBACK: '/feedback',
       SAVE_GENERATION: '/generation',

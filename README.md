@@ -48,8 +48,39 @@
 
 <br>
 
-## 🧩 Project Architecture
+## 🗂️ Database
 
+- MongoDB Atlas / MongoDB v8.0.22 / Mongoose ODM
+- **독립적**으로 관리되는 데이터 사이의 **관계**는 `ObjectId` 기반의 **`reference`** 사용
+- 함께 조회되는 데이터는 **`embedded` document** 활용하여 **조회 성능 최적화**
+
+| Collection | Description |
+| ---------- | ----------- |
+| `users` | 사용자 정보 |
+| `classes` | 소속 학반 정보 |
+| `keywords` | 학습 자료 생성 위해 입력한 키워드 |
+| `texts` | AI가 생성한 학습 자료 |
+| `records` | 문제 풀이 기록 |
+| `feedbacks` | 학습 자료에 대한 만족도 |
+| `highlights` | 하이라이트 데이터 |
+| `errorlogs` | AI 서버 오류 추적 및 분석을 위한 로그 |
+
+<br>
+
+## 📑 Conventions
+
+### Commit Types
+
+| Emoji | Type     | Description                                       |
+| ----- | -------- | ------------------------------------------------- |
+| ✨   | feat     | 새로운 기능 구현 |
+| 🐛   | fix      | 버그 수정 |
+| 🔥   | hotfix   | 배포/운영 환경 긴급 수정 |
+| 🔧   | refactor | 코드 리팩터링 |
+| 🎨   | style    | [FE] 디자인, 테마, 화면 표시 방식 등 UI 관련 변경 |
+| 🧹   | chore    | 설정, 빌드, 의존성, 환경 관련 작업 |
+| 🧪   | test     | 테스트 관련 작업 |
+| 📑   | docs     | 프로젝트 문서 작업 |
 
 <br>
 
